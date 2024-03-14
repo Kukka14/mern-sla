@@ -1,10 +1,12 @@
 import User from "../models/user.model.js";
+import { errorHandler } from "../utils/error.js";
 
-export const contactus = async (req, res) => {
+
+export const contactus = async (req, res, next) => {
     const { name, email, contactNo, message } = req.body;
 
     if (!name || !email || !contactNo || !message || name === '' || email === '' || contactNo === '' || message === '') {
-        return res.status(400).json({ message: 'All fields are required' });
+        next(errorHandler(400, 'All fields are required'));  
     }
 
     const newUser = new User ({
@@ -18,7 +20,7 @@ export const contactus = async (req, res) => {
         await newUser.save();
         res.json( 'Inquiary successful' );
     }catch (error) {
-        res.status(500).json({message: error.message});
+        next(error);
     }
     
 };
