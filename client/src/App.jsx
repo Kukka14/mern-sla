@@ -1,7 +1,19 @@
-import React from 'react'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import ContactUs from "./pages/ContactUs"
 
-export default function App() {
+ export default function App() {
   return (
-    <div>App</div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/contactus" element={<ContactUs />} />
+      </Routes>
+    </BrowserRouter>
+  
+    
+      
   )
 }
+
+
+
+
