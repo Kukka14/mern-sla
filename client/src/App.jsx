@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Product from './pages/Product';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
+import ProductListing from './pages/ProductListing';
 
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
         <Route path='/product' element={<Product />} />
         <Route path='/Services' element={<Services />} />
         <Route path='/contact' element={<Contact />} />
+        <Route path='/product-listing' element={<ProductListing/>} />
       </Routes>
     </BrowserRouter>
   );
