@@ -22,13 +22,13 @@ export default function Header() {
       </div>
       <div className='bg-backgreen2'>
         <div className=' flex flex-row justify-between items-center max-w-7xl mx-auto h-20'>
-          <img src={logo1} alt="Company Logo" className='w-52 h-12'/>
+        <Link to='/'><img src={logo1} alt="Company Logo" className='w-52 h-12'/></Link>
           <div className='text-white text-sm flex flex-row justify-between'>
-            <div className='mr-14'><a href='#'>Home</a></div>
-            <div className='mr-14'><a href='#'>About</a></div>
-            <div className='mr-14'><a href='#'>Services</a></div>
-            <div className='mr-14'><a href='#'>Product</a></div>
-            <div className='mr-14'><a href='#'>Contact</a></div>
+            <Link to='/'><div className='mr-14'><a href='#'>Home</a></div></Link>
+            <Link to='/about'><div className='mr-14'><a href='#'>About</a></div></Link>
+            <Link to='/services'><div className='mr-14'><a href='#'>Services</a></div></Link>
+            <Link to='/product'><div className='mr-14'><a href='#'>Product</a></div></Link>
+            <Link to='/contact'><div className='mr-14'><a href='#'>Contact</a></div></Link>
           </div>
           <div className='flex flex-row justify-between'>
             <div className='bg-backgreen3 w-12 h-12 flex justify-center items-center rounded-full mr-7'>
