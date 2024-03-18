@@ -7,7 +7,8 @@ import Profile from './pages/Profile';
 import Header from './components/Header';
 import Product from './pages/Product';
 import Services from './pages/Services';
-import Services from './pages/Contact';
+import Contact from './pages/Contact';
+
 
 export default function App() {
   return (
