@@ -1,4 +1,4 @@
-import React from 'react'
+import {Link} from 'react-router-dom';
 import logo from './Images/logo2.png';
 import dashboard from './Images/icons8-dashboard-layout-24 (1).png';
 import notification from './Images/icons8-notification-50.png';
@@ -49,48 +49,48 @@ export default function MainDashboard() {
 
         <div className='flex flex-col gap-10'>
           <div className='flex flex-row justify-center items-center gap-7'>
-            <div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
+            <Link to='/orderDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
               <img src={Order} alt="Order Management" className='w-16 h-15 mx-4 my-2'/>
               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
               <p className='text-sectiontext'>Order Management</p>
-            </div>
-            <div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
+            </div></Link>
+            <Link to='/productDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
               <img src={product} alt="Product Management" className='w-16 h-15 mx-4 my-2'/>
               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
               <p className='text-sectiontext'>Product Management</p>
-            </div>
-            <div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
+            </div></Link>
+            <Link to='/supplierDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
               <img src={supplier} alt="Supplier Management" className='w-16 h-15 mx-4 my-2'/>
               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
               <p className='text-sectiontext'>Supplier Management</p>
-            </div>
-            <div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
+            </div></Link>
+            <Link to='/customerDashBoard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
               <img src={customer} alt="Customer Management" className='w-16 h-15 mx-4 my-2'/>
               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
               <p className='text-sectiontext'>Customer Management</p>
-            </div>
+            </div></Link>
           </div>
           <div className='flex flex-row justify-center items-center gap-7'>
-            <div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
+            <Link to='/cusCareDashBoard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
               <img src={customerCare} alt="Customer Care Management" className='w-16 h-15 mx-4 my-2'/>
               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
               <p className='text-sectiontext text-center'>Customer Care Management</p>
-            </div>
-            <div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
+            </div></Link>
+            <Link to='/paymentDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
               <img src={payment} alt="Payment Management" className='w-16 h-15 mx-4 my-2'/>
               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
               <p className='text-sectiontext'>Payment Management</p>
-            </div>
-            <div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
+            </div></Link>
+            <Link to='/employeeDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
               <img src={employee} alt="Employee Management" className='w-16 h-15 mx-4 my-2'/>
               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
               <p className='text-sectiontext'>Employee Management</p>
-            </div>
-            <div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
+            </div></Link>
+            <Link to='/promotionDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
               <img src={promotion} alt="Category & Promotion Management" className='w-16 h-15 mx-4 my-2'/>
               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
               <p className='text-sectiontext text-center'>Category & Promotion Management</p>
-            </div>
+            </div></Link>
           </div>
         </div>
       </div>
