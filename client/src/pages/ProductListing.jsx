@@ -1,12 +1,9 @@
 import React from 'react';
-import backgroundImage from './background-image.jpg';
 
 export default function ProductListing() {
-  return (
-    <main className='p-6 max-w-4xl mx-auto'>
-      
-      <div style="background-image: url('/Downloads/reminder.png);"></div>
 
+  return (
+    <main className='p-6 max-w-4xl mx-auto'>    
       <div className='bg-gray- rounded-lg shadow-md p-6'>
         <h1 className='text-4xl font-bold text-center mb-8'>Create a Listing</h1>
         <form className='grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8'>
