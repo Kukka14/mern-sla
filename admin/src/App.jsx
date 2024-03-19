@@ -1,7 +1,12 @@
-import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MainDashboard from './MainDashboard';
 
 export default function App() {
   return (
-    <div className='text-red-500'>Admin</div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<MainDashboard />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
