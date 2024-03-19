@@ -34,7 +34,7 @@ export const addToCart = async(req, res) => {
 
 export const getCart = async (req, res) => {
     try {
-        // Retrieve all cart items from the database
+       
         const allCartItems = await CartItem.find();
 
         res.status(200).json({ items: allCartItems });
@@ -51,9 +51,19 @@ export const getCart = async (req, res) => {
 //     // Implementation to update cart item
 // };
 
-// const removeCartItem = (req, res) => {
-//     // Implementation to remove cart item
-// };
+export const removeCartItem = async (req, res) => {
+    const { itemId } = req.params;
+
+    try {
+        // Find the cart item by its ID and remove it from the database
+        await CartItem.findByIdAndRemove(itemId);
+
+        res.status(200).json({ message: 'Cart item removed successfully' });
+    } catch (error) {
+        console.error('Error removing cart item:', error);
+        res.status(500).json({ error: 'An error occurred while removing cart item' });
+    }
+};
 
 
 
