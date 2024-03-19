@@ -17,6 +17,7 @@ export default {
         'sectionBackground': '#D3FFC1',
         'sectionhr': '#7C9074',
         'sectiontext': '#4C6653',
+        'buttonbackground': '#50A72C',
     
       },
     },
