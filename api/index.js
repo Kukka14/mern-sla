@@ -1,7 +1,18 @@
-import express from 'express';
+import express, { Router } from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
+
+mongoose.connect(process.env.MONGO).then(()=>{
+    console.log('Connected to MangoDB');
+}).catch((err)=> {
+    console.log(err);
+});
 
 const app = express();
 
-app.listen(3000,() => {
+app.use(express.json());
+
+app.listen(3000, ()=> {
     console.log('Server is running on port 3000');
-});
+}); 
