@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Home from './pages/client/Home';
 import SignUp from './pages/client/SignUp';
+import SignIn from './pages/client/SignIn';
 import About from './pages/client/About';
 import Profile from './pages/client/Profile';
 import Products from './pages/client/Products';
@@ -15,6 +16,7 @@ export default function App() {
       <Header/>     
       <Routes>
         <Route path='/' element={<Home/>} />
+        <Route path='/sign-in' element={< SignIn/>} />
         <Route path='/sign-up' element={< SignUp/>} />
         <Route path='/about' element={< About/>} />
         <Route path='/profile' element={<Profile />} />
