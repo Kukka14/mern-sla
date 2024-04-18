@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const supplierSchema = new mongoose.Schema(
+const listingSchema = new mongoose.Schema(
     {
         fname:{
             type: String,
@@ -31,6 +31,6 @@ const supplierSchema = new mongoose.Schema(
     }, {timestamps: true}
 );
 
-const Listing = mongoose.model('Listing' ,supplierSchema)
+const Listing = mongoose.model('Listing' ,listingSchema)
 
 export default Listing;

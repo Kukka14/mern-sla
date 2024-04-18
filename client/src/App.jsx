@@ -7,8 +7,8 @@ import Profile from './pages/client/Profile';
 import Products from './pages/client/Products';
 import Services from './pages/client/Services';
 import Contact from './pages/client/Contact';
-import Supplier from './pages/client/Supplier';
 import Header from './components/Header';
+import CreateListing from './pages/client/CreateListing';
 
 export default function App() {
   return (
@@ -22,7 +22,7 @@ export default function App() {
         <Route path='/products' element={<Products/>} />
         <Route path='/services' element={<Services />} />
         <Route path='/contact' element={<Contact />} />       
-        <Route path='/supplier' element={<Supplier/>} />       
+        <Route path="/create-listing" element={<CreateListing />} />
       </Routes>
     </BrowserRouter>
   );

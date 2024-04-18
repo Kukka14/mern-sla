@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 export default function CreateListing() {
     const [formData, setFormData] = useState({
-    fname: '',
-    lname: '',
-    address: '',
-    nic: '',
-    phone: '',
-    email: '',
+        fname: '',
+        lname: '',
+        address: '',
+        nic: '',
+        phone: '',
+        email: '',
     });
 
     const [error, setError] = useState(null);
@@ -19,7 +19,7 @@ export default function CreateListing() {
             [e.target.id]: e.target.value,
         });
     };
-    
+
     console.log(formData);
 
     const handleSubmit = async (e) => {
@@ -27,7 +27,8 @@ export default function CreateListing() {
         try {
             setLoading(true);
             setError(false);
-            const res= await fetch('/api/listing/create',
+
+            const res = await fetch('/api/listing/create',
                 {
                     method: 'POST',
                     headers: {
@@ -38,7 +39,7 @@ export default function CreateListing() {
 
             const data = await res.json();
             console.log('Response data:', data);
-            
+
             setLoading(false);
             if (!res.ok) {
                 // Handle non-successful response (e.g., status code 4xx or 5xx)
@@ -51,8 +52,8 @@ export default function CreateListing() {
         } catch (error) {
             setError(error.message);
             setLoading(false);
-            console.error('Error:', error); // Log any errors that occur during the request
-            
+            console.log(error);
+            // Log any errors that occur during the request   
         }
     };
 
@@ -127,7 +128,7 @@ export default function CreateListing() {
                     />
 
                     <input
-                        type="email" // Use email type
+                        type="email"
                         placeholder='E-mail(eg: example@example.com)'
                         className='border p-3 rounded-lg bg-gray-200'
                         id='email'
@@ -137,6 +138,7 @@ export default function CreateListing() {
                         onChange={handleChange}
                         value={formData.email}
                     />
+
 
                     <button disabled={loading}
                         className='p-3 bg-green-900 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-40'>
