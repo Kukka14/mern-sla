@@ -5,8 +5,8 @@ import {
   signInStart,
   signInSuccess,
   signInFailure,
-} from '../redux/user/userSlice';
-import OAuth from '../components/OAuth';
+} from '../../redux/user/userSlice';
+
 
 
 
@@ -30,7 +30,7 @@ export default function SignIn() {
     } 
     try {
       dispatch(signInStart());
-      const res = await fetch('/api/auth/signin',{
+      const res = await fetch('/api/auth/sign-in',{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,11 +75,11 @@ export default function SignIn() {
         >
           {loading ? 'Loading...' : 'Sign In'}
         </button>
-       <OAuth/>
+      
       </form>
       <div className='flex gap-2 mt-5'>
         <p>Dont have an account?</p>
-        <Link to={'/signup'}>
+        <Link to={'/sign-up'}>
           <span className='text-blue-700'>Sign up</span>
         </Link>
       </div>

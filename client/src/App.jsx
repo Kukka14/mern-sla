@@ -1,33 +1,31 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import SignUp from './pages/client/SignUp.jsx'
+import SignIn from './pages/client/SignIn.jsx'
+import Home from './pages/client/Home.jsx'
+import Header from './components/Header.jsx';
+import Profile from './pages/client/Profile.jsx';
+//import AdminDashboard from './pages/admin/AdminDashboard.jsx'
+import PrivateRoute from './components/PrivateRoute';
 
-import Home from './pages/client/Home';
-import SignUp from './pages/client/SignUp';
-import SignIn from './pages/client/SignIn';
-import About from './pages/client/About';
-import Profile from './pages/client/Profile';
-import Products from './pages/client/Products';
-import Services from './pages/client/Services';
-import Contact from './pages/client/Contact';
-import Header from './components/Header';
+
+
 
 export default function App() {
   return (
-    <BrowserRouter> 
-      <Header/>     
+  
+    <BrowserRouter>
+     < Header/>
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/sign-in' element={< SignIn/>} />
-        <Route path='/sign-up' element={< SignUp/>} />
-        <Route path='/about' element={< About/>} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/products' element={<Products/>} />
-        <Route path='/services' element={<Services />} />
-        <Route path='/contact' element={<Contact />} />       
+        <Route path='/sign-up' element={<SignUp />} />
+        <Route path='/sign-in' element={<SignIn />} />
+        {/* <Route path="/admin/dashboard" element={<AdminDashboard />} /> */}
+       
+        <Route element={<PrivateRoute />}>
+        <Route path='/profile' element={<Profile />} /> 
+        
+        </Route>    
       </Routes>
     </BrowserRouter>
   );
 }
-
-
-
-

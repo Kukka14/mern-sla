@@ -1,7 +1,7 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import OAuth from '../components/OAuth';
+//import OAuth from '../components/OAuth';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -25,7 +25,7 @@ export default function SignUp() {
     try {
       setLoading(true);
       setErrorMessage(null);
-      const res = await fetch('/api/auth/signup', {
+      const res = await fetch('/api/auth/sign-up', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -36,7 +36,7 @@ export default function SignUp() {
       }
       setLoading(false);
       if(res.ok) {
-        navigate('/signin');
+        navigate('/sign-in');
       }
     } catch (error) {
       setErrorMessage(error.message);
@@ -89,11 +89,11 @@ export default function SignUp() {
           <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
             {loading ? 'Loading...' : 'Sign Up'}
           </button>
-          <OAuth/>
+          {/* <OAuth/> */}
         </form>
         <div className='flex gap-2 mt-5'>
           <p>Have an account?</p>
-          <Link to={"/signin"} className='text-blue-700'>Sign In</Link>
+          <Link to={"/sign-in"} className='text-blue-700'>Sign In</Link>
         </div>
         {error && <p className='text-red-500 mt-5'>{error}</p>}
       </div>
