@@ -1,7 +1,5 @@
-import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-//import OAuth from '../components/OAuth';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -22,6 +20,26 @@ export default function SignUp() {
     if (!formData.username || !formData.email || !formData.password || !formData.nic || !formData.phoneNumber || !formData.address) {
       return setErrorMessage('Please fill out all fields.');
     }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      return setErrorMessage('Please enter a valid email address.');
+    }
+
+    // Phone number validation
+    const phoneNumberRegex = /^\d{10}$/;
+    if (!phoneNumberRegex.test(formData.phoneNumber)) {
+      return setErrorMessage('Please enter a valid 10-digit phone number.');
+    }
+
+    // NIC validation
+const nicRegex = /^[0-9]{9}[vVxX]$/;
+if (!nicRegex.test(formData.nic)) {
+  return setErrorMessage('Please enter a valid NIC (e.g., 123456789V).');
+}
+
+
     try {
       setLoading(true);
       setErrorMessage(null);
@@ -46,56 +64,60 @@ export default function SignUp() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-200">
-      <div className='p-6 bg-white rounded-lg shadow-lg'style={{ maxWidth: '500px', width: '100%' }}>
+      <div className='p-6 bg-white rounded-lg shadow-lg' style={{ maxWidth: '500px', width: '100%' }}>
         <h1 className='text-3xl text-center font-semibold my-7'>Sign Up</h1>
+        {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
         <form onSubmit={handleSubmit} className='flex flex-col items-center gap-4'>
           <input
             type='text'
             placeholder='Username'
-            className='border border-gray-300 p-3 rounded-lg' id='username'
+            className='border border-gray-300 p-3 rounded-lg'
+            id='username'
             onChange={handleChange}
           />
           <input
             type='email'
             placeholder='Email'
-            className='border p-3 border-gray-300 rounded-lg' id='email'
+            className='border p-3 border-gray-300 rounded-lg'
+            id='email'
             onChange={handleChange}
           />
           <input
             type='password'
             placeholder='Password'
-            className='border border-gray-300 p-3 rounded-lg' id='password'
+            className='border border-gray-300 p-3 rounded-lg'
+            id='password'
             onChange={handleChange}
           />
           <input
             type='text'
             placeholder='NIC'
-            className='border border-gray-300 p-3 rounded-lg' id='nic'
+            className='border border-gray-300 p-3 rounded-lg'
+            id='nic'
             onChange={handleChange}
           />
           <input
             type='text'
             placeholder='Telephone Number'
-            className='border border-gray-300 p-3 rounded-lg' id='phoneNumber'
+            className='border border-gray-300 p-3 rounded-lg'
+            id='phoneNumber'
             onChange={handleChange}
           />
           <input
             type='text'
             placeholder='Address'
-            className='border border-gray-300 p-3 rounded-lg' id='address'
+            className='border border-gray-300 p-3 rounded-lg'
+            id='address'
             onChange={handleChange}
           />
-          {error && <p className='text-red-500'>{error}</p>}
           <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
             {loading ? 'Loading...' : 'Sign Up'}
           </button>
-          {/* <OAuth/> */}
         </form>
         <div className='flex gap-2 mt-5'>
           <p>Have an account?</p>
-          <Link to={"/sign-in"} className='text-blue-700'>Sign In</Link>
+          <Link to='/sign-in' className='text-blue-700'>Sign In</Link>
         </div>
-        {error && <p className='text-red-500 mt-5'>{error}</p>}
       </div>
     </div>
   );
