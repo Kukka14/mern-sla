@@ -7,6 +7,7 @@ import Header from './components/Header.jsx';
 import Profile from './pages/client/Profile.jsx';
 import CustomerManagement from './pages/admin/MProfile.jsx';
 import PrivateRoute from './components/PrivateRoute';
+import ProductListing from './pages/admin/ProductListing.jsx';
 import AddEmployee from './pages/admin/AddEmployee.jsx';
 import MainDashboard from './pages/admin/MainDashboard.jsx';
 
@@ -18,18 +19,18 @@ export default function App() {
     <BrowserRouter>
       {isAdmin ? null : <Header />}
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Home/>} />
+        <Route path='product-listing' element={<ProductListing/>} />
+        
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/sign-in' element={<SignIn />} />
-        <Route path="/customer-management" element={<CustomerManagement />} />
+        <Route path="/customer-management" element={<CustomerManagement />} /> 
         
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
         </Route>
-        
-        
         
       </Routes>
     </BrowserRouter>
