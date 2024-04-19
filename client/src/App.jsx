@@ -6,6 +6,8 @@ import Header from './components/Header.jsx';
 import Profile from './pages/client/Profile.jsx';
 import CustomerManagement from './pages/admin/MProfile.jsx'
 import PrivateRoute from './components/PrivateRoute';
+import AddEmployee from './pages/admin/AddEmployee.jsx';
+import MainDashboard from './pages/admin/MainDashboard.jsx';
 
 
 
@@ -22,9 +24,10 @@ export default function App() {
          <Route path="/customer-management" element={<CustomerManagement />} /> 
        
         <Route element={<PrivateRoute />}>
-        <Route path='/profile' element={<Profile />} /> 
-        
-        </Route>    
+          <Route path='/profile' element={<Profile />} />       
+        </Route>
+        <Route path='/mainDashboard' element={<MainDashboard />} /> 
+        <Route path='/addEmployee' element={<AddEmployee />} /> 
       </Routes>
     </BrowserRouter>
   );
