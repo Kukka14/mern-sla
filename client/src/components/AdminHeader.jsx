@@ -9,9 +9,9 @@ export default function AdminHeader() {
   return (
     <header>
             
-      <div className='bg-sideNavBackground'>
+      <div className='bg-mainAdminBackground'>
         <div className='flex flex-row justify-between items-center max-w-full mx-8 h-20'>
-          <Link to='/'><img src={logo1} alt="Company Logo" className='w-60 h-16'/></Link>
+          <div></div>
           
           <div className='flex flex-row justify-between'>
             <div className='w-12 h-12 flex justify-center items-center rounded-full mr-7'>
@@ -24,6 +24,7 @@ export default function AdminHeader() {
            
           </div>
         </div>
+        <hr className='h-0.5 bg-searchBarBackground border-0 '/>
       </div>
     </header>
   )
