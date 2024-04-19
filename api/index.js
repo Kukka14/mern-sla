@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import adminRouter from './routes/admin.route.js';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
+import employeeRouter from './routes/employee.route.js';
 import cookieParser from 'cookie-parser';
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.listen(5000, () => {
 app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use('/api/employee', employeeRouter);
 
 app.use((err, req, res, next) => { 
     const statusCode = res.statusCode || 500;
