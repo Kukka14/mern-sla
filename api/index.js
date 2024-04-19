@@ -1,9 +1,10 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-//import adminRouter from './routes/admin.route.js';
+import adminRouter from './routes/admin.route.js';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
+import employeeRouter from './routes/employee.route.js';
 import cookieParser from 'cookie-parser';
 dotenv.config();
 
@@ -22,8 +23,11 @@ app.use(cookieParser());
 app.listen(5000, () => {
     console.log('Server is running on port 5000');
 });
+
+app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use('/api/employee', employeeRouter);
 
 app.use((err, req, res, next) => { 
     const statusCode = res.statusCode || 500;
@@ -34,3 +38,7 @@ app.use((err, req, res, next) => {
         message,
     });
 });
+
+
+
+
