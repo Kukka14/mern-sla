@@ -116,15 +116,15 @@ export default function Profile() {
       const res = await fetch('/api/auth/signout');
       const data = await res.json();
       if (data.success === false) {
-        dispatch(deleteUserFailure(data.message));
+        dispatch(signOutUserFailure(data.message));
         return;
       }
-      dispatch(deleteUserSuccess(data));
+      dispatch(signOutUserSuccess());
+      history.push('/sign-in'); // Navigate to sign-in page after sign-out
     } catch (error) {
-      dispatch(deleteUserFailure(data.message));
+      dispatch(signOutUserFailure(error.message));
     }
   };
-
   return (
     <div className='p-3 max-w-lg mx-auto bg-green-100 rounded-lg'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
