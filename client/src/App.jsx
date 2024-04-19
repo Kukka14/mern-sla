@@ -9,7 +9,6 @@ import CustomerManagement from './pages/admin/MProfile.jsx';
 import PrivateRoute from './components/PrivateRoute';
 import AddEmployee from './pages/admin/AddEmployee.jsx';
 import MainDashboard from './pages/admin/MainDashboard.jsx';
-import AdminHeader from './components/AdminHeader.jsx';// Import the UserHeader component
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -17,7 +16,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      {isAdmin ? <AdminHeader /> : <Header />}
+      {isAdmin ? null : <Header />}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/sign-up' element={<SignUp />} />

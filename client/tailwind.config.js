@@ -19,7 +19,10 @@ export default {
 
         
         'sideNavBackground': '#ECFFEB',
+        'sideNavBackgroundhover': '#afbeae',
+        'mainAdminBackground': '#f9f6ee',        
         'sideNavButton': '#2A491D',
+        'sideNavButtonhover': '#233e18',
         'sideNavText': '#485A41',
         'searchBarBackground': '#D9D9D9',
         'sectionBackground': '#D3FFC1',
