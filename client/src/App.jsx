@@ -6,6 +6,7 @@ import Header from './components/Header.jsx';
 import Profile from './pages/client/Profile.jsx';
 import CustomerManagement from './pages/admin/MProfile.jsx'
 import PrivateRoute from './components/PrivateRoute';
+import AddEmployee from './pages/admin/AddEmployee.jsx';
 
 
 
@@ -22,9 +23,9 @@ export default function App() {
          <Route path="/customer-management" element={<CustomerManagement />} /> 
        
         <Route element={<PrivateRoute />}>
-        <Route path='/profile' element={<Profile />} /> 
-        
+          <Route path='/profile' element={<Profile />} /> 
         </Route>    
+        <Route path='/addEmployee' element={<AddEmployee />} /> 
       </Routes>
     </BrowserRouter>
   );
