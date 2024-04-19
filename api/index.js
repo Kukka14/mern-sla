@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import contactRouter from './routes/contact.route.js';
 //import adminRouter from './routes/admin.route.js';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
@@ -24,6 +25,8 @@ app.listen(5000, () => {
 });
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use('/api/contact', contactRouter);
+
 
 app.use((err, req, res, next) => { 
     const statusCode = res.statusCode || 500;
