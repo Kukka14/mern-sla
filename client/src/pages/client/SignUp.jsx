@@ -5,7 +5,6 @@ export default function SignUp() {
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false); 
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -17,7 +16,7 @@ export default function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.username || !formData.email || !formData.password || !formData.nic || !formData.phoneNumber || !formData.address) {
+    if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword || !formData.nic || !formData.phoneNumber || !formData.address) {
       return setErrorMessage('Please fill out all fields.');
     }
 
@@ -34,11 +33,15 @@ export default function SignUp() {
     }
 
     // NIC validation
-const nicRegex = /^[0-9]{9}[vVxX]$/;
-if (!nicRegex.test(formData.nic)) {
-  return setErrorMessage('Please enter a valid NIC (e.g., 123456789V).');
-}
+    const nicRegex = /^[0-9]{9}[vVxX]$/;
+    if (!nicRegex.test(formData.nic)) {
+      return setErrorMessage('Please enter a valid NIC (e.g., 123456789V).');
+    }
 
+    // Password match validation
+    if (formData.password !== formData.confirmPassword) {
+      return setErrorMessage('Passwords do not match.');
+    }
 
     try {
       setLoading(true);
@@ -87,6 +90,13 @@ if (!nicRegex.test(formData.nic)) {
             placeholder='Password'
             className='border border-gray-300 p-3 rounded-lg'
             id='password'
+            onChange={handleChange}
+          />
+          <input
+            type='password'
+            placeholder='Confirm Password'
+            className='border border-gray-300 p-3 rounded-lg'
+            id='confirmPassword'
             onChange={handleChange}
           />
           <input

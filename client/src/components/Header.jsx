@@ -1,5 +1,9 @@
 
+<<<<<<< HEAD
 import  { useState } from 'react';
+=======
+import { FaSearch } from 'react-icons/fa';
+>>>>>>> main
 import { Link } from 'react-router-dom';
 import logo1 from '../images/companylogo1.png';
 import { useSelector } from 'react-redux';
