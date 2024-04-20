@@ -28,7 +28,7 @@ export const addToCart = async (req, res) => {
                     cartId: cart._id,
                     productId,
                     p_name: productName,
-                    p_img: [productImages],
+                    p_img: productImages,
                     quantity,
                     price
                 });
@@ -76,21 +76,51 @@ export const removeFromCart = async (req, res) => {
         if (!cart) {
             return res.status(404).json({ success: false, error: 'Active cart not found for the user' });
         }
+      
 
-        const cartItem = await CartItem.findOne({ _id: itemId, cartId: cart._id });
+        const cartItem = await CartItem.findOne({cartId: cart._id });
 
         if (!cartItem) {
             return res.status(404).json({ success: false, error: 'Item not found in the users cart' });
         }
+      
 
         cart.items.pull(itemId);
         await cart.save();
 
-        await CartItem.findByIdAndRemove(itemId);
+        await CartItem.findByIdAndDelete(itemId);
+       
 
         res.status(200).json({ success: true, message: 'Item removed from cart successfully' });
     } catch (error) {
         console.error('Error removing item from cart:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
+    }
+};
+
+export const updateCartItemQuantity = async (req, res) => {
+    try {
+        const { userId, itemId } = req.params;
+        const { quantity } = req.body;
+
+        const cart = await Cart.findOne({ user: userId, status: 'active' });
+
+        if (!cart) {
+            return res.status(404).json({ success: false, error: 'Active cart not found for the user' });
+        }
+
+        const cartItem = await CartItem.findOne({ _id: itemId, cartId: cart._id });
+
+        if (!cartItem) {
+            return res.status(404).json({ success: false, error: 'Item not found in the user\'s cart' });
+        }
+
+        cartItem.quantity = quantity;
+        await cartItem.save();
+
+        res.status(200).json({ success: true, message: 'Item quantity updated successfully' });
+    } catch (error) {
+        console.error('Error updating item quantity in cart:', error);
         res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };

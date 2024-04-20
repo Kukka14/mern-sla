@@ -10,6 +10,7 @@ import reviewRouter from './routes/review.route.js'
 import contactRouter from './routes/contact.route.js'
 import employeeRouter from './routes/employee.route.js';
 import cookieParser from 'cookie-parser';
+import cartRouter from './routes/cart.route.js';
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(() => {
@@ -25,7 +26,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.listen(3000, () => {
-    console.log('Server is running on port 5000');
+    console.log('Server is running on port 3000');
 });
 
 app.use("/api/admin", adminRouter);
@@ -35,6 +36,7 @@ app.use("/api/listing", listingRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/contact", contactRouter);
 app.use('/api/employee', employeeRouter);
+app.use("/api/cart", cartRouter);
 
 app.use((err, req, res, next) => { 
     const statusCode = res.statusCode || 500;
