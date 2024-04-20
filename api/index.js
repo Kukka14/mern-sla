@@ -5,7 +5,7 @@ import CartRouter from './routes/cart.route.js';
 import adminRouter from './routes/admin.route.js';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
-import employeeRouter from './routes/employee.route.js';
+import listingRouter from './routes/listing.route.js';
 import cookieParser from 'cookie-parser';
 dotenv.config();
 
@@ -28,8 +28,12 @@ app.listen(5000, () => {
 app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+<<<<<<< HEAD
 app.use('/api/employee', employeeRouter);
 app.use("/api/cart", CartRouter);
+=======
+app.use("/api/listing", listingRouter);
+>>>>>>> main
 
 app.use((err, req, res, next) => { 
     const statusCode = res.statusCode || 500;
