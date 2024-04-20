@@ -4,7 +4,11 @@ import SignIn from './pages/client/SignIn.jsx'
 import Home from './pages/client/Home.jsx'
 import Header from './components/Header.jsx';
 import Profile from './pages/client/Profile.jsx';
-import ContactUs from './pages/client/ContactUs.jsx'
+import ContactUs from './pages/client/ContactUs.jsx';
+import ReviewPage from './pages/client/ReviewPage.jsx';
+import ReviewListingPage from './pages/client/ReviewListingPage.jsx';
+import UpdateReviewPage from './pages/client/UpdateReviewPage.jsx';
+
 //import AdminDashboard from './pages/admin/AdminDashboard.jsx'
 import PrivateRoute from './components/PrivateRoute';
 
@@ -24,7 +28,11 @@ export default function App() {
        
         <Route element={<PrivateRoute />}>
         <Route path='/profile' element={<Profile />} /> 
-        <Route path='/contactus' element={<ContactUs/>} />   
+        <Route path='/contactus' element={<ContactUs/>} />  
+        <Route path='/review' element={<ReviewPage/>} /> 
+        <Route path="/reviewList" element={<ReviewListingPage />} />
+        <Route path='/review/:id/update' element={<UpdateReviewPage />} />
+
         </Route>    
       </Routes>
     </BrowserRouter>
