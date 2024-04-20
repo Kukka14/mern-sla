@@ -12,7 +12,8 @@ import {
   updateUserFailure,
   deleteUserFailure,
   deleteUserStart,
-  deleteUserSuccess
+  deleteUserSuccess,
+  signOutUserStart
  
 } from '../../redux/user/userSlice';
 
@@ -116,13 +117,12 @@ export default function Profile() {
       const res = await fetch('/api/auth/signout');
       const data = await res.json();
       if (data.success === false) {
-        dispatch(signOutUserFailure(data.message));
+        dispatch(deleteUserFailure(data.message));
         return;
       }
-      dispatch(signOutUserSuccess());
-      history.push('/sign-in'); // Navigate to sign-in page after sign-out
+      dispatch(deleteUserSuccess(data)); // Navigate to sign-in page after sign-out
     } catch (error) {
-      dispatch(signOutUserFailure(error.message));
+      dispatch(deleteUserFailure(data.message));
     }
   };
   return (
@@ -211,8 +211,8 @@ export default function Profile() {
            {loading ? 'Loading...' : 'Update'}
         </button>
       </form>
-      <div onClick={handleDeleteUser} className = "flex justify-between mt-5">
-      <span className = 'text-red-700 cursor-pointer'> Delete Account</span>
+      <div className = "flex justify-between mt-5">
+      <span onClick={handleDeleteUser} className = 'text-red-700 cursor-pointer'> Delete Account</span>
       <span onClick={handleSignOut} className = 'text-red-700 cursor-pointer'> Sign Out</span>
     </div>
 
