@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import CartRouter from './routes/cart.route.js';
 import adminRouter from './routes/admin.route.js';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
@@ -28,6 +29,7 @@ app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use('/api/employee', employeeRouter);
+app.use("/api/cart", CartRouter);
 
 app.use((err, req, res, next) => { 
     const statusCode = res.statusCode || 500;
