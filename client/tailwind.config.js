@@ -3,6 +3,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    
   ],
   theme: {
     extend: {
@@ -16,6 +17,19 @@ export default {
         textcolor2: '#1A3111',
         backgreen3: '#FFBD3C',
         backgreen4: '#50A72C',
+
+        
+        'sideNavBackground': '#ECFFEB',
+        'sideNavBackgroundhover': '#afbeae',
+        'mainAdminBackground': '#f9f6ee',        
+        'sideNavButton': '#2A491D',
+        'sideNavButtonhover': '#233e18',
+        'sideNavText': '#485A41',
+        'searchBarBackground': '#D9D9D9',
+        'sectionBackground': '#D3FFC1',
+        'sectionhr': '#7C9074',
+        'sectiontext': '#4C6653',
+        'buttonbackground': '#50A72C',
     
       },
     },
