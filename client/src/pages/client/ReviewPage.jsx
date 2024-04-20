@@ -144,7 +144,7 @@ export default function ReviewPage() {
             
             <div className="space-y-4">
               <label htmlFor="images" className="block text-lg font-semibold">
-                Product Images
+               Images
               </label>
 
               <div className="flex items-center">

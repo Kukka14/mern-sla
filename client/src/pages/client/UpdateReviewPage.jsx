@@ -38,7 +38,7 @@ const UpdateReviewPage = () => {
         try {
             await axios.put(`/api/review/${id}`, formData);
             // Redirect user to review listing page after successful update
-            window.location.href = "/reviewList";
+            window.location.href = "/reviewlisting";
         } catch (error) {
             console.error('Error updating review:', error);
         }
