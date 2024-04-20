@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import SignUp from './pages/client/SignUp.jsx'
 import SignIn from './pages/client/SignIn.jsx'
 import Home from './pages/client/Home.jsx'
@@ -8,6 +8,7 @@ import CustomerManagement from './pages/admin/MProfile.jsx'
 import PrivateRoute from './components/PrivateRoute';
 import AddEmployee from './pages/admin/AddEmployee.jsx';
 import MainDashboard from './pages/admin/MainDashboard.jsx';
+import Notfound from './components/NotFound.jsx';
 
 
 
@@ -19,6 +20,8 @@ export default function App() {
      < Header/>
       <Routes>
         <Route path='/' element={<Home/>} />
+        <Route path="/404" element={<Notfound />} />
+        <Route path="*" element={<Navigate to="/404" />} /> 
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/sign-in' element={<SignIn />} />
          <Route path="/customer-management" element={<CustomerManagement />} /> 
