@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import SignUp from './pages/client/SignUp.jsx';
@@ -10,6 +11,10 @@ import PrivateRoute from './components/PrivateRoute';
 import ProductListing from './pages/admin/ProductListing.jsx';
 import AddEmployee from './pages/admin/AddEmployee.jsx';
 import MainDashboard from './pages/admin/MainDashboard.jsx';
+import ContactUs from './pages/client/ContactUs.jsx';
+import ReviewPage from './pages/client/ReviewPage.jsx';
+import ReviewListingPage from './pages/client/ReviewListingPage.jsx';
+import UpdateReviewPage from './pages/client/UpdateReviewPage.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -20,16 +25,21 @@ export default function App() {
       {isAdmin ? null : <Header />}
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='product-listing' element={<ProductListing/>} />
+        <Route path='/product-listing' element={<ProductListing/>} />
+        <Route path='contactus' element={<ContactUs/>} />
         
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/sign-in' element={<SignIn />} />
-        <Route path="/customer-management" element={<CustomerManagement />} /> 
+        
         
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
+          <Route path='review' element={<ReviewPage/>} />
+          <Route path='/reviewlisting' element={<ReviewListingPage/>} />
+          <Route path='/review/:id/update' element={<UpdateReviewPage />} />
+          <Route path="/customer-management" element={<CustomerManagement />} /> 
         </Route>
         
       </Routes>
