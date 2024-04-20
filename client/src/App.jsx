@@ -1,29 +1,39 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import SignUp from './pages/client/SignUp.jsx'
-import SignIn from './pages/client/SignIn.jsx'
-import Home from './pages/client/Home.jsx'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import SignUp from './pages/client/SignUp.jsx';
+import SignIn from './pages/client/SignIn.jsx';
+import Home from './pages/client/Home.jsx';
 import Header from './components/Header.jsx';
 import Profile from './pages/client/Profile.jsx';
+<<<<<<< HEAD
 import ContactUs from './pages/client/ContactUs.jsx';
 import ReviewPage from './pages/client/ReviewPage.jsx';
 import ReviewListingPage from './pages/client/ReviewListingPage.jsx';
 import UpdateReviewPage from './pages/client/UpdateReviewPage.jsx';
 
 //import AdminDashboard from './pages/admin/AdminDashboard.jsx'
+=======
+import CustomerManagement from './pages/admin/MProfile.jsx';
+>>>>>>> main
 import PrivateRoute from './components/PrivateRoute';
-
-
-
+import ProductListing from './pages/admin/ProductListing.jsx';
+import AddEmployee from './pages/admin/AddEmployee.jsx';
+import MainDashboard from './pages/admin/MainDashboard.jsx';
 
 export default function App() {
+  const { currentUser } = useSelector((state) => state.user);
+  const isAdmin = currentUser && currentUser.isAdmin; // Check if user is admin
+
   return (
-  
     <BrowserRouter>
-     < Header/>
+      {isAdmin ? null : <Header />}
       <Routes>
         <Route path='/' element={<Home/>} />
+        <Route path='product-listing' element={<ProductListing/>} />
+        
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/sign-in' element={<SignIn />} />
+<<<<<<< HEAD
         {/* <Route path="/admin/dashboard" element={<AdminDashboard />} /> */}
        
         <Route element={<PrivateRoute />}>
@@ -34,6 +44,16 @@ export default function App() {
         <Route path='/review/:id/update' element={<UpdateReviewPage />} />
 
         </Route>    
+=======
+        <Route path="/customer-management" element={<CustomerManagement />} /> 
+        
+        <Route element={<PrivateRoute />}>
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/mainDashboard' element={<MainDashboard />} />
+          <Route path='/addEmployee' element={<AddEmployee />} />
+        </Route>
+        
+>>>>>>> main
       </Routes>
     </BrowserRouter>
   );

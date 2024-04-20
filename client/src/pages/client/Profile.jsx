@@ -12,7 +12,8 @@ import {
   updateUserFailure,
   deleteUserFailure,
   deleteUserStart,
-  deleteUserSuccess
+  deleteUserSuccess,
+  signOutUserStart
  
 } from '../../redux/user/userSlice';
 
@@ -119,12 +120,11 @@ export default function Profile() {
         dispatch(deleteUserFailure(data.message));
         return;
       }
-      dispatch(deleteUserSuccess(data));
+      dispatch(deleteUserSuccess(data)); // Navigate to sign-in page after sign-out
     } catch (error) {
       dispatch(deleteUserFailure(data.message));
     }
   };
-
   return (
     <div className='p-3 max-w-lg mx-auto bg-green-100 rounded-lg'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -211,8 +211,8 @@ export default function Profile() {
            {loading ? 'Loading...' : 'Update'}
         </button>
       </form>
-      <div onClick={handleDeleteUser} className = "flex justify-between mt-5">
-      <span className = 'text-red-700 cursor-pointer'> Delete Account</span>
+      <div className = "flex justify-between mt-5">
+      <span onClick={handleDeleteUser} className = 'text-red-700 cursor-pointer'> Delete Account</span>
       <span onClick={handleSignOut} className = 'text-red-700 cursor-pointer'> Sign Out</span>
     </div>
 

@@ -33,7 +33,7 @@ export default function Header() {
             <Link to='/about'><div className='mr-14 hover:opacity-50'><a href='#'>About</a></div></Link>
             <Link to='/services'><div className='mr-14 hover:opacity-50'><a href='#'>Services</a></div></Link>
             <Link to='/products'><div className='mr-14 hover:opacity-50'><a href='#'>Products</a></div></Link>
-            <Link to='/contactus'><div className='mr-14 hover:opacity-50'><a href='#'>Contact Us</a></div></Link>
+            <Link to='/contact'><div className='mr-14 hover:opacity-50'><a href='#'>Contact Us</a></div></Link>
             
             <div className='mr-14'>   
             <form className='bg-green-600 p-3 rounded-lg flex items-center'>
@@ -56,7 +56,7 @@ export default function Header() {
             </div>
             {currentUser ? (
               <Link to='/profile'>
-                <img className='bg-backgreen4 text-white rounded-3xl font-bold flex justify-center items-center h-10 px-5' src={currentUser.avatar} alt='Profile' />
+                <img className='rounded-full h-12 w-12' src={currentUser.avatar} alt='Profile' />
               </Link>
             ) : (
               <Link to='/sign-in'>

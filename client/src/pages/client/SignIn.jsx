@@ -44,8 +44,15 @@ export default function SignIn() {
         return;
       }
       if (res.ok) {
-      dispatch(signInSuccess(data));
-      navigate('/');}
+
+        if (data.isAdmin) {
+          dispatch(signInSuccess(data));
+          navigate('/mainDashboard');
+        } else {
+          dispatch(signInSuccess(data));
+          navigate('/');
+        }
+      }
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
