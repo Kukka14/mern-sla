@@ -33,21 +33,8 @@ export default function Header() {
             <Link to='/about'><div className='mr-14 hover:opacity-50'><a href='#'>About</a></div></Link>
             <Link to='/services'><div className='mr-14 hover:opacity-50'><a href='#'>Services</a></div></Link>
             <Link to='/products'><div className='mr-14 hover:opacity-50'><a href='#'>Products</a></div></Link>
-            <Link to='/contact'><div className='mr-14 hover:opacity-50'><a href='#'>Contact Us</a></div></Link>
-            
-            <div className='mr-14'>   
-            <form className='bg-green-600 p-3 rounded-lg flex items-center'>
-                  <input
-                      type='text'
-                      placeholder='Search...'
-                      className='bg-transparent focus:outline-none w-24 sm:w-65 text-black placeholder-black' />
-                  <button>
-                      <FaSearch className='text-slate-600' />
-                  </button>
-            </form>
+            <Link to='/contact'><div className='mr-14 hover:opacity-50'><a href='#'>Contact Us</a></div></Link>           
            </div>
-
-          </div>
           <div className='flex flex-row justify-between'>
             <div className='bg-backgreen3 w-12 h-12 flex justify-center items-center rounded-full mr-7'>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8 text-white">
@@ -56,7 +43,7 @@ export default function Header() {
             </div>
             {currentUser ? (
               <Link to='/profile'>
-                <img className='bg-backgreen4 text-white rounded-3xl font-bold flex justify-center items-center h-10 px-5' src={currentUser.avatar} alt='Profile' />
+                <img className='rounded-full h-12 w-12' src={currentUser.avatar} alt='Profile' />
               </Link>
             ) : (
               <Link to='/sign-in'>
