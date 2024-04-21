@@ -3,22 +3,20 @@ import Address from '../models/address.model.js';
 export const getAddresses = async (req, res) => {
     const { userId } = req.body; 
     try {
-      
-        const address = await Address.findOne({ userId });
+        // Find all addresses associated with the user
+        const addresses = await Address.find({ userId: userId });
 
-        if (!address) {
-          
-            return res.json({ message: 'No address found' });
+        if (!addresses || addresses.length === 0) {
+            return res.json({ message: 'No addresses found' });
         } else {
-         
-            return res.json({ address, message: 'Address fetched successfully' });
+            return res.json({ addresses, message: 'Addresses fetched successfully' });
         }
     } catch (error) {
-        console.error('Error fetching address:', error);
-        
-        return res.status(500).json({ error: 'An error occurred while fetching address' });
+        console.error('Error fetching addresses:', error);
+        return res.status(500).json({ error: 'An error occurred while fetching addresses' });
     }
 };
+
 export const createAddress = async (req, res) => {
     const { userId, addressLine1, addressLine2, city, state, postalCode, country } = req.body;
     try {
