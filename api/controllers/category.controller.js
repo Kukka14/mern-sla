@@ -14,6 +14,15 @@ export const add = async (req, res, next) => {
 
 export const getAllCategories = async (req, res, next) => {
   try {
+    const categories = await Category.find({}, '_id categoryname');
+    res.status(200).json(categories);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllCategoriesList = async (req, res, next) => {
+  try {
     const categories = await Category.find();
     res.status(200).json(categories);
   } catch (error) {
@@ -64,16 +73,5 @@ export const getCategoryById = async (req, res) => {
       res.json(category);
     } catch (error) {
         next(error);
-    }
-  };
-
-export const getAllCategoriesByName = async (req, res, next) => {
-  try {
-    const categories = await Category.find({}, '_id categoryname');
-    res.status(200).json(categories);
-  } catch (error) {
-    next(error);
-  }
-};
-
-
+    }
+  };
