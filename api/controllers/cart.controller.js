@@ -1,6 +1,30 @@
 import Cart from "../models/cart.model.js";
 import CartItem from "../models/cartItem.model.js";
 
+export const checkoutcart =async (req, res) => {
+    try {
+        const { totalPrice, userId } = req.body;
+
+       
+        const activeCart = await Cart.findOne({ user:userId, status: 'active' });
+
+        if (!activeCart) {
+            return res.status(404).json({ error: 'Active cart not found' });
+        }
+
+      
+        activeCart.total = totalPrice;
+        await activeCart.save();
+
+       
+        return res.status(200).json({ message: 'Checkout successful' });
+    } catch (error) {
+        console.error('Error during checkout:', error);
+        return res.status(500).json({ error: 'An error occurred during checkout' });
+    }
+
+};
+
 export const addToCart = async (req, res) => {
     try {
         const { userId, productId, productName, productImages, price, quantity } = req.body;

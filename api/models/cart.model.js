@@ -16,7 +16,11 @@ const cartSchema = new mongoose.Schema({
     items: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'CartItem'
-    }]
+    }],
+    total: {
+        type: Number,
+        default: 0
+    }
     
 });
 // Create Cart model

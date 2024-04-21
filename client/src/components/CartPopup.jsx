@@ -19,7 +19,7 @@ export default function CartPopup() {
   const [cartItems, setCartItems] = useState([]);
 
   const fetchCartItems = () => {
-      fetch(`/api/cart/cart`, {
+      fetch(`/api/cart/get`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
