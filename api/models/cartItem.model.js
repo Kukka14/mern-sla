@@ -10,10 +10,10 @@ const cartItemSchema = new mongoose.Schema({
     },
     productId: {
         type: Schema.Types.ObjectId,
-        ref: 'Product', 
+        ref: 'Listing', 
         required: true
     },
-    p_imageUrls: [{
+    p_img: [{
         type: String, 
         required: true
     }],
