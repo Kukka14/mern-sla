@@ -10,12 +10,13 @@ const cartSchema = new mongoose.Schema({
   
     status: {
         type: String,
-        enum: ['active', 'inactive'],
+        enum: ['active', 'completed'],
         default: 'active'
     },
     items: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'CartItem'
+        ref: 'CartItem',
+        default: []
     }],
     total: {
         type: Number,

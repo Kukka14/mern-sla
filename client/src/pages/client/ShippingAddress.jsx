@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; 
 
 export default function ShippingAddress() {
+  
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -118,7 +120,8 @@ export default function ShippingAddress() {
       })
       .then(data => {
       console.log('Order created successfully:', data);
-      // Navigate to the payment page or any other appropriate page
+
+      navigate('/');
       })
       .catch(error => {
       console.error('Error creating order:', error);
@@ -130,8 +133,11 @@ export default function ShippingAddress() {
       <div className="py-8">
         <h2 className="text-2xl font-bold my-4 text-center">Shipping Address</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
+        {addresses === undefined && <p className="text-red-500 text-center">No addresses found. Please add a new address.</p>}
+{addresses && addresses.length === 0 && <p className="text-red-500 text-center">No addresses found. Please add a new address.</p>}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {addresses.map(address => (
+          {addresses && addresses.map(address => (
             <div key={address._id} className="bg-gray-100 p-4 rounded-md">
               <label htmlFor={address._id}>
                 <input

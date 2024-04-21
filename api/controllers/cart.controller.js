@@ -32,7 +32,12 @@ export const addToCart = async (req, res) => {
         let cart = await Cart.findOne({ user: userId, status: 'active' });
 
         if (!cart) {
-            cart = await Cart.create({ user: userId });
+            cart = new Cart({ user: userId, status: 'active', items: [], total: 0
+             });
+
+        // Save the new cart to the database
+        await cart.save();
+        console.log('New cart created:', cart); 
         }
 
         const existingCartItem = await CartItem.findOne({ cartId: cart._id, productId });
