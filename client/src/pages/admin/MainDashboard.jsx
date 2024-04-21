@@ -50,14 +50,14 @@ export default function MainDashboard() {
               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
               <p className='text-sectiontext'>Order Management</p>
             </div></Link>
-            <Link to='/productDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
+            <Link to='/product-admin-dashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
               <img src={product} alt="Product Management" className='w-16 h-15 mx-4 my-2'/>
               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
               <p className='text-sectiontext'>Product Management</p>
             </div></Link>
             <Link to='/supplierDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
               <img src={supplier} alt="Supplier Management" className='w-16 h-15 mx-4 my-2'/>
-              <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
+               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
               <p className='text-sectiontext'>Supplier Management</p>
             </div></Link>
             <Link to='/customerDashBoard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   getDownloadURL,
   getStorage,
@@ -7,7 +7,7 @@ import {
 } from "firebase/storage";
 import { app } from "../../firebase";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 
 import { Link } from "react-router-dom";
 import logo from "./../../images/logo2.png";
@@ -18,6 +18,7 @@ import AdminHeader from "../../components/AdminHeader";
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const params = useParams();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
@@ -27,13 +28,27 @@ export default function CreateListing() {
     type: "rent",
     regularPrice: 50,
     quantity: 0,
-    category: "",
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  console.log(formData);
+  
+  useEffect (() => {
+    const fetchProduct = async () => {
+        const productId = params.id;
+        const res = await fetch(`/api/listing/${productId}`);
+        const data = await res.json();
+
+        if(data.success === false){
+          console.log(data.message);
+          return;
+        }
+        setFormData(data);
+    };
+    fetchProduct();
+}, []);  
+
 
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
@@ -101,12 +116,9 @@ export default function CreateListing() {
         ...formData,
         type: e.target.id,
       });
-    } else if (e.target.id === "category") {
-      setFormData({
-        ...formData,
-        category: e.target.value,
-      });
-    } else if (
+    }
+
+    if (
       e.target.type === "number" ||
       e.target.type === "text" ||
       e.target.type === "textarea"
@@ -127,7 +139,7 @@ export default function CreateListing() {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`/api/listing/update/${params.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -143,7 +155,7 @@ export default function CreateListing() {
         setError(data.message);
       } else {
         // If successful, navigate to ProductAdminDashboard
-        navigate("/product-admin-dashboard");
+        navigate("/product-view");
       }
     } catch (error) {
       setError(error.message);
@@ -151,7 +163,11 @@ export default function CreateListing() {
     }
   };
 
+  
+
   return (
+    
+
     <div className="flex h-screen">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
@@ -175,16 +191,21 @@ export default function CreateListing() {
             text="Create Listing"
             to="/product-listing"
           />
-          <NavLink icon={dashboard} text="View Products" to="/product-view" />
+          <NavLink
+            icon={dashboard}
+            text="View Products"
+            to="/product-view"
+          />
         </div>
       </div>
+    
 
       <div className="basis-4/5 ">
         <AdminHeader />
         <main className="p-3 max-w-4xl mx-auto">
           <div className="bg-gray- rounded-lg shadow-md p-8">
             <h1 className="text-4xl font-bold text-center mb-8">
-              Create a Listing
+              Update a Listing
             </h1>
             <form onSubmit={handleSubmit} className="items-center mt-12">
               <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
@@ -207,6 +228,7 @@ export default function CreateListing() {
                     value={formData.name}
                   />
                 </div>
+                
 
                 <div className="space-y-4">
                   <label
@@ -297,26 +319,6 @@ export default function CreateListing() {
 
                 <div className="space-y-4">
                   <label
-                    htmlFor="pcategory"
-                    className="block text-lg font-semibold"
-                  >
-                    Product category
-                  </label>
-                  <select
-                    id="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                    className="block w-full py-2 pl-3 pr-10 mt-1 text-base border border-gray-300 focus:outline-none focus:border-blue-500 rounded-md"
-                  >
-                    <option value="">Select Category</option>
-                    <option value="Energizers">Energizers</option>
-                    <option value="Cultivater">Cultivater</option>
-                    <option value="Tractor">Tractor</option>
-                  </select>
-                </div>
-
-                <div className="space-y-4">
-                  <label
                     htmlFor="images"
                     className="block text-lg font-semibold"
                   >
@@ -376,7 +378,7 @@ export default function CreateListing() {
                   disabled={loading || uploading}
                   className="bg-blue-500 text-white px-8 py-4 rounded-lg w-full hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                 >
-                  {loading ? "Creating..." : "Create listing"}
+                  {loading ? "Creating..." : "Update listing"}
                 </button>
                 {error && <p className="text-red-700 text-sm">{error}</p>}
               </div>
