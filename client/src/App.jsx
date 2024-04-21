@@ -19,9 +19,8 @@ import ProductAdminDashboard from './pages/admin/ProductAdminDashboard.jsx';
 import ShowProductListing from './pages/admin/ShowProductListing.jsx';
 import UpdateProductListing from './pages/admin/UpdateProductListing.jsx';
 import Cart from './pages/client/Cart.jsx';
-import AddCategory from './pages/admin/categoryAndPromotion/AddCategory.jsx';
-import ViewCategory from './pages/admin/categoryAndPromotion/ViewCategory.jsx';
-import UpdateCategory from './pages/admin/categoryAndPromotion/UpdateCategory.jsx';
+import CartPopup from './components/CartPopup.jsx';
+import ShippingAddress from './pages/client/ShippingAddress.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -41,18 +40,18 @@ export default function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
-          <Route path='/review' element={<ReviewPage/>} />
-          <Route path='/cart' element={<Cart/>} />
+          <Route path='review' element={<ReviewPage/>} />
+          <Route path='cart' element={<Cart/>} />
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
+          <Route path='/cartpop' element={<CartPopup/>} />
+          <Route path="/shipping-address" element={<ShippingAddress />} />
           <Route path='/product-listing' element={<ProductListing/>} />
           <Route path='/product-admin-dashboard' element={<ProductAdminDashboard />} />
           <Route path='/product-view' element={<ShowProductListing/>} />
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
-          <Route path='/addCategory' element={<AddCategory />} />
-          <Route path='/viewCategories' element={<ViewCategory />} />
-          <Route path='/updatecategory/:id' element={<UpdateCategory />} />
+          
         </Route>
         
       </Routes>
