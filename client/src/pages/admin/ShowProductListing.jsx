@@ -7,26 +7,37 @@ import dashboard from "./../../images/icons8-arrow-50 (1).png";
 import AdminHeader from "../../components/AdminHeader";
 
 const ReviewProductList = () => {
-  const [products, setReviews] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    fetchProduct();
+    fetchProducts();
+    fetchCategories();
   }, []);
 
-  const fetchProduct = async () => {
+  const fetchProducts = async () => {
     try {
       const response = await axios.get("/api/listing/get/:id");
-      setReviews(response.data);
+      setProducts(response.data);
     } catch (error) {
       console.error("Error fetching Products:", error);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get("/api/category/getAllCategories");
+      setCategories(response.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
     }
   };
 
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/api/listing/${id}`);
-      setReviews(products.filter((product) => product._id !== id));
+      setProducts(products.filter((product) => product._id !== id));
     } catch (error) {
       console.error("Error deleting review:", error);
     }
@@ -40,7 +51,7 @@ const ReviewProductList = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(`/api/listing?search=${searchQuery}`);
-      setReviews(response.data);
+      setProducts(response.data);
     } catch (error) {
       console.error("Error searching Products:", error);
     }
@@ -117,8 +128,13 @@ const ReviewProductList = () => {
                     <td className="border px-4 py-2">{product.type}</td>
                     <td className="border px-4 py-2">{product.regularPrice}</td>
                     <td className="border px-4 py-2">{product.quantity}</td>
-                    <td className="border px-4 py-2">{product.category}</td>
-
+                    <td className="border px-4 py-2">
+                      {
+                        categories.find(
+                          (category) => category._id === product.category
+                        )?.categoryname
+                      }
+                    </td>
                     <td className="border px-4 py-2">
                       {product.imageUrls &&
                         Array.isArray(product.imageUrls) &&
