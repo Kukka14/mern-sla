@@ -12,3 +12,11 @@ export const add = async (req, res, next) => {
   }
 };
 
+export const getAllCategories = async (req, res, next) => {
+  try {
+    const categories = await Category.find({}, '_id categoryname');
+    res.status(200).json(categories);
+  } catch (error) {
+    next(error);
+  }
+};
