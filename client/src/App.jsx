@@ -15,9 +15,6 @@ import ContactUs from './pages/client/ContactUs.jsx';
 import ReviewPage from './pages/client/ReviewPage.jsx';
 import ReviewListingPage from './pages/client/ReviewListingPage.jsx';
 import UpdateReviewPage from './pages/client/UpdateReviewPage.jsx';
-import ProductAdminDashboard from './pages/admin/ProductAdminDashboard.jsx';
-import ShowProductListing from './pages/admin/ShowProductListing.jsx';
-import UpdateProductListing from './pages/admin/UpdateProductListing.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -38,13 +35,10 @@ export default function App() {
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
           <Route path='review' element={<ReviewPage/>} />
+          <Route path='cart' element={<Cart/>} />
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
-          <Route path='/product-listing' element={<ProductListing/>} />
-          <Route path='/product-admin-dashboard' element={<ProductAdminDashboard />} />
-          <Route path='/product-view' element={<ShowProductListing/>} />
-          <Route path='/update-product/:id' element={<UpdateProductListing/>} />
         </Route>
         
       </Routes>
