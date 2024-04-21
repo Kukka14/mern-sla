@@ -21,7 +21,7 @@ export default function ShippingAddress() {
 
   useEffect(() => {
     fetchAddresses();
-  }, [currentUser._id]);
+  },);
 
   const fetchAddresses = () => {
     fetch(`/api/address/get`, {
