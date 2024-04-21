@@ -106,7 +106,7 @@ export default function AddCategory() {
             text="Main Dashboard"
             to="/product-admin-dashboard"
           />
-          <NavLink icon={dashboard} text="Add Categories" to="/addCatecory" />
+          <NavLink icon={dashboard} text="Add Categories" to="/addCategory" />
           <NavLink icon={dashboard} text="View Categories" to="/viewCategories" />
         </div>
       </div>
