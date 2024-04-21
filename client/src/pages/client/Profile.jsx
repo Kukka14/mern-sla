@@ -31,12 +31,6 @@ export default function Profile() {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const dispatch = useDispatch();
 
-    // firebase storage
-  // allow read;
-  // allow write: if
-  // request.resource.size < 2 * 1024 * 1024 &&
-  // request.resource.contentType.matches('image/.*')
-
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
@@ -126,6 +120,7 @@ export default function Profile() {
     }
   };
   return (
+
     <div className='p-3 max-w-lg mx-auto bg-green-100 rounded-lg'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
       <form onSubmit={handleSubmit} className = 'flex flex-col gap-4'>
@@ -147,6 +142,8 @@ export default function Profile() {
             ''
           )}
         </p>
+
+        
         <input
           type="text"
           placeholder='Username'

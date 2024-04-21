@@ -20,6 +20,7 @@ export default {
 
         
         'sideNavBackground': '#ECFFEB',
+        'productAdminSideNavBar': '#ECFFEB',
         'sideNavBackgroundhover': '#afbeae',
         'mainAdminBackground': '#f9f6ee',        
         'sideNavButton': '#2A491D',

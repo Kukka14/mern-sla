@@ -22,14 +22,18 @@ const listingSchema = new mongoose.Schema(
         type: Number,
         required: true,
     }, 
+    category:{
+      type: String,
+      required: true
+    },
     imageUrls: {
       type: Array,
       required: true,
-    },
+    },     
   },
   { timestamps: true }
 );
 
-const Listing = mongoose.model('Listing', listingSchema);
+const Listing = mongoose.model('Product', listingSchema);
 
 export default Listing;
