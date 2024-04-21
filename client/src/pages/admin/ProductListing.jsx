@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import {
   getDownloadURL,
   getStorage,
@@ -19,6 +21,7 @@ export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
@@ -34,6 +37,19 @@ export default function CreateListing() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   console.log(formData);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("/api/category/getAllCategories");
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
@@ -302,6 +318,7 @@ export default function CreateListing() {
                   >
                     Product category
                   </label>
+
                   <select
                     id="category"
                     value={formData.category}
@@ -309,9 +326,11 @@ export default function CreateListing() {
                     className="block w-full py-2 pl-3 pr-10 mt-1 text-base border border-gray-300 focus:outline-none focus:border-blue-500 rounded-md"
                   >
                     <option value="">Select Category</option>
-                    <option value="Energizers">Energizers</option>
-                    <option value="Cultivater">Cultivater</option>
-                    <option value="Tractor">Tractor</option>
+                    {categories.map((category) => (
+                      <option key={category._id} value={category._id}>
+                        {category.categoryname}
+                      </option>
+                    ))}
                   </select>
                 </div>
 

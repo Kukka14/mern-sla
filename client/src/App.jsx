@@ -22,6 +22,7 @@ import Cart from './pages/client/Cart.jsx';
 import AddCategory from './pages/admin/categoryAndPromotion/AddCategory.jsx';
 import ViewCategory from './pages/admin/categoryAndPromotion/ViewCategory.jsx';
 import UpdateCategory from './pages/admin/categoryAndPromotion/UpdateCategory.jsx';
+import AddCategory from './pages/admin/categoryAndPromotion/AddCategory.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -50,9 +51,6 @@ export default function App() {
           <Route path='/product-admin-dashboard' element={<ProductAdminDashboard />} />
           <Route path='/product-view' element={<ShowProductListing/>} />
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
-          <Route path='/addCategory' element={<AddCategory/>} />
-          <Route path='/viewCategories' element={<ViewCategory/>} />
-          <Route path='/updatecategory/:id' element={<UpdateCategory />} />
         </Route>
         
       </Routes>
