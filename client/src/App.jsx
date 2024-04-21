@@ -45,6 +45,13 @@ export default function App() {
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
+          <Route path='/cartpop' element={<CartPopup/>} />
+          <Route path="/shipping-address" element={<ShippingAddress />} />
+          <Route path='/product-listing' element={<ProductListing/>} />
+          <Route path='/product-admin-dashboard' element={<ProductAdminDashboard />} />
+          <Route path='/product-view' element={<ShowProductListing/>} />
+          <Route path='/update-product/:id' element={<UpdateProductListing/>} />
+          
         </Route>
         
       </Routes>
