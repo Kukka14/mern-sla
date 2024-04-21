@@ -1,12 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "./../../../images/logo2.png";
 import dashboard from "./../../../images/icons8-arrow-50 (1).png";
 import { FaSortAmountDown } from "react-icons/fa";
 import AdminHeader from "../../../components/AdminHeader";
-import { useRef, useState, useEffect } from 'react';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
-import { app } from '../../../firebase';
+import { useRef, useState, useEffect } from "react";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { app } from "../../../firebase";
 
 export default function AddCategory() {
   const [file, setFile] = useState(undefined);
@@ -15,7 +20,8 @@ export default function AddCategory() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [avatarUploaded, setAvatarUploaded] = useState(false); // Track whether avatar is uploaded
+  const [avatarUploaded, setAvatarUploaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (file) {
@@ -67,12 +73,13 @@ export default function AddCategory() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
+      
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
         return;
       }
+      navigate('/viewCategories');
       setLoading(false);
       setError(null);
     } catch (error) {
@@ -99,13 +106,8 @@ export default function AddCategory() {
             text="Main Dashboard"
             to="/product-admin-dashboard"
           />
-          <NavLink
-            icon={dashboard}
-            text="Create Listing"
-            to="/product-listing"
-          />
-          <NavLink icon={dashboard} text="View Products" to="/product-view" />
-          {/* Add more navigation items as needed */}
+          <NavLink icon={dashboard} text="Add Categories" to="/addCatecory" />
+          <NavLink icon={dashboard} text="View Categories" to="/viewCategories" />
         </div>
       </div>
 
@@ -113,31 +115,33 @@ export default function AddCategory() {
       <div className="flex-1 basis-4/5">
         {/* Header */}
         <AdminHeader />
-        <div className="p-3 max-w-lg mx-auto">
-          <h1 className="text-3xl text-center font-semibold my-7">
-            Add New Category
-          </h1>
+        <div className="p-3 max-w-lg mx-auto mt-12">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <label className="text-sideNavText text-lg">Category Name :</label>
             <input
               type="text"
               placeholder="Category name"
-              className="border p-3 rounded-lg"
+              className="border p-3 rounded-lg bg-sideNavBackground"
               id="categoryname"
               onChange={handleChange}
             />
+            <label className="text-sideNavText text-lg">Description :</label>
             <input
               type="text"
               placeholder="description"
-              className="border p-3 rounded-lg"
+              className="border p-3 rounded-lg bg-sideNavBackground"
               id="description"
               onChange={handleChange}
             />
 
-            <input
-              onChange={(e) => setFile(e.target.files[0])}
-              type="file"
-              accept="image/*"
-            />
+            <div className="flex justify-center items-center">
+              <input
+                onChange={(e) => setFile(e.target.files[0])}
+                type="file"
+                accept="image/*"
+                className=""
+              />
+            </div>
 
             {file && (
               <div>
@@ -145,14 +149,14 @@ export default function AddCategory() {
                 <img
                   src={URL.createObjectURL(file)}
                   alt="Selected"
-                  className="max-w-xs my-3"
+                  className="max-w-xs my-3 w-36 h-36"
                 />
               </div>
             )}
 
             <button
               disabled={loading || !avatarUploaded}
-              className="bg-backgreen4 text-white rounded-2xl"
+              className="bg-backgreen4 text-white rounded-2xl h-12 font-semibold text-xl"
             >
               {loading ? "Adding..." : "Add Category"}
             </button>
