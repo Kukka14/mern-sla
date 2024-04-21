@@ -1,15 +1,8 @@
-
-
 import  { useState } from 'react';
-
-
-
 import { Link } from 'react-router-dom';
 import logo1 from '../images/companylogo1.png';
 import { useSelector } from 'react-redux';
 import CartPopup from './CartPopup';
-
-//import CartPopup from './CartPopup';
 
 export default function Header() {
   const { currentUser } = useSelector(state => state.user);
