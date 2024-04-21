@@ -19,6 +19,8 @@ import ProductAdminDashboard from './pages/admin/ProductAdminDashboard.jsx';
 import ShowProductListing from './pages/admin/ShowProductListing.jsx';
 import UpdateProductListing from './pages/admin/UpdateProductListing.jsx';
 import Cart from './pages/client/Cart.jsx';
+import CartPopup from './components/CartPopup.jsx';
+import ShippingAddress from './pages/client/ShippingAddress.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -49,6 +51,7 @@ export default function App() {
           <Route path='/product-admin-dashboard' element={<ProductAdminDashboard />} />
           <Route path='/product-view' element={<ShowProductListing/>} />
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
+          
         </Route>
         
       </Routes>
