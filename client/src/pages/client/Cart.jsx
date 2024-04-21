@@ -34,7 +34,7 @@ export default function Cart() {
 
     useEffect(() => {
         fetchCartItems();
-    }, []);
+    }, );
 
     const removeFromCart = (itemId) => {
         fetch(`/api/cart/remove-from-cart/${currentUser._id}/${itemId}`, {
