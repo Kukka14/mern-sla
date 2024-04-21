@@ -20,3 +20,5 @@ export const getAllCategories = async (req, res, next) => {
     next(error);
   }
 };
+
+
