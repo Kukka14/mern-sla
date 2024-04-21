@@ -17,7 +17,7 @@ export default {
         textcolor2: '#1A3111',
         backgreen3: '#FFBD3C',
         backgreen4: '#50A72C',
-        cartbackground: '#DADADA',
+        cartbackground: '#f5f5f5',
         carttableheader: '#316C42',
         carttablerow: '#CDCDCD',
 

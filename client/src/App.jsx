@@ -16,6 +16,7 @@ import ReviewPage from './pages/client/ReviewPage.jsx';
 import ReviewListingPage from './pages/client/ReviewListingPage.jsx';
 import UpdateReviewPage from './pages/client/UpdateReviewPage.jsx';
 import Cart from './pages/client/Cart.jsx';
+import CartPopup from './components/CartPopup.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -38,7 +39,8 @@ export default function App() {
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
           <Route path='review' element={<ReviewPage/>} />
-          <Route path='cart' element={<Cart/>} />
+          <Route path='/cart' element={<Cart/>} />
+          <Route path='cartpop' element={<CartPopup/>} />
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
