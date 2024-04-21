@@ -18,10 +18,16 @@ export const getAddresses = async (req, res) => {
 };
 
 export const createAddress = async (req, res) => {
-    const { userId, addressLine1, addressLine2, city, state, postalCode, country } = req.body;
     try {
-        const addressData = { userId, addressLine1, addressLine2, city, state, postalCode, country };
+        const { userId, addressLine1, city, state, postalCode, country } = req.body;
+
+       
+
+        
+        const addressData = { userId, addressLine1, city, state, postalCode, country };
         const address = await Address.create(addressData);
+
+        // Return success response
         res.status(201).json({ message: 'Address created successfully', address });
     } catch (error) {
         console.error('Error creating address:', error);
