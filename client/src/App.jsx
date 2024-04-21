@@ -16,6 +16,7 @@ import ReviewPage from './pages/client/ReviewPage.jsx';
 import ReviewListingPage from './pages/client/ReviewListingPage.jsx';
 import UpdateReviewPage from './pages/client/UpdateReviewPage.jsx';
 import Cart from './pages/client/Cart.jsx';
+import AddCategory from './pages/admin/categoryAndPromotion/AddCategory.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -42,6 +43,7 @@ export default function App() {
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
+          <Route path="/addCategory" element={<AddCategory />} /> 
         </Route>
         
       </Routes>
