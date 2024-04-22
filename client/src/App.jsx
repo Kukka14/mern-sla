@@ -25,6 +25,8 @@ import ShippingAddress from './pages/client/ShippingAddress.jsx';
 import AddCategory from './pages/admin/categoryAndPromotion/AddCategory.jsx';
 import ViewCategory from './pages/admin/categoryAndPromotion/ViewCategory.jsx';
 import UpdateCategory from './pages/admin/categoryAndPromotion/UpdateCategory.jsx';
+import ProductView from './pages/client/ProductView.jsx';
+import ProductDetail from './pages/client/ProductDetail.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -38,7 +40,8 @@ export default function App() {
         <Route path='contactus' element={<ContactUs/>} />        
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/sign-in' element={<SignIn />} />
-        
+        <Route path='/product-view-client' element={<ProductView />} />
+        <Route path='/product-detail/:id' element={<ProductDetail />} />
         
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />

@@ -39,7 +39,7 @@ export default function Header() {
             <Link to='/'><div className='mr-14 hover:opacity-50'><a href='#'>Home</a></div></Link>
             <Link to='/about'><div className='mr-14 hover:opacity-50'><a href='#'>About</a></div></Link>
             <Link to='/services'><div className='mr-14 hover:opacity-50'><a href='#'>Services</a></div></Link>
-            <Link to='/product'><div className='mr-14 hover:opacity-50'><a href='#'>Products</a></div></Link>
+            <Link to='/product-view-client'><div className='mr-14 hover:opacity-50'><a href='#'>Products</a></div></Link>
             <Link to='/contact'><div className='mr-14 hover:opacity-50'><a href='#'>Contact Us</a></div></Link>           
            </div>
           <div className='flex flex-row justify-between'>
