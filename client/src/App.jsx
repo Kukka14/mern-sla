@@ -21,7 +21,6 @@ import UpdateProductListing from './pages/admin/UpdateProductListing.jsx';
 import Cart from './pages/client/Cart.jsx';
 import CartPopup from './components/CartPopup.jsx';
 import ShippingAddress from './pages/client/ShippingAddress.jsx';
-import OrderSummary from './pages/client/Ordersummary.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -31,18 +30,19 @@ export default function App() {
     <BrowserRouter>
       {isAdmin ? null : <Header />}
       <Routes>
-        <Route path='/' element={<Home/>} />        
-        <Route path='contactus' element={<ContactUs/>} />        
-        <Route path='/sign-up' element={<SignUp />} />
-        <Route path='/sign-in' element={<SignIn />} />
-        
-        
+        <Route path="/" element={<Home />} />
+        <Route path="contactus" element={<ContactUs />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/product-view-client" element={<ProductView />} />
+        <Route path="/product-detail/:id" element={<ProductDetail />} />
+
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
-          <Route path='/review' element={<ReviewPage/>} />
-          <Route path='/cart' element={<Cart/>} />
+          <Route path='review' element={<ReviewPage/>} />
+          <Route path='cart' element={<Cart/>} />
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
@@ -52,10 +52,8 @@ export default function App() {
           <Route path='/product-admin-dashboard' element={<ProductAdminDashboard />} />
           <Route path='/product-view' element={<ShowProductListing/>} />
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
-          <Route path='/order-summary/:orderId' element={<OrderSummary/>} />
           
         </Route>
-        
       </Routes>
     </BrowserRouter>
   );
