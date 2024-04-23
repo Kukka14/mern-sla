@@ -22,7 +22,12 @@ import Cart from './pages/client/Cart.jsx';
 import CartPopup from './components/CartPopup.jsx';
 import ShippingAddress from './pages/client/ShippingAddress.jsx';
 import Ordersummary from './pages/client/Ordersummary.jsx';
-
+import ProductDetail from './pages/client/ProductDetail.jsx';
+import ProductView from './pages/client/ProductView.jsx';
+import OrderDashboard from './pages/admin/OrderManagement/OrderDashboard.jsx';
+import NewOrders from './pages/admin/OrderManagement/NewOrders.jsx';
+import CompleteOrder from './pages/admin/OrderManagement/CompleteOrder.jsx';
+import ManageOrder from './pages/admin/OrderManagement/ManageOrder.jsx';
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
   const isAdmin = currentUser && currentUser.isAdmin; // Check if user is admin
@@ -35,8 +40,9 @@ export default function App() {
         <Route path="contactus" element={<ContactUs />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/product-view-client" element={<ProductView />} />
+        <Route path="/product-view-client" element={<ProductView/>} />
         <Route path="/product-detail/:id" element={<ProductDetail />} />
+        
 
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
@@ -54,6 +60,10 @@ export default function App() {
           <Route path='/product-view' element={<ShowProductListing/>} />
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
           <Route path='/order-summary/:orderId' element={<Ordersummary/>} />
+          <Route path="/order-dashboard" element={<OrderDashboard />} />
+          <Route path="/new-orders-dashboard" element={<NewOrders />} />
+          <Route path="/complete-orders-dashboard" element={<CompleteOrder />} />
+          <Route path="/manage-orders-dashboard" element={<ManageOrder />} />
           
         </Route>
       </Routes>
