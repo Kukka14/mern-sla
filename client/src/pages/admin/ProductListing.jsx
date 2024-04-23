@@ -217,7 +217,7 @@ export default function CreateListing() {
                     className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
                     id="name"
                     maxLength="62"
-                    minLength="10"
+                    minLength="1"
                     required
                     onChange={handleChange}
                     value={formData.name}
@@ -302,7 +302,7 @@ export default function CreateListing() {
                   <input
                     type="number"
                     id="quantity"
-                    min="0"
+                    min="1"
                     max="10000000"
                     required
                     className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
