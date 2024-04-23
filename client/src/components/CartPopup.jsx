@@ -104,7 +104,7 @@ export default function CartPopup() {
              <p className="text-gray-600">Your cart is empty</p>
              <button
                type="button"
-               className="font-medium text-indigo-600 hover:text-indigo-500"
+               className="font-medium text-backgreen4 hover:text-green-700"
                onClick={() => setOpen(false)}
              >
                Continue Shopping
@@ -140,7 +140,7 @@ export default function CartPopup() {
                                       <button
                                         type="button"
                                         onClick={() => removeFromCart(item._id)}
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                        className="font-medium text-red-500 hover:text-red-700"
                                       >
                                         Remove
                                       </button>
@@ -162,13 +162,13 @@ export default function CartPopup() {
                         <p>Rs.{totalPrice}.00</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                      <div className="mt-6">
-                       <Link to="/cart"><button  type="button"
-                          className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={() => setOpen(false)}
-                        >
-                          View Cart 
-                        </button></Link> 
-                      </div>
+                      <div className="mt-3 flex justify-center text-center">
+  <Link
+    to="/cart"
+    className="flex items-center justify-center rounded-md border border-transparent bg-backgreen4 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700 w-full md:w-auto"
+    onClick={() => setOpen(false)}
+  >      View Cart       </Link> 
+</div>
                     
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
@@ -176,7 +176,7 @@ export default function CartPopup() {
                          
                           <Link to="/product"><button
                             type="button"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                            className="font-medium text-backgreen4 hover:text-green-700"
                             onClick={() => setOpen(false)}
                           >
                             Continue Shopping

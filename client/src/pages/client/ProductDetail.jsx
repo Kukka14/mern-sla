@@ -2,14 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FaShoppingCart, FaMoneyBill } from "react-icons/fa";
+import { useSelector } from 'react-redux';
+import { toast,ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';  
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetail = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [category, setCategory] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [cardHeight, setCardHeight] = useState("auto");
+  const currentUser = useSelector((state) => state.user.currentUser) || null;
 
   useEffect(() => {
     const fetchProductDetail = async () => {
@@ -61,12 +67,61 @@ const ProductDetail = () => {
     );
   };
 
-  const handleBuy = (productId) => {
-    // Implement buy functionality
+  const handleBuy = () => {
+    if(currentUser) {
+      handleAddToCart();
+      setTimeout(() => {
+        navigate("/cart");
+      }, 4000);
+    } else {
+      toast.error("Please login to buy items to the cart", {
+        onClose: () => {
+          navigate("/sign-in");
+        }
+      });
+    }
   };
+  
 
-  const handleAddToCart = (productId) => {
-    // Implement add to cart functionality
+
+  const handleAddToCart = async () => {
+    if (!currentUser) {
+      toast.error("Please login to add items to the cart");
+      history.push("/signin");
+      return;
+    }
+    try {
+      const response = await fetch("/api/cart/addToCart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: currentUser._id, // Use currentUser from Redux store
+          productId: product._id,
+          productName: product.name,
+          productImages: product.imageUrls,
+          price: product.regularPrice,
+          quantity: 1, // Adjust quantity as needed
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add item to cart");
+      }
+
+      const data = await response.json();
+
+      if (data.success && data.updated) {
+        toast.success("Item added to cart successfully");
+      } else if (data.success && !data.updated) {
+        toast.success("Item quantity updated successfully");
+      } else {
+        console.error("Failed to add item to cart:", data.error);
+      }
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+    }
   };
 
   return (
@@ -122,7 +177,7 @@ const ProductDetail = () => {
                 <FaMoneyBill className="mr-2" /> Buy
               </button>
               <button
-                onClick={() => handleAddToCart(product.id)}
+                onClick={() => handleAddToCart()}
                 className="flex items-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded"
               >
                 <FaShoppingCart className="mr-2" /> Add to Cart
@@ -133,6 +188,7 @@ const ProductDetail = () => {
       ) : (
         <p className="text-center">Product not found.</p>
       )}
+       <ToastContainer />
     </div>
   );
 };

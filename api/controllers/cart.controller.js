@@ -153,3 +153,20 @@ export const updateCartItemQuantity = async (req, res) => {
         res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };
+export const getCartDetails = async (req, res) => {
+    try {
+        const { cartId } = req.body;
+
+        const cart = await Cart.find({ _id: cartId });
+
+        if (!cart) {
+            return res.status(404).json({ success: false, error: 'Cart not found' });
+        }
+        const items = await CartItem.find({ cartId: cartId });
+        res.status(200).json({items});
+
+    } catch (error) {
+        console.error('Error fetching cart details:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
+    }
+};

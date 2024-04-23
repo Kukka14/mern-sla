@@ -25,6 +25,10 @@ const orderSchema = new mongoose.Schema({
     enum: ['pending', 'processing', 'shipped', 'delivered'],
     default: 'pending'
   },
+  promotionPrice: {
+    type: Number,
+    default: 0
+  },
   paymentStatus: {
     type: String,
     enum: ['pending', 'paid'],
