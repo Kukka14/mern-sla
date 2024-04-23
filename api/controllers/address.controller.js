@@ -19,12 +19,12 @@ export const getAddresses = async (req, res) => {
 
 export const createAddress = async (req, res) => {
     try {
-        const { userId, addressLine1, city, state, postalCode, country } = req.body;
+        const { userId, addressLine1,addressLine2, city, state, postalCode, country } = req.body;
 
        
 
         
-        const addressData = { userId, addressLine1, city, state, postalCode, country };
+        const addressData = { userId, addressLine1,addressLine2, city, state, postalCode, country };
         const address = await Address.create(addressData);
 
         // Return success response
@@ -63,9 +63,9 @@ export const deleteAddress = async (req, res) => {
 };
 
 export const getAddressById = async (req, res) => {
-    const addressId = req.params;
+    const { addressId } = req.body; // Update this line to destructure addressId from req.body
     try {
-        const address = await Address.findById(addressId);
+        const address = await Address.findOne({ _id: addressId });
         if (!address) {
             return res.status(404).json({ error: 'Address not found' });
         }

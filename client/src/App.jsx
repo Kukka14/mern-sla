@@ -21,6 +21,7 @@ import UpdateProductListing from './pages/admin/UpdateProductListing.jsx';
 import Cart from './pages/client/Cart.jsx';
 import CartPopup from './components/CartPopup.jsx';
 import ShippingAddress from './pages/client/ShippingAddress.jsx';
+import OrderSummary from './pages/client/Ordersummary.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -40,8 +41,8 @@ export default function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
-          <Route path='review' element={<ReviewPage/>} />
-          <Route path='cart' element={<Cart/>} />
+          <Route path='/review' element={<ReviewPage/>} />
+          <Route path='/cart' element={<Cart/>} />
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
@@ -51,6 +52,7 @@ export default function App() {
           <Route path='/product-admin-dashboard' element={<ProductAdminDashboard />} />
           <Route path='/product-view' element={<ShowProductListing/>} />
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
+          <Route path='/order-summary/:orderId' element={<OrderSummary/>} />
           
         </Route>
         

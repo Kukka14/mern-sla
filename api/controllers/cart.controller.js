@@ -157,16 +157,13 @@ export const getCartDetails = async (req, res) => {
     try {
         const { cartId } = req.body;
 
-        const cart = await Cart.find({ _id: cartId }).populate('items');
+        const cart = await Cart.find({ _id: cartId });
 
         if (!cart) {
             return res.status(404).json({ success: false, error: 'Cart not found' });
         }
-
-        
-
-        // Assuming you want to include itemDetails in the response
-        res.status(200).json({ success: true, cart});
+        const items = await CartItem.find({ cartId: cartId });
+        res.status(200).json({items});
 
     } catch (error) {
         console.error('Error fetching cart details:', error);
