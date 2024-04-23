@@ -44,3 +44,22 @@ export const createOrder = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while creating the order' });
   }
 };
+
+export const getOrderDetails = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+   
+    
+    res.status(200).json({ order });
+  } catch (error) {
+    console.error('Error getting order details:', error);
+    res.status(500).json({ error: 'An error occurred while getting the order details' });
+  }
+};

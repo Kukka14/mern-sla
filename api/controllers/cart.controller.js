@@ -153,3 +153,23 @@ export const updateCartItemQuantity = async (req, res) => {
         res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };
+export const getCartDetails = async (req, res) => {
+    try {
+        const { cartId } = req.body;
+
+        const cart = await Cart.find({ _id: cartId }).populate('items');
+
+        if (!cart) {
+            return res.status(404).json({ success: false, error: 'Cart not found' });
+        }
+
+        
+
+        // Assuming you want to include itemDetails in the response
+        res.status(200).json({ success: true, cart});
+
+    } catch (error) {
+        console.error('Error fetching cart details:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
+    }
+};

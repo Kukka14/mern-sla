@@ -61,3 +61,17 @@ export const deleteAddress = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while deleting address' });
     }
 };
+
+export const getAddressById = async (req, res) => {
+    const addressId = req.params;
+    try {
+        const address = await Address.findById(addressId);
+        if (!address) {
+            return res.status(404).json({ error: 'Address not found' });
+        }
+        res.json({ address });
+    } catch (error) {
+        console.error('Error fetching address:', error);
+        res.status(500).json({ error: 'An error occurred while fetching address' });
+    }
+};
