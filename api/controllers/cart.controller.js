@@ -1,6 +1,30 @@
 import Cart from "../models/cart.model.js";
 import CartItem from "../models/cartItem.model.js";
 
+export const checkoutcart =async (req, res) => {
+    try {
+        const { totalPrice, userId } = req.body;
+
+       
+        const activeCart = await Cart.findOne({ user:userId, status: 'active' });
+
+        if (!activeCart) {
+            return res.status(404).json({ error: 'Active cart not found' });
+        }
+
+      
+        activeCart.total = totalPrice;
+        await activeCart.save();
+
+       
+        return res.status(200).json({ message: 'Checkout successful' });
+    } catch (error) {
+        console.error('Error during checkout:', error);
+        return res.status(500).json({ error: 'An error occurred during checkout' });
+    }
+
+};
+
 export const addToCart = async (req, res) => {
     try {
         const { userId, productId, productName, productImages, price, quantity } = req.body;
@@ -8,7 +32,12 @@ export const addToCart = async (req, res) => {
         let cart = await Cart.findOne({ user: userId, status: 'active' });
 
         if (!cart) {
-            cart = await Cart.create({ user: userId });
+            cart = new Cart({ user: userId, status: 'active', items: [], total: 0
+             });
+
+        // Save the new cart to the database
+        await cart.save();
+        console.log('New cart created:', cart); 
         }
 
         const existingCartItem = await CartItem.findOne({ cartId: cart._id, productId });
@@ -121,6 +150,23 @@ export const updateCartItemQuantity = async (req, res) => {
         res.status(200).json({ success: true, message: 'Item quantity updated successfully' });
     } catch (error) {
         console.error('Error updating item quantity in cart:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
+    }
+};
+export const getCartDetails = async (req, res) => {
+    try {
+        const { cartId } = req.body;
+
+        const cart = await Cart.find({ _id: cartId });
+
+        if (!cart) {
+            return res.status(404).json({ success: false, error: 'Cart not found' });
+        }
+        const items = await CartItem.find({ cartId: cartId });
+        res.status(200).json({items});
+
+    } catch (error) {
+        console.error('Error fetching cart details:', error);
         res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };
