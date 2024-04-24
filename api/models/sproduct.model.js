@@ -1,36 +1,31 @@
 import mongoose from "mongoose";
 
-const listingSchema = new mongoose.Schema(
+const sproductSchema = new mongoose.Schema(
     {
-        fname:{
+        Supplier_Name:{
             type: String,
             required: true,
         },
-        lname:{
-            type: String,
-            required: true,
-        },
-        address:{
-            type: String,
-            required: true,
-        },
-        nic:{
-            type: Number,
-            required: true,
-            unique: true,
-        },
-        phone:{
-            type: Number,
-            required: true,
-        },
-        email:{
+        Supplier_Email:{
             type: String,
             required: true,
             unique: true,
+        },
+        Product_Name:{
+            type: String,
+            required: true,
+        },
+        Supplier_Price:{
+            type: Number,
+            required: true,
+        },
+        Quantity:{
+            type: Number,
+            required: true,
         },
     }, {timestamps: true}
 );
 
-const Listing = mongoose.model('Listing' ,listingSchema)
+const Sproduct = mongoose.model('Sproduct' ,sproductSchema)
 
-export default Listing;
+export default Sproduct;
