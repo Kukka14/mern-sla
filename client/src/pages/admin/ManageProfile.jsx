@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { saveAs } from 'file-saver';
 
-const AdminDashboard = () => {
+const ManageProfile = () => {
   const [users, setUsers] = useState([]);
   const [userCount, setUserCount] = useState(0);
 
@@ -30,23 +29,8 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleDownloadReport = () => {
-    const csvData = convertToCSV(users);
-    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
-    saveAs(blob, 'user_report.csv');
-  };
-
-  const convertToCSV = (data) => {
-    const csvRows = [];
-    const headers = Object.keys(data[0]);
-    csvRows.push(headers.join(','));
-
-    for (const user of data) {
-      const values = headers.map(header => user[header]);
-      csvRows.push(values.join(','));
-    }
-
-    return csvRows.join('\n');
+  const handleGenerateReport = () => {
+    window.location.href = '/customer-report';
   };
 
   return (
@@ -84,9 +68,9 @@ const AdminDashboard = () => {
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
           <p>Total Users: {userCount}</p>
         </div>
-        <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-          <button onClick={handleDownloadReport} className="bg-green-500 text-white py-2 px-4 rounded-lg mr-2">
-            Download User Report
+        <div>
+          <button onClick={handleGenerateReport} style={{ backgroundColor: 'blue', color: 'white', padding: '10px', borderRadius: '5px', border: 'none' }}>
+            Generate Report
           </button>
         </div>
       </div>
@@ -94,4 +78,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default ManageProfile;

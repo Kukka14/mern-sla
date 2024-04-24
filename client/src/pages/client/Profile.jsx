@@ -5,7 +5,7 @@ import {
   getStorage, 
   ref, 
   uploadBytesResumable } from 'firebase/storage';
-  import { app } from '../../firebase';
+import { app } from '../../firebase';
 import {
   updateUserStart,
   updateUserSuccess,
@@ -20,6 +20,7 @@ import {
 import { useDispatch } from 'react-redux';
 
 
+
 export default function Profile() {
 
   const fileRef = useRef(null)
@@ -31,12 +32,6 @@ export default function Profile() {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const dispatch = useDispatch();
 
-    // firebase storage
-  // allow read;
-  // allow write: if
-  // request.resource.size < 2 * 1024 * 1024 &&
-  // request.resource.contentType.matches('image/.*')
-
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
@@ -47,21 +42,19 @@ export default function Profile() {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
-    const uploadeTask = uploadBytesResumable(storageRef, file);
+    const uploadTask = uploadBytesResumable(storageRef, file);
     
-    uploadeTask.on(
+    uploadTask.on(
       'state_changed',
       (snapshot) => {
-        const progress = 
-        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setFilePerc(Math.round(progress));
       },
       (error) => {
         setFileUploadError(true);
       },
       () => {
-        getDownloadURL(uploadeTask.snapshot.ref).then
-        ((downloadURL) => setFormData({ ...formData, avatar: downloadURL}));
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => setFormData({ ...formData, avatar: downloadURL}));
       }
     );
   };
@@ -125,103 +118,115 @@ export default function Profile() {
       dispatch(deleteUserFailure(data.message));
     }
   };
+  
   return (
-    <div className='p-3 max-w-lg mx-auto bg-green-100 rounded-lg'>
-      <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
-      <form onSubmit={handleSubmit} className = 'flex flex-col gap-4'>
-        <input onChange={(e)=>setFile(e.target.files[0])} type = "file" ref = {fileRef} hidden accept = 'image/*'/>
-        <input onChange={(e) => setFile(e.target.files[0])} type='file' ref={fileRef} hidden accept='image/*'/>
-        <img onClick={() => fileRef.current.click()} 
-        src={formData?.avatar || currentUser.avatar} alt='Profile' className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2' />
+   
+
+    <div className="flex items-center justify-center min-h-screen">
+   
+       
+    <div className="p-5 bg-white rounded-lg shadow-lg" style={{ maxWidth: '500px', width: '500%', backgroundColor: 'rgba(144, 162, 158, 0.8)' }}>
+    <h1 className='text-3xl font-semibold text-center my-27'>Profile</h1>
+    <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         
-        <p className='text-sm self-center'>
-          {fileUploadError ? (
-            <span className='text-red-700'>
-              Error Image upload (image must be less than 2 mb)
-            </span>
-          ) : filePerc > 0 && filePerc < 100 ? (
-            <span className='text-slate-700'>{`Uploading ${filePerc}%`}</span>
-          ) : filePerc === 100 ? (
-            <span className='text-green-700'>Image successfully uploaded!</span>
-          ) : (
-            ''
-          )}
-        </p>
-        <input
-          type="text"
-          placeholder='Username'
-          defaultValue={currentUser.username}
-          id = 'username'
-          className='border p-3 rounded-lg '
-          onChange={handleChange}
-        />
-
-        <input
-          type="email"
-          placeholder='Email'
-          defaultValue={currentUser.email}
-          id = 'email'
-          className='border p-3 rounded-lg '
-          onChange={handleChange}
-        />
-
-        <input
-          type="text"
-          placeholder='Address'
-          defaultValue={currentUser.address}
-          id = 'address'
-          className='border p-3 rounded-lg'
-          onChange={handleChange}
-        />
-
-        <input
-          type="tel"
-          placeholder='Telephone Number'
-          defaultValue={currentUser.phoneNumber}
-          id = 'phoneNumber'
-          className='border p-3 rounded-lg '
-          onChange={handleChange}
-        />
-
-        <input
-          type="text"
-          placeholder='NIC'
-          defaultValue={currentUser.nic}
-          id ='nic'
-          className='border p-3 rounded-lg '
-          onChange={handleChange}
-        />
-
-        <input
-          type="password"
-          placeholder='Password'
+          <input onChange={(e) => setFile(e.target.files[0])} type="file" ref={fileRef} hidden accept='image/*'/>
+          <img onClick={() => fileRef.current.click()} src={formData?.avatar || currentUser.avatar} alt='Profile' className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2' />
           
-          id = 'password'
-          className='border p-3 rounded-lg'
-          onChange={handleChange}
-        />
+          <p className='text-sm self-center'>
+            {fileUploadError ? (
+              <span className='text-red-700'>Error Image upload (image must be less than 2 mb)</span>
+            ) : filePerc > 0 && filePerc < 100 ? (
+              <span className='text-slate-700'>{`Uploading ${filePerc}%`}</span>
+            ) : filePerc === 100 ? (
+              <span className='text-green-700'>Image successfully uploaded!</span>
+            ) : ('')
+            }
+          </p>
+          <input
+            type="text"
+            placeholder='Username'
+            defaultValue={currentUser.username}
+            id='username'
+            className='border p-3 rounded-lg'
+            onChange={handleChange}
+          />
 
-        {/* You can add more input fields for additional details if needed */}
+          <input
+            type="email"
+            placeholder='Email'
+            defaultValue={currentUser.email}
+            id='email'
+            className='border p-3 rounded-lg'
+            onChange={handleChange}
+          />
 
-        <button
-        
-          disabled={loading}
-          className='bg-green-500 text-white py-3 px-6 rounded-lg block w-full mt-4'
-        >
-           {loading ? 'Loading...' : 'Update'}
-        </button>
-      </form>
-      <div className = "flex justify-between mt-5">
-      <span onClick={handleDeleteUser} className = 'text-red-700 cursor-pointer'> Delete Account</span>
-      <span onClick={handleSignOut} className = 'text-red-700 cursor-pointer'> Sign Out</span>
-    </div>
+          <input
+            type="text"
+            placeholder='Address'
+            defaultValue={currentUser.address}
+            id='address'
+            className='border p-3 rounded-lg'
+            onChange={handleChange}
+          />
 
-    <p className='text-red-700 mt-5'>{error ? error : ''}</p>
-      <p className='text-green-700 mt-5'>
-        {updateSuccess ? 'User is updated successfully!' : ''}
-      </p>
+          <input
+            type="tel"
+            placeholder='Telephone Number'
+            defaultValue={currentUser.phoneNumber}
+            id='phoneNumber'
+            className='border p-3 rounded-lg'
+            onChange={handleChange}
+          />
 
-    </div>
+          <input
+            type="text"
+            placeholder='NIC'
+            defaultValue={currentUser.nic}
+            id='nic'
+            className='border p-3 rounded-lg'
+            onChange={handleChange}
+          />
+
+          <input
+            type="password"
+            placeholder='Password'
+            id='password'
+            className='border p-3 rounded-lg'
+            onChange={handleChange}
+          />
+
+          {/* You can add more input fields for additional details if needed */}
+
+          <button
+            disabled={loading}
+            className='bg-green-900 text-white py-3 px-6 rounded-lg block w-full mt-4'
+            
+          >
+            {loading ? 'Loading...' : 'Update'}
+          </button>
+        </form>
+        {/* Delete account and sign out buttons */}
+        <div className='flex justify-between mt-5'>
+          <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer' style={{ color: '#ff0000' }}>Delete Account</span>
+          <span onClick={handleSignOut} className='text-red-700 cursor-pointer' style={{ color: '#ff0000' }}>Sign Out</span>
+        </div>
+        {/* Error and success messages */}
+        <p className='text-red-700 mt-5'>{error ? error : ''}</p>
+        <p className='text-green-700 mt-5'>{updateSuccess ? 'User is updated successfully!' : ''}</p>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+  <button className='bg-blue-900 text-white py-3 px-6 rounded-full mr-4' style={{ color: '#ffffff' }}>Order</button>
+  <button className='bg-blue-900 text-white py-3 px-6 rounded-full mr-4' style={{ color: '#ffffff' }}>Payments</button>
+  <button className='bg-blue-900 text-white py-3 px-6 rounded-full' style={{ color: '#ffffff' }}>Address</button>
+</div>
+
+
+
+
+
+
+      </div>
+      </div>
+    
+   
   );
 }
-

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+
 export default function SignUp() {
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
@@ -66,69 +67,71 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-200">
-      <div className='p-6 bg-white rounded-lg shadow-lg' style={{ maxWidth: '500px', width: '100%' }}>
-        <h1 className='text-3xl text-center font-semibold my-7'>Sign Up</h1>
-        {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
-        <form onSubmit={handleSubmit} className='flex flex-col items-center gap-4'>
-          <input
-            type='text'
-            placeholder='Username'
-            className='border border-gray-300 p-3 rounded-lg'
-            id='username'
-            onChange={handleChange}
-          />
-          <input
-            type='email'
-            placeholder='Email'
-            className='border p-3 border-gray-300 rounded-lg'
-            id='email'
-            onChange={handleChange}
-          />
-          <input
-            type='password'
-            placeholder='Password'
-            className='border border-gray-300 p-3 rounded-lg'
-            id='password'
-            onChange={handleChange}
-          />
-          <input
-            type='password'
-            placeholder='Confirm Password'
-            className='border border-gray-300 p-3 rounded-lg'
-            id='confirmPassword'
-            onChange={handleChange}
-          />
-          <input
-            type='text'
-            placeholder='NIC'
-            className='border border-gray-300 p-3 rounded-lg'
-            id='nic'
-            onChange={handleChange}
-          />
-          <input
-            type='text'
-            placeholder='Telephone Number'
-            className='border border-gray-300 p-3 rounded-lg'
-            id='phoneNumber'
-            onChange={handleChange}
-          />
-          <input
-            type='text'
-            placeholder='Address'
-            className='border border-gray-300 p-3 rounded-lg'
-            id='address'
-            onChange={handleChange}
-          />
-          <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
-            {loading ? 'Loading...' : 'Sign Up'}
-          </button>
-        </form>
-        <div className='flex gap-2 mt-5'>
-          <p>Have an account?</p>
-          <Link to='/sign-in' className='text-blue-700'>Sign In</Link>
+
+    <div className="flex items-center justify-center min-h-screen">
+    <div className="p-5 bg-white rounded-lg shadow-lg" style={{ maxWidth: '500px', width: '500%', backgroundColor: 'rgba(144, 162, 158, 0.8)' }}>
+          <h1 className='text-3xl text-center font-semibold my-3 '>Sign Up</h1>
+          {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
+          <form onSubmit={handleSubmit} className='flex flex-col items-center gap-4'>
+            <input
+              type='text'
+              placeholder='Username'
+              className='border border-gray-700 p-3 rounded-lg'
+              id='username'
+              onChange={handleChange}
+            />
+            <input
+              type='email'
+              placeholder='Email'
+              className='border p-3 border-gray-700 rounded-lg'
+              id='email'
+              onChange={handleChange}
+            />
+            <input
+              type='password'
+              placeholder='Password'
+              className='border border-gray-700 p-3 rounded-lg'
+              id='password'
+              onChange={handleChange}
+            />
+            <input
+              type='password'
+              placeholder='Confirm Password'
+              className='border border-gray-700 p-3 rounded-lg'
+              id='confirmPassword'
+              onChange={handleChange}
+            />
+            <input
+              type='text'
+              placeholder='NIC'
+              className='border border-gray-700 p-3 rounded-lg'
+              id='nic'
+              onChange={handleChange}
+            />
+            <input
+              type='text'
+              placeholder='Telephone Number'
+              className='border border-gray-700 p-3 rounded-lg'
+              id='phoneNumber'
+              onChange={handleChange}
+            />
+            <input
+              type='text'
+              placeholder='Address'
+              className='border border-gray-700 p-3 rounded-lg'
+              id='address'
+              onChange={handleChange}
+            />
+            <button disabled={loading} className='bg-green-900 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
+              {loading ? 'Loading...' : 'Sign Up'}
+            </button>
+          </form>
+          <div className='flex gap-2 mt-5'>
+            <p>Have an account?</p>
+            <Link to='/sign-in' className='text-blue-700'>Sign In</Link>
+          </div>
         </div>
       </div>
-    </div>
+    
   );
 }
