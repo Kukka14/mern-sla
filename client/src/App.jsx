@@ -54,7 +54,7 @@ export default function App() {
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
-          <Route path='/cartpop' element={<CartPopup/>} />
+          <Route path='/cartpop' element={<CartPopup/>} />9
           <Route path="/shipping-address" element={<ShippingAddress />} />
           <Route path='/product-listing' element={<ProductListing/>} />
           <Route path='/product-admin-dashboard' element={<ProductAdminDashboard />} />
