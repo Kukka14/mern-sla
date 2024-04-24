@@ -8,7 +8,7 @@ export const createOrder = async (req, res) => {
     const { userId, addressId } = req.body;
     console.log(userId);
 
-    // Find the active cart for the user
+    
     const activeCart = await Cart.findOne({ user: userId, status: 'active' });
 
     if (!activeCart) {
@@ -16,7 +16,7 @@ export const createOrder = async (req, res) => {
       return res.status(404).json({ error: 'No active cart found for the user' });
     }
 
-    // Calculate total price
+    
     const totalPrice = activeCart.total;
 
     // Update the status of the active cart to 'inactive'
