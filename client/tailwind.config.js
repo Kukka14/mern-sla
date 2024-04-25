@@ -17,9 +17,13 @@ export default {
         textcolor2: '#1A3111',
         backgreen3: '#FFBD3C',
         backgreen4: '#50A72C',
+        cartbackground: '#f5f5f5',
+        carttableheader: '#316C42',
+        carttablerow: '#CDCDCD',
 
         
         'sideNavBackground': '#ECFFEB',
+        'productAdminSideNavBar': '#ECFFEB',
         'sideNavBackgroundhover': '#afbeae',
         'mainAdminBackground': '#f9f6ee',        
         'sideNavButton': '#2A491D',
@@ -30,7 +34,10 @@ export default {
         'sectionhr': '#7C9074',
         'sectiontext': '#4C6653',
         'buttonbackground': '#50A72C',
-    
+        'section1': '#bee6ae',
+        'section2': '#d7ffc7',
+        'tableHead': '#94b387'
+        
       },
     },
   },
