@@ -8,6 +8,7 @@ export default function Ordersummary() {
   const [orderDetails, setOrderDetails] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const [addressDetails, setAddressDetails] = useState({});
+  
   const { orderId } = useParams();
 
   console.log('Success! Got ID:', orderId);

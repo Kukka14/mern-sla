@@ -66,7 +66,7 @@ export const getOrderDetails = async (req, res) => {
 
 export const getAllDeliveredOrders = async (req, res) => {
   try {
-    const deliveredOrders = await Order.find({ orderStatus: 'delivered', paymentStatus: 'paid' });
+    const deliveredOrders = await Order.find({ orderStatus: 'completed', paymentStatus: 'paid', trackingStatus: 'delivered' });
 
     res.status(200).json({ orders: deliveredOrders });
   } catch (error) {
@@ -78,7 +78,7 @@ export const getAllDeliveredOrders = async (req, res) => {
 export const getNewOrders = async (req, res) => {
   try {
     const currentDate = new Date();
-    const sevenDaysAgo = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const sevenDaysAgo = new Date(currentDate.getTime() - 1 * 24 * 60 * 60 * 1000);
 
     const newOrders = await Order.find({
       orderStatus: 'pending',
