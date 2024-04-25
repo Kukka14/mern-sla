@@ -21,7 +21,7 @@ export default function ShippingAddress() {
 
   useEffect(() => {
     fetchAddresses();
-  }, [currentUser._id]);
+  },);
 
   const fetchAddresses = () => {
     fetch(`/api/address/get`, {
@@ -119,13 +119,17 @@ export default function ShippingAddress() {
       return response.json();
       })
       .then(data => {
-      console.log('Order created successfully:', data);
+      console.log('Order created successfully:', data.order);
+      console.log('Order ID:', data.order._id);
 
-      navigate('/');
+      navigate(`/order-summary/orderId:${data.order._id}`);
       })
       .catch(error => {
       console.error('Error creating order:', error);
       });
+  };
+  const handleGoBack = () => {
+    navigate('/cart');
   };
 
   return (
@@ -134,11 +138,11 @@ export default function ShippingAddress() {
         <h2 className="text-2xl font-bold my-4 text-center">Shipping Address</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
         {addresses === undefined && <p className="text-red-500 text-center">No addresses found. Please add a new address.</p>}
-{addresses && addresses.length === 0 && <p className="text-red-500 text-center">No addresses found. Please add a new address.</p>}
+        {addresses && addresses.length === 0 && <p className="text-red-500 text-center">No addresses found. Please add a new address.</p>}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-6 mx-9 ">
           {addresses && addresses.map(address => (
-            <div key={address._id} className="bg-gray-100 p-4 rounded-md">
+            <div key={address._id} className="bg-gray-100 p-4 rounded-md hover:bg-gray-200">
               <label htmlFor={address._id}>
                 <input
                   type="radio"
@@ -151,7 +155,7 @@ export default function ShippingAddress() {
                   <div className="font-bold">{address.addressLine1}</div>
                   <div>{address.addressLine2}</div>
                   <div>
-                    {address.city}, {address.state}, {address.country}, {address.postalCode}
+                    {address.city}, <br/>{address.state},<br/> {address.country},<br/> {address.postalCode}
                   </div>
                 </div>
               </label>
@@ -160,45 +164,48 @@ export default function ShippingAddress() {
         </div>
         {showAddAddressForm ? (
           <div className="mt-6">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="mx-5 my-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="addressLine1">Address Line 1</label>
-                  <input type="text" id="addressLine1" name="addressLine1" value={newAddress.addressLine1} onChange={handleChange} />
+                  <label htmlFor="addressLine1" className="block text-sm font-medium text-gray-700">Address Line 1</label>
+                  <input type="text" id="addressLine1" name="addressLine1" value={newAddress.addressLine1} onChange={handleChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
                 <div>
-                  <label htmlFor="addressLine2">Address Line 2</label>
-                  <input type="text" id="addressLine2" name="addressLine2" value={newAddress.addressLine2} onChange={handleChange} />
+                  <label htmlFor="addressLine2" className="block text-sm font-medium text-gray-700">Address Line 2</label>
+                  <input type="text" id="addressLine2" name="addressLine2" value={newAddress.addressLine2} onChange={handleChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
                 <div>
-                  <label htmlFor="city">City</label>
-                  <input type="text" id="city" name="city" value={newAddress.city} onChange={handleChange} />
+                  <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
+                  <input type="text" id="city" name="city" value={newAddress.city} onChange={handleChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
                 <div>
-                  <label htmlFor="state">State</label>
-                  <input type="text" id="state" name="state" value={newAddress.state} onChange={handleChange} />
+                  <label htmlFor="state" className="block text-sm font-medium text-gray-700">State</label>
+                  <input type="text" id="state" name="state" value={newAddress.state} onChange={handleChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
                 <div>
-                  <label htmlFor="postalCode">Postal Code</label>
-                  <input type="text" id="postalCode" name="postalCode" value={newAddress.postalCode} onChange={handleChange} />
+                  <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700">Postal Code</label>
+                  <input type="text" id="postalCode" name="postalCode" value={newAddress.postalCode} onChange={handleChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
                 <div>
-                  <label htmlFor="country">Country</label>
-                  <input type="text" id="country" name="country" value={newAddress.country} onChange={handleChange} />
+                  <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
+                  <input type="text" id="country" name="country" value={newAddress.country} onChange={handleChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
               </div>
-              <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4">
+              <button type="submit" className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-block">
                 Add Address
               </button>
             </form>
           </div>
         ) : (
-          <div className="mt-6">
+          <div className="mt-6 mx-7">
             <button onClick={toggleAddAddressForm} className="text-blue-500 hover:underline">Add New Address</button>
           </div>
         )}
-        <div className="flex justify-between items-center mt-6">
-          <button onClick={handleCheckout} className={`bg-blue-500 ${selectedAddress ? "hover:bg-blue-600" : "opacity-50 cursor-not-allowed"} text-white font-bold py-2 px-4 rounded`}>
+        <div className="flex justify-between items-center mt-6 mx-5">
+          <button onClick={handleGoBack} className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+            Back to Cart
+          </button>
+          <button onClick={handleCheckout} className={`bg-backgreen4 ${selectedAddress ? "hover:bg-green-900" : "opacity-50 cursor-not-allowed"} text-white font-bold py-2 px-4 rounded`}>
             Continue to {selectedAddress ? "Payment" : "Select an Address"}
           </button>
         </div>

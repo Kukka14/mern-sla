@@ -19,12 +19,12 @@ export const getAddresses = async (req, res) => {
 
 export const createAddress = async (req, res) => {
     try {
-        const { userId, addressLine1, city, state, postalCode, country } = req.body;
+        const { userId, addressLine1,addressLine2, city, state, postalCode, country } = req.body;
 
        
 
         
-        const addressData = { userId, addressLine1, city, state, postalCode, country };
+        const addressData = { userId, addressLine1,addressLine2, city, state, postalCode, country };
         const address = await Address.create(addressData);
 
         // Return success response
@@ -59,5 +59,19 @@ export const deleteAddress = async (req, res) => {
     } catch (error) {
         console.error('Error deleting address:', error);
         res.status(500).json({ error: 'An error occurred while deleting address' });
+    }
+};
+
+export const getAddressById = async (req, res) => {
+    const { addressId } = req.body; // Update this line to destructure addressId from req.body
+    try {
+        const address = await Address.findOne({ _id: addressId });
+        if (!address) {
+            return res.status(404).json({ error: 'Address not found' });
+        }
+        res.json({ address });
+    } catch (error) {
+        console.error('Error fetching address:', error);
+        res.status(500).json({ error: 'An error occurred while fetching address' });
     }
 };
