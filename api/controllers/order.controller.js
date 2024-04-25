@@ -63,3 +63,61 @@ export const getOrderDetails = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while getting the order details' });
   }
 };
+
+export const getAllDeliveredOrders = async (req, res) => {
+  try {
+    const deliveredOrders = await Order.find({ orderStatus: 'delivered', paymentStatus: 'paid' });
+
+    res.status(200).json({ orders: deliveredOrders });
+  } catch (error) {
+    console.error('Error getting delivered orders:', error);
+    res.status(500).json({ error: 'An error occurred while getting the delivered orders' });
+  }
+};
+
+export const getNewOrders = async (req, res) => {
+  try {
+    const currentDate = new Date();
+    const sevenDaysAgo = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+    const newOrders = await Order.find({
+      orderStatus: 'pending',
+      createdAt: { $gte: sevenDaysAgo }
+    });
+
+    res.status(200).json({ orders: newOrders });
+  } catch (error) {
+    console.error('Error getting new orders:', error);
+    res.status(500).json({ error: 'An error occurred while getting the new orders' });
+  }
+};
+export const getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find();
+
+    res.status(200).json({ orders });
+  } catch (error) {
+    console.error('Error getting all orders:', error);
+    res.status(500).json({ error: 'An error occurred while getting all orders' });
+  }
+};
+export const searchOrder = async (req, res) => {
+  try {
+    const { keyword } = req.query;
+
+    const orders = await Order.find({
+      $or: [
+        { userId: { $regex: keyword, $options: 'i' } },
+        { addressId: { $regex: keyword, $options: 'i' } },
+        { orderStatus: { $regex: keyword, $options: 'i' } },
+        { paymentStatus: { $regex: keyword, $options: 'i' } }
+      ]
+    });
+
+    res.status(200).json({ orders });
+  } catch (error) {
+    console.error('Error searching orders:', error);
+    res.status(500).json({ error: 'An error occurred while searching orders' });
+  }
+};
+
