@@ -1,5 +1,5 @@
 import express from 'express';
-import { createListing, getAllProduct, updateProduct, deleteProduct, getProductById } from '../controllers/listing.controller.js';
+import { createListing, getAllProduct, updateProduct, deleteProduct, getProductById, getProduct } from '../controllers/listing.controller.js';
 import { verifyToken } from '../utils/verifyUser.js';
 
 
@@ -11,5 +11,7 @@ router.post('/update/:id', updateProduct);
 router.get('/:id', getProductById);
 
 router.delete('/:id', deleteProduct);
+
+router.get('/', getProduct);
 
 export default router;

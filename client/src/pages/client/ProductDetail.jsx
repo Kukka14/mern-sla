@@ -2,14 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FaShoppingCart, FaMoneyBill } from "react-icons/fa";
+import { useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';  
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetail = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [category, setCategory] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [cardHeight, setCardHeight] = useState("auto");
+  const currentUser = useSelector((state) => state.user.currentUser) || null;
+  const [count, setCount] = useState(1); // State variable to store count
 
   useEffect(() => {
     const fetchProductDetail = async () => {
@@ -61,12 +68,63 @@ const ProductDetail = () => {
     );
   };
 
-  const handleBuy = (productId) => {
-    // Implement buy functionality
+  const handleBuy = () => {
+    if(currentUser) {
+      handleAddToCart();
+      setTimeout(() => {
+        navigate("/cart");
+      }, 4000);
+    } else {
+      toast.error("Please login to buy items to the cart", {
+        onClose: () => {
+          navigate("/sign-in");
+        }
+      });
+    }
+  };
+  
+  const handleAddToCart = async () => {
+    if (!currentUser) {
+      toast.error("Please login to add items to the cart");
+      history.push("/signin");
+      return;
+    }
+    try {
+      const response = await fetch("/api/cart/addToCart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: currentUser._id, // Use currentUser from Redux store
+          productId: product._id,
+          productName: product.name,
+          productImages: product.imageUrls,
+          price: product.regularPrice,
+          quantity: count, // Pass count
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add item to cart");
+      }
+
+      const data = await response.json();
+
+      if (data.success && data.updated) {
+        toast.success("Item added to cart successfully");
+      } else if (data.success && !data.updated) {
+        toast.success("Item quantity updated successfully");
+      } else {
+        console.error("Failed to add item to cart:", data.error);
+      }
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+    }
   };
 
-  const handleAddToCart = (productId) => {
-    // Implement add to cart functionality
+  const handleChangeCount = (event) => {
+    setCount(parseInt(event.target.value)); // Update count when user changes it
   };
 
   return (
@@ -75,24 +133,25 @@ const ProductDetail = () => {
         <p className="text-center">Loading...</p>
       ) : product ? (
         <div
-          className="flex bg-green-200 rounded-lg shadow-md max-w-4xl"
+          className="flex justify-center w-full px-4"
           style={{ minHeight: cardHeight }}
         >
-          <div className="relative flex-1 p-8">
-            <div className="relative h-80 w-80">
+          <div className=" relative flex-1 w-full">
+            <div className=" relative h-full w-full flex items-center justify-center">
               <img
+                
                 src={product.imageUrls[currentImageIndex]}
                 alt={`Product Image ${currentImageIndex + 1}`}
-                className="w-full h-full object-contain rounded-lg transition-transform duration-300 transform hover:scale-105"
+                className="object-contain w-4/5   rounded-lg transition-transform duration-300 transform hover:scale-105 "
               />
               <button
-                className="absolute top-1/2 left-0 bg-black text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
+                className="absolute top-1/2 left-0 bg-backgreen2 bg-opacity-70 text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
                 onClick={handlePrevImage}
               >
                 &lt;
               </button>
               <button
-                className="absolute top-1/2 right-0 bg-black text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
+                className="absolute top-1/2 right-0 bg-backgreen2 bg-opacity-70  text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
                 onClick={handleNextImage}
               >
                 &gt;
@@ -114,15 +173,26 @@ const ProductDetail = () => {
                 Category: {category.categoryname}
               </p>
             )}
+            <div className="flex items-center mb-4"> {/* Count selection */}
+              <label className="text-lg font-semibold mr-2">Quantity:</label>
+              <input
+                type="number"
+                id="count"
+                min="1"
+                value={count}
+                onChange={handleChangeCount}
+                className="border border-gray-300 rounded-lg px-4 py-2 w-20 focus:outline-none focus:border-blue-500"
+              />
+            </div>
             <div className="flex ">
               <button
-                onClick={() => handleBuy(product.id)}
+                onClick={handleBuy}
                 className="flex items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded mr-3"
               >
                 <FaMoneyBill className="mr-2" /> Buy
               </button>
               <button
-                onClick={() => handleAddToCart(product.id)}
+                onClick={handleAddToCart}
                 className="flex items-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded"
               >
                 <FaShoppingCart className="mr-2" /> Add to Cart
@@ -133,6 +203,7 @@ const ProductDetail = () => {
       ) : (
         <p className="text-center">Product not found.</p>
       )}
+      <ToastContainer />
     </div>
   );
 };

@@ -54,3 +54,23 @@ export const deleteProduct = async (req, res, next) => {
       next(error);
   }
 };
+
+
+export const getProduct = async (req, res, next) => {
+  try {
+    const { productName, category } = req.query;
+    const query = {};
+
+    if (productName) {
+      query.name = { $regex: productName, $options: 'i' };
+    }
+    if (category) {
+      query.category = category;
+    }
+
+    const products = await Listing.find(query);
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+};
