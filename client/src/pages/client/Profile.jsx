@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   getDownloadURL, 
   getStorage, 
@@ -36,6 +37,9 @@ export default function Profile() {
   // allow write: if
   // request.resource.size < 2 * 1024 * 1024 &&
   // request.resource.contentType.matches('image/.*')
+
+  
+
 
   useEffect(() => {
     if (file) {
@@ -125,6 +129,8 @@ export default function Profile() {
       dispatch(deleteUserFailure(data.message));
     }
   };
+
+
   return (
     <div className='p-3 max-w-lg mx-auto bg-green-100 rounded-lg'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -213,6 +219,17 @@ export default function Profile() {
       </form>
       <div className = "flex justify-between mt-5">
       <span onClick={handleDeleteUser} className = 'text-red-700 cursor-pointer'> Delete Account</span>
+     
+      
+      
+
+      <Link to={`/my-reviews/${currentUser._id}`} className="btn">My Review</Link>
+
+    
+    <Link to={`/review?userId=${currentUser._id}`} className="btn">Add Review</Link>
+
+
+      
       <span onClick={handleSignOut} className = 'text-red-700 cursor-pointer'> Sign Out</span>
     </div>
 

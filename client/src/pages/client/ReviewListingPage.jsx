@@ -52,7 +52,7 @@ const ReviewListingPage = () => {
                                 <td className="border px-4 py-2">{review.comment}</td>
                                 <td className="border px-4 py-2">{review.rating}</td>
                                 <td className="border px-4 py-2">
-                                {review.imageUrl && Array.isArray(review.imageUrl) && review.imageUrl.map(url => (
+                                {review.imageUrls && Array.isArray(review.imageUrls) && review.imageUrls.map(url => (
                                      <img key={url} src={url} alt="Review" className="w-24 h-24 object-cover mr-2" />
                                 ))}
                                 </td>

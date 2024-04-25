@@ -38,3 +38,19 @@ export const deleteReview = async (req, res, next) => {
         next(error);
     }
 };
+
+
+
+const getUserReviewsById = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const reviews = await Review.find({ userId });
+    res.status(200).json(reviews);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export { getUserReviewsById };
+
+

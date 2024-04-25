@@ -35,6 +35,17 @@ app.use("/api/review", reviewRouter);
 app.use("/api/contact", contactRouter);
 app.use('/api/employee', employeeRouter);
 
+
+// Example endpoint in your backend
+
+
+
+
+
+
+
+
+
 app.use((err, req, res, next) => { 
     const statusCode = res.statusCode || 500;
     const message = err.message || 'Internal Server Error';

@@ -15,6 +15,11 @@ import ContactUs from './pages/client/ContactUs.jsx';
 import ReviewPage from './pages/client/ReviewPage.jsx';
 import ReviewListingPage from './pages/client/ReviewListingPage.jsx';
 import UpdateReviewPage from './pages/client/UpdateReviewPage.jsx';
+import MyReview from './pages/client/MyReview.jsx';
+
+
+
+
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -25,7 +30,7 @@ export default function App() {
       {isAdmin ? null : <Header />}
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/product-listing' element={<ProductListing/>} />
+       
         <Route path='contactus' element={<ContactUs/>} />
         
         <Route path='/sign-up' element={<SignUp />} />
@@ -33,16 +38,20 @@ export default function App() {
         
         
         <Route element={<PrivateRoute />}>
+        <Route path='/product-listing' element={<ProductListing/>} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
-          <Route path='review' element={<ReviewPage/>} />
+          <Route path='/review' element={<ReviewPage/>} />
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
+          <Route path="/my-reviews/:userId" element={<MyReview />} />  
+    
         </Route>
         
       </Routes>
     </BrowserRouter>
   );
 }
+
