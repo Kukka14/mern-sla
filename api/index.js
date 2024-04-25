@@ -1,8 +1,19 @@
+
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import sproductRouter from './routes/sproduct.route.js';
-import cors from 'cors'; 
+import adminRouter from './routes/admin.route.js';
+import userRouter from './routes/user.route.js';
+import authRouter from './routes/auth.route.js';
+import listingRouter from './routes/listing.route.js';
+import reviewRouter from './routes/review.route.js'
+import contactRouter from './routes/contact.route.js'
+import employeeRouter from './routes/employee.route.js';
+import cookieParser from 'cookie-parser';
+import cartRouter from './routes/cart.route.js';
+import catgoryRouter from './routes/category.route.js';
+import orderRouter from './routes/order.route.js';
+import SproductRouter from './routes/sproduct.route.js';
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(() => {
@@ -14,10 +25,32 @@ mongoose.connect(process.env.MONGO).then(() => {
 const app = express();
 
 app.use(express.json());
-app.use(cors()); // Use cors middleware
 
-app.use('/api/sproduct', sproductRouter);
+app.use(cookieParser());
 
 app.listen(5000, () => {
     console.log('Server is running on port 5000');
+
+});
+
+app.use("/api/admin", adminRouter);
+app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/listing", listingRouter);
+app.use("/api/review", reviewRouter);
+app.use("/api/contact", contactRouter);
+app.use('/api/employee', employeeRouter);
+app.use("/api/cart", cartRouter);
+app.use('/api/category', catgoryRouter);
+app.use('/api/order', orderRouter);
+app.use('/api/sproduct',SproductRouter);
+
+app.use((err, req, res, next) => { 
+    const statusCode = res.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
+    return res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message,
+    });
 });

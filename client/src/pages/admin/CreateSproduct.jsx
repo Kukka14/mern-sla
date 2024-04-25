@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function CreateSproduct() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     Supplier_Name: '',
     Supplier_Email: '',
     Product_Name: '',
     Supplier_Price: '',
     Quantity: '',
-    // const navigate = useNavigate()
   });
 
   const [error, setError] = useState(null);
@@ -22,26 +22,17 @@ function CreateSproduct() {
     });
   };
 
- 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       setError(null);
   
-      const response = await axios.post('/api/sproduct/add', formData); // Use Axios for POST request
-  
-      console.log('Response data:', response.data);
+      const response = await axios.post('/api/sproduct/add', formData);
   
       setLoading(false);
-      // Check response status and success property
-      if (!response.data || response.data.success !== true) {
-        setError(response.data.message || 'An error occurred.');
-        return;
-      }
-      // Handle success case, e.g., redirect
-       navigate('/sproduct')
+      
+      navigate('/sproduct');
     } catch (error) {
       setError(error.message || 'An error occurred.');
       setLoading(false);
@@ -50,7 +41,7 @@ function CreateSproduct() {
   };
   
   return (
-    <div className="min-h-screen bg-primary flex items-center justify-center">
+    <div className="min-h-screen bg-green-200 flex items-center justify-center">
       <div className="w-3/4 bg-white rounded p-3">
         <div className="flex justify-between mb-4">
           <h1 className="text-3xl font-semibold">Add New Supplier Product</h1>
@@ -95,19 +86,18 @@ function CreateSproduct() {
 
             <input
               type="text"
-              placeholder='Supplier Price'
-              className='border p-3 rounded-lg bg-gray-200'
-              id='Supplier_Price'
-              maxLength='8'
-              minLength='4'
+              placeholder="Supplier Price"
+              className="border p-3 rounded-lg bg-gray-200"
+              id="Supplier_Price"
+              maxLength="8"
+              minLength="4"
               required
-              inputMode='numeric'
+              inputMode="numeric"
               pattern="[0-9]*"
               title="Please enter only numbers"
               onChange={handleChange}
               value={formData.Supplier_Price}
             />
-
 
             <input
               type="number"

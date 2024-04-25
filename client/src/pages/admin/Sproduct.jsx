@@ -4,8 +4,10 @@ import axios from 'axios';
 import { FaSearch } from 'react-icons/fa'; // Importing search icon from react-icons/fa
 
 function Sproduct() {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]); // Initialize products as an empty array
     const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true); // State to manage loading status
+    const [error, setError] = useState(null); // State to manage error status
 
     const fetchProducts = async () => {
         try {
@@ -13,6 +15,9 @@ function Sproduct() {
             setProducts(response.data);
         } catch (error) {
             console.error('Error fetching products:', error);
+            setError(error); // Set error state if there's an error fetching products
+        } finally {
+            setLoading(false); // Set loading state to false regardless of success or failure
         }
     };
 
@@ -30,15 +35,24 @@ function Sproduct() {
         }
     };
 
+    // Conditional rendering based on loading and error states
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
     const filteredProducts = products.filter(product =>
         product.Supplier_Name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.Supplier_Email.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.Product_Name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.Supplier_Price.toString().includes(searchQuery) // Convert price to string before searching
+        product.Supplier_Price.toString().includes(searchQuery)
     );
 
     return (
-        <div className="min-h-screen bg-primary flex items-center justify-center">
+        <div className="min-h-screen bg-green-200 flex items-center justify-center">
             <div className="w-3/4 bg-white rounded p-3">
                 <div className="flex justify-between mb-4">
                     <Link to="/create-sproduct" className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">Add Products+</Link>

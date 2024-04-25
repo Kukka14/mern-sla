@@ -9,7 +9,7 @@ const sproductSchema = new mongoose.Schema(
         Supplier_Email:{
             type: String,
             required: true,
-            unique: true,
+            
         },
         Product_Name:{
             type: String,
