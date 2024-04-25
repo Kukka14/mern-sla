@@ -21,30 +21,33 @@ export default function Ordersummary() {
 
   const paymenthdl = async () => {
     try {
-      const response = await fetch(`/api/payment/checkout-session`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-         
-        },
-        body: JSON.stringify({ orderId })
-      });
-      const data = await response.json();
+      const cleanOrderId = orderId.split(':')[1];
+      console.log('cleanOrderId:', cleanOrderId);
   
-      console.log('Payment session response:', data); // Log the response data
-      
-      if (response.ok && data.success) {
-        console.log('Payment session created:', data);
-        window.location = data.session.url;
-      } else {
-        console.error('Error creating payment session:', data.message);
-        // Handle the error, e.g., show a toast message or redirect to an error page
-        toast.error(data.message);
+      const res = await fetch('/api/payment/checkout', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ orderId: cleanOrderId }) // Wrap orderId in an object
+      });
+  
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message + ' Please try again later.');
+      }
+  
+      const data = await res.json();
+      console.log('Payment data:', data);
+  
+      if (data.url) {
+        // Wait for the response from the server before redirecting
+        window.location.href = data.url;
+        toast.success('Payment Successful');
       }
     } catch (error) {
-      console.error('Error creating payment session:', error);
-      // Handle the error, e.g., show a toast message or redirect to an error page
-      toast.error('An error occurred while creating the payment session.');
+      console.error(error);
+      toast.error('Error processing payment. Please try again later.');
     }
   };
   
