@@ -66,7 +66,8 @@ export const getOrderDetails = async (req, res) => {
 
 export const getAllDeliveredOrders = async (req, res) => {
   try {
-    const deliveredOrders = await Order.find({ orderStatus: 'completed', paymentStatus: 'paid', trackingStatus: 'delivered' });
+    const deliveredOrders = await Order.find({ orderStatus: 'completed', paymentStatus: 'paid', trackingStatus: 'delivered' })
+      .sort({ createdAt: -1 }); // Sort by createdAt field in descending order
 
     res.status(200).json({ orders: deliveredOrders });
   } catch (error) {
@@ -121,3 +122,85 @@ export const searchOrder = async (req, res) => {
   }
 };
 
+export const changeTrackingStatus = async (req, res) => {
+  try {
+    const { orderId, trackingStatus } = req.body;
+
+    const updatedOrder = await Order.findOneAndUpdate(
+      { _id: orderId },
+      { $set: { trackingStatus } },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    res.status(200).json({ message: 'Tracking status updated successfully', order: updatedOrder });
+  } catch (error) {
+    console.error('Error changing tracking status:', error);
+    res.status(500).json({ error: 'An error occurred while changing the tracking status' });
+  }
+};
+export const deleteOrder = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+
+    const deletedOrder = await Order.findByIdAndDelete(orderId);
+
+    if (!deletedOrder) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    res.status(200).json({ message: 'Order deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting order:', error);
+    res.status(500).json({ error: 'An error occurred while deleting the order' });
+  }
+};
+
+export const updatePaymentStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { paymentStatus } = req.body;
+
+    const updatedOrder = await Order.findByIdAndUpdate(orderId, { paymentStatus }, { new: true });
+
+    res.status(200).json({ message: 'Payment status updated successfully', order: updatedOrder });
+  } catch (error) {
+    console.error('Error updating payment status:', error);
+    res.status(500).json({ error: 'An error occurred while updating the payment status' });
+  }
+};
+
+// Controller function to update tracking status
+export const updateTrackingStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { trackingStatus } = req.body;
+
+    let nextTrackingStatus = trackingStatus;
+    let orderStatus = 'pending'; // Default order status
+
+    if (trackingStatus === 'delivered') {
+      // Check if payment is paid
+      const order = await Order.findById(orderId);
+      if (order.paymentStatus === 'paid') {
+        // If payment is paid and tracking status is delivered, set order status to completed
+        orderStatus = 'completed';
+      }
+    }
+
+    // Update order status
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { trackingStatus: nextTrackingStatus, orderStatus },
+      { new: true }
+    );
+
+    res.status(200).json({ message: 'Tracking status updated successfully', order: updatedOrder });
+  } catch (error) {
+    console.error('Error updating tracking status:', error);
+    res.status(500).json({ error: 'An error occurred while updating the tracking status' });
+  }
+};
