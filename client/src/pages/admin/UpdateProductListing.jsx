@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import {
   getDownloadURL,
   getStorage,
@@ -7,12 +9,11 @@ import {
 } from "firebase/storage";
 import { app } from "../../firebase";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 import logo from "./../../images/logo2.png";
 import dashboard from "./../../images/icons8-arrow-50 (1).png";
-import { FaSortAmountDown } from "react-icons/fa";
 import AdminHeader from "../../components/AdminHeader";
 
 export default function CreateListing() {
@@ -20,6 +21,7 @@ export default function CreateListing() {
   const navigate = useNavigate();
   const params = useParams();
   const [files, setFiles] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
@@ -28,30 +30,46 @@ export default function CreateListing() {
     type: "rent",
     regularPrice: 50,
     quantity: 0,
+    category: "",
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  
-  useEffect (() => {
-    const fetchProduct = async () => {
-        const productId = params.id;
-        const res = await fetch(`/api/listing/${productId}`);
-        const data = await res.json();
 
-        if(data.success === false){
-          console.log(data.message);
-          return;
-        }
-        setFormData(data);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("/api/category/getAllCategories");
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
     };
-    fetchProduct();
-}, []);  
 
+    const fetchProduct = async () => {
+      const productId = params.id;
+      const res = await fetch(`/api/listing/${productId}`);
+      const data = await res.json();
+
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setFormData(data);
+      // Set current category in formData
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        category: data.category._id,
+      }));
+    };
+
+    fetchCategories();
+    fetchProduct();
+  }, []);
 
   const handleImageSubmit = (e) => {
-    if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
+    if (files.length > 0 && files.length + formData.imageUrls.length < 11) {
       setUploading(true);
       setImageUploadError(false);
       const promises = [];
@@ -73,7 +91,7 @@ export default function CreateListing() {
           setUploading(false);
         });
     } else {
-      setImageUploadError("You can only upload 6 images per listing");
+      setImageUploadError("You can only upload 10 images per listing");
       setUploading(false);
     }
   };
@@ -116,9 +134,12 @@ export default function CreateListing() {
         ...formData,
         type: e.target.id,
       });
-    }
-
-    if (
+    } else if (e.target.id === "category") {
+      setFormData({
+        ...formData,
+        category: e.target.value,
+      });
+    } else if (
       e.target.type === "number" ||
       e.target.type === "text" ||
       e.target.type === "textarea"
@@ -163,11 +184,7 @@ export default function CreateListing() {
     }
   };
 
-  
-
   return (
-    
-
     <div className="flex h-screen">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
@@ -198,16 +215,17 @@ export default function CreateListing() {
           />
         </div>
       </div>
-    
 
       <div className="basis-4/5 ">
         <AdminHeader />
         <main className="p-3 max-w-4xl mx-auto">
-          <div className="bg-gray- rounded-lg shadow-md p-8">
-            <h1 className="text-4xl font-bold text-center mb-8">
-              Update a Listing
+          <div className="flex justify-center mt-7">
+            <h1 className="text-center text-3xl font-bold mb-4 w-1/2 border-b-2 border-green-600 py-2">
+              Product Listing
             </h1>
-            <form onSubmit={handleSubmit} className="items-center mt-12">
+          </div>
+          <div className="bg-green-100 rounded-lg shadow-md p-8 mt-2">
+            <form onSubmit={handleSubmit} className="items-center ">
               <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                 <div className="space-y-4">
                   <label
@@ -218,17 +236,16 @@ export default function CreateListing() {
                   </label>
                   <input
                     type="text"
-                    placeholder="Name"
+                    placeholder="Product Name"
                     className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
                     id="name"
                     maxLength="62"
-                    minLength="10"
+                    minLength="1"
                     required
                     onChange={handleChange}
                     value={formData.name}
                   />
                 </div>
-                
 
                 <div className="space-y-4">
                   <label
@@ -273,7 +290,7 @@ export default function CreateListing() {
                       onChange={handleChange}
                       checked={formData.type === "rent"}
                     />
-                    <label htmlFor="sale" className="font-semibold">
+                    <label htmlFor="rent" className="font-semibold">
                       For Rent
                     </label>
                   </div>
@@ -289,7 +306,7 @@ export default function CreateListing() {
                   <input
                     type="number"
                     id="regularPrice"
-                    min="50"
+                    min="1"
                     max="10000000"
                     required
                     className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
@@ -300,21 +317,44 @@ export default function CreateListing() {
 
                 <div className="space-y-4">
                   <label
-                    htmlFor="pprice"
+                    htmlFor="quantity"
                     className="block text-lg font-semibold"
                   >
-                    Quantity (Rs:)
+                    Quantity
                   </label>
                   <input
                     type="number"
                     id="quantity"
-                    min="0"
+                    min="1"
                     max="10000000"
                     required
                     className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
                     onChange={handleChange}
                     value={formData.quantity}
                   />
+                </div>
+
+                <div className="space-y-4">
+                  <label
+                    htmlFor="pcategory"
+                    className="block text-lg font-semibold"
+                  >
+                    Product category
+                  </label>
+
+                  <select
+                    id="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                    className="block w-full py-2 pl-3 pr-10 mt-1 text-base border border-gray-300 focus:outline-none focus:border-blue-500 rounded-md"
+                  >
+                    <option value="">Select Category</option>
+                    {categories.map((category) => (
+                      <option key={category._id} value={category._id}>
+                        {category.categoryname}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="space-y-4">
@@ -378,7 +418,7 @@ export default function CreateListing() {
                   disabled={loading || uploading}
                   className="bg-blue-500 text-white px-8 py-4 rounded-lg w-full hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                 >
-                  {loading ? "Creating..." : "Update listing"}
+                  {loading ? "Updating..." : "Update listing"}
                 </button>
                 {error && <p className="text-red-700 text-sm">{error}</p>}
               </div>

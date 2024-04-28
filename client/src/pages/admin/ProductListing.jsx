@@ -52,7 +52,7 @@ export default function CreateListing() {
   }, []);
 
   const handleImageSubmit = (e) => {
-    if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
+    if (files.length > 0 && files.length + formData.imageUrls.length < 11) {
       setUploading(true);
       setImageUploadError(false);
       const promises = [];
@@ -74,7 +74,7 @@ export default function CreateListing() {
           setUploading(false);
         });
     } else {
-      setImageUploadError("You can only upload 6 images per listing");
+      setImageUploadError("You can only upload 10 images per listing");
       setUploading(false);
     }
   };
@@ -168,7 +168,7 @@ export default function CreateListing() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-auto">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
@@ -198,11 +198,10 @@ export default function CreateListing() {
       <div className="basis-4/5 ">
         <AdminHeader />
         <main className="p-3 max-w-4xl mx-auto">
-          <div className="bg-gray- rounded-lg shadow-md p-8">
-            <h1 className="text-4xl font-bold text-center mb-8">
-              Create a Listing
-            </h1>
-            <form onSubmit={handleSubmit} className="items-center mt-12">
+        <div className="flex justify-center mt-7"><h1 className="text-center text-3xl font-bold mb-4 w-1/2 border-b-2 border-green-600 py-2">Product Listing</h1></div>
+          <div className="bg-green-100 rounded-lg shadow-md p-8 mt-2">
+          
+            <form onSubmit={handleSubmit} className="items-center ">
               <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                 <div className="space-y-4">
                   <label
@@ -213,7 +212,7 @@ export default function CreateListing() {
                   </label>
                   <input
                     type="text"
-                    placeholder="Name"
+                    placeholder="Product Name"
                     className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
                     id="name"
                     maxLength="62"
@@ -283,7 +282,7 @@ export default function CreateListing() {
                   <input
                     type="number"
                     id="regularPrice"
-                    min="50"
+                    min="1"
                     max="10000000"
                     required
                     className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
