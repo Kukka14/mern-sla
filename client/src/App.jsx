@@ -28,6 +28,8 @@ import OrderDashboard from './pages/admin/OrderManagement/OrderDashboard.jsx';
 import NewOrders from './pages/admin/OrderManagement/NewOrders.jsx';
 import CompleteOrder from './pages/admin/OrderManagement/CompleteOrder.jsx';
 import ManageOrder from './pages/admin/OrderManagement/ManageOrder.jsx';
+import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
+
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
   const isAdmin = currentUser && currentUser.isAdmin; // Check if user is admin
@@ -53,7 +55,7 @@ export default function App() {
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
-          <Route path='/cartpop' element={<CartPopup/>} />
+          <Route path='/cartpop' element={<CartPopup/>} />9
           <Route path="/shipping-address" element={<ShippingAddress />} />
           <Route path='/product-listing' element={<ProductListing/>} />
           <Route path='/product-admin-dashboard' element={<ProductAdminDashboard />} />
@@ -64,6 +66,8 @@ export default function App() {
           <Route path="/new-orders-dashboard" element={<NewOrders />} />
           <Route path="/complete-orders-dashboard" element={<CompleteOrder />} />
           <Route path="/manage-orders-dashboard" element={<ManageOrder />} />
+          <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
+         
           
         </Route>
       </Routes>

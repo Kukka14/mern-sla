@@ -84,9 +84,10 @@ const ProductView = () => {
       const data = await response.json();
 
       if (data.success && data.updated) {
-        toast.success("Item added to cart successfully");
-      } else if (data.success && !data.updated) {
+        console.log(data.success, data.updated);
         toast.success("Item quantity updated successfully");
+      } else if (data.success && !data.updated) {
+        toast.success("Item added to cart successfully");
       } else {
         console.error("Failed to add item to cart:", data.error);
       }
