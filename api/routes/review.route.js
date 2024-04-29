@@ -11,3 +11,6 @@ router.delete('/:id', deleteReview);
 router.get('/:userId', getUserReviewsById);
 
 export default router;
+
+
+//sets up routes for handle various CRUD operations

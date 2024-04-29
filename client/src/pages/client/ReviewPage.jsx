@@ -1,11 +1,10 @@
-import { Button, Label, TextInput } from 'flowbite-react'
+import { Label, TextInput } from 'flowbite-react'
 import { useState } from 'react';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from '../../firebase';
 import StarRatingComponent from 'react-star-rating-component';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
 
 
 export default function ReviewPage() {
@@ -20,14 +19,10 @@ export default function ReviewPage() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const navigate = useNavigate();
   console.log(formData);
-
-
-
-
-
 
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
@@ -59,10 +54,10 @@ export default function ReviewPage() {
 
   const storeImage = async (file) => {
     return new Promise((resolve, reject) => {
-      const storage = getStorage(app);
-      const fileName = new Date().getTime() + file.name;
+      const storage = getStorage(app);                    //initialize firebase storage
+      const fileName = new Date().getTime() + file.name;            //create unique file name each uploaded
       const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      const uploadTask = uploadBytesResumable(storageRef, file);       // initiates the upload of the file to Firebase Storage 
       uploadTask.on(
         'state_changed',
         (snapshot) => {
@@ -89,10 +84,6 @@ export default function ReviewPage() {
     });
   };
 
-
-
-
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -100,28 +91,24 @@ export default function ReviewPage() {
     });
   };
 
-
-
-
   const { currentUser } = useSelector((state) => state.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (formData.imageUrls.length < 1)
-        return setError('You must upload at least one image');
-      if (!formData.rating)
-        return setError('Please provide a rating');
-
+      if (formData.imageUrls.length < 1) return setError('You must upload at least one image');
+      if (!formData.rating) return setError('Please provide a rating');
+  
       setLoading(true);
       setError(false);
-
+      setSuccessMessage(''); // Reset success message before submission
+  
       // Add user ID to formData
       const formDataWithUserId = {
         ...formData,
-        userId: currentUser._id
+        userId: currentUser._id,
       };
-
+  
       const res = await fetch('/api/review/addReview', {
         method: 'POST',
         headers: {
@@ -134,14 +121,17 @@ export default function ReviewPage() {
       if (data.success === false) {
         setError(data.message);
       } else {
-        navigate("/profile");
+        setSuccessMessage('Review submitted successfully!');
+        setTimeout(() => { // Delay navigation to display success message
+          navigate('/profile');
+        }, 2000);
       }
-      
     } catch (error) {
       setError(error.message);
       setLoading(false);
     }
   };
+  
 
   return (
     <div className='flex items-center justify-center min-h-screen bg-gray-200'>
@@ -163,7 +153,6 @@ export default function ReviewPage() {
               onStarClick={(nextValue) => setFormData({ ...formData, rating: nextValue })}
             />
           </div>
-
 
           <div className="space-y-4">
             <label htmlFor="images" className="block text-lg font-semibold">
@@ -195,9 +184,6 @@ export default function ReviewPage() {
             </p>
           </div>
 
-
-
-
           <div className="flex justify-center items-center h-full">
             <div className="grid grid-cols-3 gap-4 mb-8 mt-8">
               {formData.imageUrls.length > 0 &&
@@ -220,9 +206,6 @@ export default function ReviewPage() {
             </div>
           </div>
 
-
-
-
           <div className="sm:col-span-2">
             <button
               disabled={loading || uploading}
@@ -233,6 +216,8 @@ export default function ReviewPage() {
             {error && <p className="text-red-700 text-sm">{error}</p>}
           </div>
         </form>
+
+        {successMessage && <p className="text-green-700 text-sm">{successMessage}</p>}
 
       </div>
     </div>

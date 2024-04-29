@@ -13,8 +13,14 @@ import AddEmployee from './pages/admin/AddEmployee.jsx';
 import MainDashboard from './pages/admin/MainDashboard.jsx';
 import ContactUs from './pages/client/ContactUs.jsx';
 import ReviewPage from './pages/client/ReviewPage.jsx';
-import ReviewListingPage from './pages/client/ReviewListingPage.jsx';
+import ReviewListingPage from './pages/admin/ReviewListingPage.jsx';
 import UpdateReviewPage from './pages/client/UpdateReviewPage.jsx';
+import MyReview from './pages/client/MyReview.jsx';
+import AdminResponses from './pages/admin/AdminResponses.jsx';
+import AllResponses from './pages/admin/AllResponses.jsx';
+import ReviewAdminDashboard from './pages/admin/ReviewAdminDashboard.jsx';
+import ReviewReport from './pages/admin/ReviewReport.jsx';
+import ProductAdminDashboard from './pages/admin/ProductAdminDashboard.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -39,8 +45,20 @@ export default function App() {
           <Route path='/addEmployee' element={<AddEmployee />} />
           <Route path='review' element={<ReviewPage/>} />
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
+          <Route path='/reviewadmin' element={<ReviewAdminDashboard/>} />
+
+          <Route path='/product-admin-dashboard' element={<ProductAdminDashboard/>} />
+
+
+          
+
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
+          <Route path='my-reviews/:userId' element={<MyReview />} />
+          <Route path='/admin-responses' element={<AdminResponses />} />
+          <Route path='/all-responses' element={<AllResponses />} /> 
+          <Route path='/reviewreport' element={<ReviewReport />} />
+
         </Route>
       </Routes>
     </BrowserRouter>

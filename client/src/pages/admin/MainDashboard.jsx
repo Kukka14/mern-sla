@@ -95,31 +95,9 @@ export default function MainDashboard() {
               </div>
             </Link>
           </div>
-<<<<<<< HEAD
-          <div className='flex flex-row justify-center items-center gap-7'>
-            <Link to='/reviewlisting'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
-              <img src={customerCare} alt="Customer Care Management" className='w-16 h-15 mx-4 my-2'/>
-              <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
-              <p className='text-sectiontext text-center'>Customer Care Management</p>
-            </div></Link>
-            <Link to='/paymentDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
-              <img src={payment} alt="Payment Management" className='w-16 h-15 mx-4 my-2'/>
-              <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
-              <p className='text-sectiontext'>Payment Management</p>
-            </div></Link>
-            <Link to='/employeeDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
-              <img src={employee} alt="Employee Management" className='w-16 h-15 mx-4 my-2'/>
-              <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
-              <p className='text-sectiontext'>Employee Management</p>
-            </div></Link>
-            <Link to='/promotionDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
-              <img src={promotion} alt="Category & Promotion Management" className='w-16 h-15 mx-4 my-2'/>
-              <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
-              <p className='text-sectiontext text-center'>Category & Promotion Management</p>
-            </div></Link>
-=======
+        
           <div className="flex flex-row justify-center items-center gap-7">
-            <Link to="/cusCareDashBoard">
+            <Link to="/reviewadmin">
               <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
                 <img
                   src={customerCare}
@@ -167,7 +145,7 @@ export default function MainDashboard() {
                 </p>
               </div>
             </Link>
->>>>>>> main
+ 
           </div>
         </div>
       </div>

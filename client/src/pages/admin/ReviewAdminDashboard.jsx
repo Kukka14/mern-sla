@@ -4,7 +4,12 @@ import dashboard from './../../images/icons8-arrow-50 (1).png';
 import { FaSortAmountDown } from 'react-icons/fa';
 import AdminHeader from '../../components/AdminHeader';
 
-export default function ProductAdminDashboard() {
+
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+
+export default function ReviewAdminDashboard() {
   return (
     <div className='flex h-screen'>
 
@@ -21,9 +26,9 @@ export default function ProductAdminDashboard() {
 
         {/* Navigation */}
         <div className='space-y-1'>
-          <NavLink icon={dashboard} text="Main Dashboard" to="/product-admin-dashboard" />
-          <NavLink icon={dashboard} text="Create Listing" to="/product-listing" />
-          <NavLink icon={dashboard} text="View Products" to="/product-view" />
+          <NavLink icon={dashboard} text="Main Dashboard" to="/reviewadmin" />
+          <NavLink icon={dashboard} text="View Reviews" to="/reviewlisting" />
+          <NavLink icon={dashboard} text="Add Respond" to="/admin-responses" />
           {/* Add more navigation items as needed */}
         </div>
       </div>

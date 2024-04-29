@@ -197,6 +197,7 @@ export default function CreateListing() {
 
       <div className="basis-4/5 ">
         <AdminHeader />
+        
         <main className="p-3 max-w-4xl mx-auto">
         <div className="flex justify-center mt-7"><h1 className="text-center text-3xl font-bold mb-4 w-1/2 border-b-2 border-green-600 py-2">Product Listing</h1></div>
           <div className="bg-green-100 rounded-lg shadow-md p-8 mt-2">
