@@ -28,12 +28,11 @@ import OrderDashboard from './pages/admin/OrderManagement/OrderDashboard.jsx';
 import NewOrders from './pages/admin/OrderManagement/NewOrders.jsx';
 import CompleteOrder from './pages/admin/OrderManagement/CompleteOrder.jsx';
 import ManageOrder from './pages/admin/OrderManagement/ManageOrder.jsx';
-
-
 import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboard.jsx';
 import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
 
 import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
+
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -63,7 +62,6 @@ export default function App() {
          
           <Route path='/cartpop' element={<CartPopup/>} />
 
-          <Route path="/customer-management" element={<CustomerManagement />} /> 
 
           <Route path="/shipping-address" element={<ShippingAddress />} />
           <Route path='/product-listing' element={<ProductListing/>} />
@@ -81,8 +79,6 @@ export default function App() {
         
           <Route path="/customerDashBoard" element={<CustomerDashboard />} />
           <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
-         
-          
 
         </Route>
       </Routes>
