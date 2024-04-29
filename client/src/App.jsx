@@ -29,6 +29,7 @@ import NewOrders from './pages/admin/OrderManagement/NewOrders.jsx';
 import CompleteOrder from './pages/admin/OrderManagement/CompleteOrder.jsx';
 import ManageOrder from './pages/admin/OrderManagement/ManageOrder.jsx';
 import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
+
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
   const isAdmin = currentUser && currentUser.isAdmin; // Check if user is admin
@@ -66,6 +67,7 @@ export default function App() {
           <Route path="/complete-orders-dashboard" element={<CompleteOrder />} />
           <Route path="/manage-orders-dashboard" element={<ManageOrder />} />
           <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
+         
           
         </Route>
       </Routes>
