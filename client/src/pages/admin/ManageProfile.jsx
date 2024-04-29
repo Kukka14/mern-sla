@@ -67,8 +67,8 @@ const ManageProfile = () => {
         </div>
 
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
-  <p style={{ fontSize: '20px', fontWeight: 'bold' }}>Total Users: {userCount}</p>
-</div>
+          <p style={{ fontSize: '20px', fontWeight: 'bold' }}>Total Users: {userCount}</p>
+        </div>
 
         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
           <thead>
@@ -76,6 +76,7 @@ const ManageProfile = () => {
               <th style={{ border: '3px solid black', padding: '20px', color: 'white', backgroundColor: '#443F82' }}>List</th>
               <th style={{ border: '3px solid black', padding: '20px', color: 'white', backgroundColor: '#443F82' }}>ID</th>
               <th style={{ border: '3px solid black', padding: '20px', color: 'white', backgroundColor: '#443F82' }}>Username</th>
+              <th style={{ border: '3px solid black', padding: '20px', color: 'white', backgroundColor: '#443F82' }}>Email</th>
               <th style={{ border: '3px solid black', padding: '20px', color: 'white', backgroundColor: '#443F82' }}>Actions</th>
             </tr>
           </thead>
@@ -85,6 +86,7 @@ const ManageProfile = () => {
                 <td style={{ border: '3px solid black', padding: '8px', color: 'black' }}>{index + 1}</td>
                 <td style={{ border: '3px solid black', padding: '8px', color: 'black' }}>{user._id}</td>
                 <td style={{ border: '3px solid black', padding: '8px', color: 'black' }}>{user.username}</td>
+                <td style={{ border: '3px solid black', padding: '8px', color: 'black' }}>{user.email}</td>
                 <td style={{ border: '3px solid black', padding: '8px' }}>
                   <button
                     onClick={() => handleDeleteUser(user._id)}

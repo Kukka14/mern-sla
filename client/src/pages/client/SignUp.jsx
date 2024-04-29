@@ -83,7 +83,13 @@ export default function SignUp() {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="p-5 bg-white rounded-lg shadow-lg" style={{ maxWidth: '500px', width: '500%', backgroundColor: 'rgba(144, 162, 158, 0.8)' }}>
+      <div 
+        className="p-5 rounded-lg shadow-lg" 
+        style={{ 
+          maxWidth: '500px', 
+          width: '100%', 
+          backgroundColor: 'rgba(128, 128, 128, 0.5)', // Gray color with transparency
+        }}>
         <h1 className='text-3xl text-center font-semibold my-3 '>Sign Up</h1>
         {errorMessage.general && <p className='text-red-500'>{errorMessage.general}</p>}
         <form onSubmit={handleSubmit} className='flex flex-col items-center gap-4'>
@@ -148,9 +154,20 @@ export default function SignUp() {
             id='address'
             onChange={handleChange}
           />
-          <button disabled={loading} className='bg-green-900 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
-            {loading ? 'Loading...' : 'Sign Up'}
-          </button>
+           <button
+                disabled={loading}
+                style={{
+                  color: 'white',
+                  padding: '1rem 2rem',
+                  borderRadius: '0.5rem',
+                  border: 'none',
+                  cursor: 'pointer',
+                  backgroundColor: 'rgba(0, 128, 0, 0.8)', // Adjust the alpha value for transparency
+                }}
+                className={loading ? 'opacity-80 cursor-not-allowed' : 'hover:opacity-95'} 
+              >
+                {loading ? 'Loading...' : 'Sign Up'}
+              </button>
         </form>
         <div className='flex gap-2 mt-5'>
           <p>Have an account?</p>
