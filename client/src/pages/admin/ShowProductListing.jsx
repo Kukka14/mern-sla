@@ -143,7 +143,7 @@ const ReviewProductList = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-auto">
       <div className="bg-sideNavBackground basis-1/5 p-4">
         {/* Logo */}
         <div className="flex justify-center items-center mb-8">
