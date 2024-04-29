@@ -23,7 +23,8 @@ export default function CustomerDashboard() {
         <div className='space-y-1'>
           <NavLink icon={dashboard} text="Main Dashboard" to="/product-admin-dashboard" />
           <NavLink icon={dashboard} text="Manage Profile" to="/customer-management" />
-          <NavLink icon={dashboard} text="Report" to="/customer-repor" />
+          
+          
           {/* Add more navigation items as needed */}
         </div>
       </div>

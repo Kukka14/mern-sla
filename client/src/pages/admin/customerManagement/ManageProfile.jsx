@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import logo from './../../../images/logo2.png';
+import dashboard from './../../../images/icons8-arrow-50 (1).png';
+import AdminHeader from './../../../components/AdminHeader';
+import { Link } from 'react-router-dom';
 
 const ManageProfile = () => {
   const [users, setUsers] = useState([]);
@@ -49,6 +53,42 @@ const ManageProfile = () => {
   };
 
   return (
+   
+    <div className='flex h-screen'>
+
+      {/* Sidebar */}
+      <div className='bg-sideNavBackground w-1/5 p-4'>
+
+        {/* Logo */}
+        <div className='flex justify-center items-center mb-8'>
+          <img src={logo} alt="Company Logo" className='w-48 h-auto'/>
+        </div>
+        
+        {/* Separate Line */}
+        <hr className="border-gray-700 my-4"/>
+
+        {/* Navigation */}
+        <div className='space-y-1'>
+          <NavLink icon={dashboard} text="Main Dashboard" to="/product-admin-dashboard" />
+          <NavLink icon={dashboard} text="Manage Profile" to="/customer-management" />
+          
+          
+          {/* Add more navigation items as needed */}
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className='flex-1'>
+
+        {/* Header */}
+        <AdminHeader />
+
+        {/* Main Content Area */}
+        <div className='p-8'></div>
+       
+      
+
+
     <div style={{ backgroundColor: '#F1F2EB', display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
       <div style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
         <h1 className='text-3xl font-semibold text-center my-7'>User Details</h1>
@@ -72,22 +112,22 @@ const ManageProfile = () => {
 
         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid black', backgroundColor: '#443F82' }}>
-              <th style={{ border: '3px solid black', padding: '20px', color: 'white', backgroundColor: '#443F82' }}>List</th>
-              <th style={{ border: '3px solid black', padding: '20px', color: 'white', backgroundColor: '#443F82' }}>ID</th>
-              <th style={{ border: '3px solid black', padding: '20px', color: 'white', backgroundColor: '#443F82' }}>Username</th>
-              <th style={{ border: '3px solid black', padding: '20px', color: 'white', backgroundColor: '#443F82' }}>Email</th>
-              <th style={{ border: '3px solid black', padding: '20px', color: 'white', backgroundColor: '#443F82' }}>Actions</th>
+            <tr style={{ borderBottom: '1px solid black', backgroundColor: '#10b981' }}>
+              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>List</th>
+              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>ID</th>
+              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>Username</th>
+              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>Email</th>
+              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.map((user, index) => (
-              <tr key={user._id} style={{ backgroundColor: index % 2 === 0 ? '#fffffff' : '#D5D4E3' }}>
-                <td style={{ border: '3px solid black', padding: '8px', color: 'black' }}>{index + 1}</td>
-                <td style={{ border: '3px solid black', padding: '8px', color: 'black' }}>{user._id}</td>
-                <td style={{ border: '3px solid black', padding: '8px', color: 'black' }}>{user.username}</td>
-                <td style={{ border: '3px solid black', padding: '8px', color: 'black' }}>{user.email}</td>
-                <td style={{ border: '3px solid black', padding: '8px' }}>
+              <tr key={user._id} style={{ backgroundColor: index % 2 === 0 ? '#fffffff' : '#e7e5e4' }}>
+                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{index + 1}</td>
+                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user._id}</td>
+                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user.username}</td>
+                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user.email}</td>
+                <td style={{ border: '1px solid black', padding: '8px' }}>
                   <button
                     onClick={() => handleDeleteUser(user._id)}
                     className="bg-red-500 text-white py-2 px-4 rounded-lg"
@@ -101,13 +141,28 @@ const ManageProfile = () => {
         </table>
        
         <div>
-          <button onClick={handleGenerateReport} style={{ backgroundColor: 'blue', color: 'white', padding: '10px', borderRadius: '5px', border: 'none' }}>
+          <button onClick={handleGenerateReport} style={{ backgroundColor: '#10b981', color: 'white', padding: '10px', borderRadius: '5px', border: 'none' }}>
             Generate Report
           </button>
         </div>
       </div>
     </div>
+
+    </div>
+      </div>
+    
   );
 };
 
 export default ManageProfile;
+
+
+// NavLink Component for sidebar navigation items
+function NavLink({ icon, text, to }) {
+  return (
+    <Link to={to} className='flex items-center text-white py-2 px-4 rounded-md  bg-sideNavButton hover:bg-sideNavButtonhover '>
+      <img src={icon} alt={text} className='w-6 h-6 mr-4'/>
+      <span className='text-lg font-semibold'>{text}</span>
+    </Link>
+  );
+}
