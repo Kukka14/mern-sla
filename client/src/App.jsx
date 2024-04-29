@@ -29,8 +29,12 @@ import NewOrders from './pages/admin/OrderManagement/NewOrders.jsx';
 import CompleteOrder from './pages/admin/OrderManagement/CompleteOrder.jsx';
 import ManageOrder from './pages/admin/OrderManagement/ManageOrder.jsx';
 
+
 import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboard.jsx';
 import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
+
+import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
+
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
   const isAdmin = currentUser && currentUser.isAdmin; // Check if user is admin
@@ -55,8 +59,12 @@ export default function App() {
           <Route path='cart' element={<Cart/>} />
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
+
          
           <Route path='/cartpop' element={<CartPopup/>} />
+
+          <Route path="/customer-management" element={<CustomerManagement />} /> 
+
           <Route path="/shipping-address" element={<ShippingAddress />} />
           <Route path='/product-listing' element={<ProductListing/>} />
           <Route path='/product-admin-dashboard' element={<ProductAdminDashboard />} />
@@ -66,11 +74,16 @@ export default function App() {
           <Route path="/order-dashboard" element={<OrderDashboard />} />
           <Route path="/new-orders-dashboard" element={<NewOrders />} />
           <Route path="/complete-orders-dashboard" element={<CompleteOrder />} />
+
           <Route path="/manage-orders-dashboard" element={<ManageOrder/>}/>
           <Route path="/customer-report" element={<ManageProfileReport />} />
           <Route path="/customer-management" element={<ManageProfile />} />
         
           <Route path="/customerDashBoard" element={<CustomerDashboard />} />
+          <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
+         
+          
+
         </Route>
       </Routes>
     </BrowserRouter>
