@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 import logo from "./../../images/logo2.png";
 import dashboard from "./../../images/icons8-arrow-50 (1).png";
 import AdminHeader from "../../components/AdminHeader";
@@ -10,6 +13,88 @@ const ReviewProductList = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [product, setProduct] = useState([]);
+  const [error, setError] = useState(null);
+  const [search, setSearch] = useState("");
+  const [selectedCatergories, setSelectedCatergories] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/category/`);
+        const data = await res.json();
+        console.log(data);
+        setCategories(data);
+      } catch (error) {
+        setError(error.message);
+      }
+      setLoading(false);
+    };
+
+    fetchCategories();
+  }, []);
+
+  const handleChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        let url = "/api/listing?";
+        if (search) {
+          url += `productName=${search}`;
+          if (selectedCategory) {
+            url += `&category=${selectedCategory}`;
+          }
+        } else if (selectedCategory) {
+          url += `category=${selectedCategory}`;
+        }
+
+        const response = await axios.get(url);
+        setProduct(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProducts();
+  }, [search, selectedCategory]);
+
+  //   console.log(product);
+
+  const downloadPdf = () => {
+    console.log(categories); // Check if categories state is populated
+    const doc = new jsPDF();
+    doc.text("Product List", 14, 16);
+    doc.autoTable({
+      theme: "striped",
+      startY: 22,
+      head: [["Name", "Description", "Price", "Type", "Stock", "Category"]],
+      body: product.map((product) => {
+        const category = categories.find(
+          (category) => category._id === product.category
+        );
+        console.log(category); // Check if category object is retrieved correctly
+        const categoryname = category ? category.categoryname : ""; // Assuming categoryName is a property of your category object
+        console.log(categoryname); // Check if categoryName is correctly assigned
+        return [
+          product.name,
+          product.description,
+          product.regularPrice,
+          product.type,
+          product.quantity,
+          categoryname,
+        ];
+      }),
+    });
+    doc.save("product-list.pdf");
+  };
 
   useEffect(() => {
     fetchProducts();
@@ -87,41 +172,58 @@ const ReviewProductList = () => {
       <div className="basis-4/5 ">
         <AdminHeader />
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold mb-4">Review Listing</h1>
-          <div className="flex mb-4">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search..."
-              className="w-full px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none"
-            />
+        <div className="flex justify-center"><h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">Listed Products</h1></div>
+
+
+          <div className="flex justify-center mb-10  ">
+            <form className="flex items-center bg-sectionBackground rounded-lg shadow-md border border-green-200 px-4 py-2">
+              <input
+                type="text"
+                placeholder="Search by name..."
+                onChange={(e) => setSearch(e.target.value)}
+                className="bg-green-100 w-80 rounded-lg border border-green-300 h-10 px-4 mr-4 focus:outline-none"
+              />
+              <select
+                onChange={handleChange}
+                value={selectedCategory}
+                className="p-2 rounded-lg border border-green-300 focus:outline-none bg-white"
+              >
+                <option value="">All Categories</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.categoryname}
+                  </option>
+                ))}
+              </select>
+            </form>
+
             <button
-              onClick={handleSearch}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+              onClick={downloadPdf}
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-md ml-4 "
             >
-              Search
+              Report
             </button>
           </div>
+
           <div className="overflow-x-auto">
             <table className="table-auto w-full bg-white shadow-md rounded-lg">
               <thead>
-                <tr className="bg-gray-200">
-                  <th className="px-4 py-2 text-left">Name</th>
+                <tr className="bg-green-300">
+                  <th className="px-4 py-2 text-left rounded-tl-lg">Name</th>
                   <th className="px-4 py-2 text-left">Description</th>
                   <th className="px-4 py-2 text-left">Type</th>
                   <th className="px-4 py-2 text-left">Price</th>
                   <th className="px-4 py-2 text-left">Quantity</th>
                   <th className="px-4 py-2 text-left">Category</th>
                   <th className="px-4 py-2 text-left">Images</th>
-                  <th className="px-4 py-2 text-left">Delete/Update</th>
+                  <th className="px-4 py-2 text-left rounded-tr-lg">Delete/Update</th>
                 </tr>
               </thead>
               <tbody>
-                {products.map((product, index) => (
+                {product.map((product, index) => (
                   <tr
                     key={product._id}
-                    className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}
+                    className={index % 2 === 0 ? "bg-green-100" : "bg-green-200"}
                   >
                     <td className="border px-4 py-2">{product.name}</td>
                     <td className="border px-4 py-2">{product.description}</td>
@@ -169,6 +271,8 @@ const ReviewProductList = () => {
               </tbody>
             </table>
           </div>
+
+          
         </div>
       </div>
     </div>

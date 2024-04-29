@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FaShoppingCart, FaMoneyBill } from "react-icons/fa";
 import { useSelector } from 'react-redux';
-import { toast,ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';  
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,6 +16,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [cardHeight, setCardHeight] = useState("auto");
   const currentUser = useSelector((state) => state.user.currentUser) || null;
+  const [count, setCount] = useState(1); // State variable to store count
 
   useEffect(() => {
     const fetchProductDetail = async () => {
@@ -82,8 +83,6 @@ const ProductDetail = () => {
     }
   };
   
-
-
   const handleAddToCart = async () => {
     if (!currentUser) {
       toast.error("Please login to add items to the cart");
@@ -102,7 +101,7 @@ const ProductDetail = () => {
           productName: product.name,
           productImages: product.imageUrls,
           price: product.regularPrice,
-          quantity: 1, // Adjust quantity as needed
+          quantity: count, // Pass count
         }),
       });
 
@@ -125,21 +124,25 @@ const ProductDetail = () => {
     }
   };
 
+  const handleChangeCount = (event) => {
+    setCount(parseInt(event.target.value)); // Update count when user changes it
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       {loading ? (
         <p className="text-center">Loading...</p>
       ) : product ? (
         <div
-          className="flex bg-green-200 rounded-lg shadow-md max-w-4xl"
+          className="flex justify-center w-full px-4"
           style={{ minHeight: cardHeight }}
         >
-          <div className="relative flex-1 p-8">
-            <div className="relative h-80 w-80">
+          <div className="relative flex-1 w-full">
+            <div className="relative h-full w-full flex items-center justify-center">
               <img
                 src={product.imageUrls[currentImageIndex]}
                 alt={`Product Image ${currentImageIndex + 1}`}
-                className="w-full h-full object-contain rounded-lg transition-transform duration-300 transform hover:scale-105"
+                className="object-contain w-4/5   rounded-lg transition-transform duration-300 transform hover:scale-105"
               />
               <button
                 className="absolute top-1/2 left-0 bg-black text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
@@ -170,15 +173,26 @@ const ProductDetail = () => {
                 Category: {category.categoryname}
               </p>
             )}
+            <div className="flex items-center mb-4"> {/* Count selection */}
+              <label className="text-lg font-semibold mr-2">Quantity:</label>
+              <input
+                type="number"
+                id="count"
+                min="1"
+                value={count}
+                onChange={handleChangeCount}
+                className="border border-gray-300 rounded-lg px-4 py-2 w-20 focus:outline-none focus:border-blue-500"
+              />
+            </div>
             <div className="flex ">
               <button
-                onClick={() => handleBuy(product.id)}
+                onClick={handleBuy}
                 className="flex items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded mr-3"
               >
                 <FaMoneyBill className="mr-2" /> Buy
               </button>
               <button
-                onClick={() => handleAddToCart()}
+                onClick={handleAddToCart}
                 className="flex items-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded"
               >
                 <FaShoppingCart className="mr-2" /> Add to Cart
@@ -189,7 +203,7 @@ const ProductDetail = () => {
       ) : (
         <p className="text-center">Product not found.</p>
       )}
-       <ToastContainer />
+      <ToastContainer />
     </div>
   );
 };
