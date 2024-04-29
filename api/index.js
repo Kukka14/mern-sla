@@ -12,7 +12,6 @@ import employeeRouter from './routes/employee.route.js';
 import cookieParser from 'cookie-parser';
 import cartRouter from './routes/cart.route.js';
 import catgoryRouter from './routes/category.route.js';
-]
 import orderRouter from './routes/order.route.js';
 import addressRouter from './routes/address.route.js';
 import paymentrouter from './routes/payment.route.js';
