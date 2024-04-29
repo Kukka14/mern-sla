@@ -29,6 +29,8 @@ import OrderDashboard from './pages/admin/OrderManagement/OrderDashboard.jsx';
 import NewOrders from './pages/admin/OrderManagement/NewOrders.jsx';
 import CompleteOrder from './pages/admin/OrderManagement/CompleteOrder.jsx';
 import ManageOrder from './pages/admin/OrderManagement/ManageOrder.jsx';
+import CusManageMainDashboard from './pages/admin/customerManagement/CustomerDashboard.jsx';
+import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboard.jsx';
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
   const isAdmin = currentUser && currentUser.isAdmin; // Check if user is admin
@@ -67,6 +69,7 @@ export default function App() {
           <Route path="/manage-orders-dashboard" element={<ManageOrder/>}/>
           <Route path="/customer-report" element={<ManageProfileReport />} />
           <Route path="/customer-management" element={<ManageProfile />} />
+          <Route path="/customerDashBoard" element={<CustomerDashboard />} />
         </Route>
       </Routes>
     </BrowserRouter>
