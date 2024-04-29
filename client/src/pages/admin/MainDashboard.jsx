@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "./../../images/logo2.png";
 import dashboard from "./../../images/icons8-dashboard-layout-24 (1).png";
-import notification from "./../../images/icons8-notification-50.png";
-import profilepic from "./../../images/219969.png";
-import profilIcon from "./../../images/icons8-admin-settings-male-48.png";
 import Order from "./../../images/icons8-create-order-50.png";
 import product from "./../../images/icons8-product-50.png";
 import supplier from "./../../images/icons8-supplies-50.png";
@@ -11,8 +8,7 @@ import customer from "./../../images/icons8-customers-50.png";
 import customerCare from "./../../images/icons8-customer-support-50.png";
 import payment from "./../../images/icons8-payment-50.png";
 import employee from "./../../images/icons8-employee-50.png";
-import promotion from "./../../images/icons8-promotion-50.png";
-import { FaSortAmountDown } from "react-icons/fa";
+import promotion from "./../../images/icons8-promotion-50.png"
 import AdminHeader from "../../components/AdminHeader";
 
 export default function MainDashboard() {
