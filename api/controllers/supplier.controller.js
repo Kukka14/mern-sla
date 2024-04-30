@@ -1,26 +1,28 @@
 import Supplier from "../models/supplier.model.js";
 
-export const Createsupplier = async (req, res, next) => {
+export const addSupplier = async (req, res) => {
     try {
-        const { fname,lname, Supplier_Email, nic, address, phone } = req.body;
+        const { fname, lname, Supplier_Email, nic, address,phone } = req.body;
 
-        const supplier = await Supplier.create({
+        // Create a new supplier instance
+        const newSupplier = new Supplier({
             fname,
             lname,
-            Supplier_Email, 
-            nic, 
-            address, 
+            Supplier_Email,
+            nic,
+            address,
             phone
         });
-        
-        return res.status(201).json(supplier);
+
+        // Save the new supplier to the database
+        const savedSupplier = await newSupplier.save();
+
+        res.status(201).json(savedSupplier);
     } catch (error) {
-        // Handle errors
-        console.error("Error creating supplier:", error);
-        return res.status(500).json({ message: "Failed to create supplier." });
+        console.error("Error adding supplier:", error);
+        res.status(500).json({ message: "Failed to add supplier." });
     }
 };
-
 
 export const updateSupplier = async (req, res, next) => {
     const { id } = req.params;
@@ -28,21 +30,18 @@ export const updateSupplier = async (req, res, next) => {
 
     try {
         // Find the supplier by ID and update its details
-        const updatedSupplier = await Sproduct.findByIdAndUpdate(
+        const updatedSupplier = await Supplier.findByIdAndUpdate(
             id,
-            { Supplier_Name, Supplier_Email, Product_Name, Supplier_Price, Quantity },
-            { new: true } // To return the updated product
+            {fname,lname, Supplier_Email, nic, address, phone },
+            { new: true }
         );
 
-        // If the supplier is not found, return 404
         if (!updatedSupplier) {
             return res.status(404).json({ message: "Supplier not found." });
         }
 
-        // Return the updated supplier
         res.status(200).json(updatedSupplier);
     } catch (error) {
-        // Handle errors
         console.error("Error updating supplier:", error);
         res.status(500).json({ message: "Failed to update supplier." });
     }
@@ -51,13 +50,10 @@ export const updateSupplier = async (req, res, next) => {
 
 export const getAllSuppliers = async (req, res, next) => {
     try {
-        // Query all supplier from the database
         const supplier = await Supplier.find();
 
-        // Return the list of suppliers
         res.status(200).json(supplier);
     } catch (error) {
-        // Handle errors
         console.error("Error retrieving suppliers:", error);
         res.status(500).json({ message: "Failed to retrieve suppliers." });
     }
@@ -67,18 +63,14 @@ export const getAllSuppliers = async (req, res, next) => {
 export const getSupplierById = async (req, res, next) => {
     const { id } = req.params;
     try {
-        // Query the supplier by ID from the database
         const supplier = await Supplier.findById(id);
 
-        // If the supplier is not found, return 404
         if (!supplier) {
             return res.status(404).json({ message: "Supplier not found." });
         }
 
-        // Return the supplier
         res.status(200).json(supplier);
     } catch (error) {
-        // Handle errors
         console.error("Error retrieving supplier:", error);
         res.status(500).json({ message: "Failed to retrieve supplier." });
     }

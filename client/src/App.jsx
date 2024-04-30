@@ -33,6 +33,10 @@ import SproductReport from './pages/admin/SproductReport';
 import Sdashboard from './pages/admin/Sdashboard';
 import CreateSproduct from './pages/admin/CreateSproduct.jsx';
 import UpdateSproduct from './pages/admin/UpdateSproduct.jsx';
+import AddSuppler from './pages/admin/supplierManagement/AddSupplier.jsx';
+import Supplier from './pages/admin/supplierManagement/Supplier.jsx';
+import UpdateSupplier from './pages/admin/supplierManagement/UpdateSupplier.jsx'
+
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
   const isAdmin = currentUser && currentUser.isAdmin; // Check if user is admin
@@ -52,8 +56,11 @@ export default function App() {
           <Route path="/sdashboard" element={<Sdashboard />} />
           <Route path="/create-sproduct" element={<CreateSproduct />} />
           <Route path="/update-sproduct/:id" element={<UpdateSproduct />} />
-        
-
+          <Route path="/add-supplier" element={<AddSuppler />} />
+          <Route path="/view-suppliers" element={<Supplier/>} />
+          <Route path="/update-supplier/:id" element={<UpdateSupplier/>} />
+          
+      
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/mainDashboard' element={<MainDashboard />} />
