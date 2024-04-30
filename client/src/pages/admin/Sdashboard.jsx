@@ -23,7 +23,6 @@ function Dashboard() {
 
     const handleSearch = (e) => {
         setSearchQuery(e.target.value);
-        // Perform search actions here if needed
     };
 
     return (

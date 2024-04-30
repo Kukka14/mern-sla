@@ -116,7 +116,7 @@ function CreateSproduct() {
                             className="border p-3 rounded-lg bg-gray-200"
                             id="phone"
                             minLength="10"
-                            maxLength="15"
+                            maxLength="10"
                             required
                             onChange={handleChange}
                             value={formData.phone}
