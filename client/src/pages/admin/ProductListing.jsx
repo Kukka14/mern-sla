@@ -27,9 +27,9 @@ export default function CreateListing() {
     name: "",
     description: "",
     address: "",
-    type: "rent",
-    regularPrice: 50,
-    quantity: 0,
+    type: "sale",
+    regularPrice: 0,
+    quantity: 1,
     category: "",
   });
   const [imageUploadError, setImageUploadError] = useState(false);
@@ -197,205 +197,215 @@ export default function CreateListing() {
 
       <div className="basis-4/5 ">
         <AdminHeader />
-        <main className="p-3 max-w-4xl mx-auto">
-          <div className="flex justify-center mt-7">
-            <h1 className="text-center text-3xl font-bold mb-4 w-1/2 border-b-2 border-green-600 py-2">
+        <main className="p-3 w-11/12 mx-auto flex justify-center flex-col">
+          <div className="flex justify-center mt-4">
+            <h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">
               Product Listing
             </h1>
           </div>
-          <div className="bg-green-100 rounded-lg shadow-md p-8 mt-2">
-            <form onSubmit={handleSubmit} className="items-center ">
-              <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
-                <div className="space-y-4">
-                  <label
-                    htmlFor="product_name"
-                    className="block text-lg font-semibold"
-                  >
-                    Product Name
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Product Name"
-                    className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
-                    id="name"
-                    maxLength="62"
-                    minLength="1"
-                    required
-                    onChange={handleChange}
-                    value={formData.name}
-                  />
-                </div>
+          <div className="bg-green-100 rounded-lg shadow-md p-8 mt-2 ">
+            {/* Move image upload and create listing part to the right side */}
 
-                <div className="space-y-4">
-                  <label
-                    htmlFor="product_description"
-                    className="block text-lg font-semibold"
-                  >
-                    Product Description
-                  </label>
-                  <textarea
-                    type="text"
-                    placeholder="Description"
-                    className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
-                    id="description"
-                    required
-                    onChange={handleChange}
-                    value={formData.description}
-                  />
-                </div>
+            <form onSubmit={handleSubmit} className="items-center space-y-4 ">
+              <div className="flex flex-row">
+                <div className="basis-1/2">
+                  <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+                    <div className="space-y-4">
+                      <label
+                        htmlFor="product_name"
+                        className="block text-lg font-semibold"
+                      >
+                        Product Name
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Product Name"
+                        className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
+                        id="name"
+                        maxLength="62"
+                        minLength="1"
+                        required
+                        onChange={handleChange}
+                        value={formData.name}
+                      />
+                    </div>
 
-                <div className="space-y-4">
-                  <label className="block text-lg font-semibold">
-                    Product Type
-                  </label>
-                  <div className="mr-4">
-                    <input
-                      type="checkbox"
-                      id="sale"
-                      className="w-5 mr-2"
-                      onChange={handleChange}
-                      checked={formData.type === "sale"}
-                    />
-                    <label htmlFor="sale" className="font-semibold">
-                      For Sale
-                    </label>
-                  </div>
+                    <div className="space-y-4">
+                      <label
+                        htmlFor="product_description"
+                        className="block text-lg font-semibold"
+                      >
+                        Product Description
+                      </label>
+                      <textarea
+                        type="text"
+                        placeholder="Description"
+                        className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
+                        id="description"
+                        required
+                        onChange={handleChange}
+                        value={formData.description}
+                      />
+                    </div>
 
-                  <div className="mr-4">
-                    <input
-                      type="checkbox"
-                      id="rent"
-                      className="w-5 mr-2"
-                      onChange={handleChange}
-                      checked={formData.type === "rent"}
-                    />
-                    <label htmlFor="sale" className="font-semibold">
-                      For Rent
-                    </label>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <label
-                    htmlFor="pprice"
-                    className="block text-lg font-semibold"
-                  >
-                    Product Price (Rs:)
-                  </label>
-                  <input
-                    type="number"
-                    id="regularPrice"
-                    min="1"
-                    max="10000000"
-                    required
-                    className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
-                    onChange={handleChange}
-                    value={formData.regularPrice}
-                  />
-                </div>
-
-                <div className="space-y-4">
-                  <label
-                    htmlFor="pprice"
-                    className="block text-lg font-semibold"
-                  >
-                    Quantity (Rs:)
-                  </label>
-                  <input
-                    type="number"
-                    id="quantity"
-                    min="1"
-                    max="10000000"
-                    required
-                    className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
-                    onChange={handleChange}
-                    value={formData.quantity}
-                  />
-                </div>
-
-                <div className="space-y-4">
-                  <label
-                    htmlFor="pcategory"
-                    className="block text-lg font-semibold"
-                  >
-                    Product category
-                  </label>
-
-                  <select
-                    id="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                    className="block w-full py-2 pl-3 pr-10 mt-1 text-base border border-gray-300 focus:outline-none focus:border-blue-500 rounded-md"
-                  >
-                    <option value="">Select Category</option>
-                    {categories.map((category) => (
-                      <option key={category._id} value={category._id}>
-                        {category.categoryname}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="space-y-4">
-                  <label
-                    htmlFor="images"
-                    className="block text-lg font-semibold"
-                  >
-                    Product Images
-                  </label>
-
-                  <div className="flex items-center">
-                    <input
-                      onChange={(e) => setFiles(e.target.files)}
-                      className="p-3 border border-gray-300 rounded w-full"
-                      type="file"
-                      id="images"
-                      accept="image/*"
-                      multiple
-                    />
-
-                    <button
-                      type="button"
-                      disabled={uploading}
-                      onClick={handleImageSubmit}
-                      className="bg-green-500 text-white px-6 py-3 rounded-lg ml-4 hover:bg-green-600 focus:outline-none focus:bg-green-600"
-                    >
-                      {uploading ? "Uploading..." : "Upload"}
-                    </button>
-                  </div>
-
-                  <p className="text-gray-500 text-sm">
-                    The first image will be the cover photo
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex justify-center items-center h-full">
-                <div className="grid grid-cols-3 gap-4 mb-8 mt-8">
-                  {formData.imageUrls.length > 0 &&
-                    formData.imageUrls.map((url, index) => (
-                      <div key={url} className="relative">
-                        <img
-                          src={url}
-                          alt="listing image"
-                          className="w-full h-auto object-contain rounded-lg"
+                    <div className="space-y-4">
+                      <label className="block text-lg font-semibold">
+                        Product Type
+                      </label>
+                      <div className="mr-4">
+                        <input
+                          type="checkbox"
+                          id="sale"
+                          className="w-5 mr-2"
+                          onChange={handleChange}
+                          checked={formData.type === "sale"}
                         />
+                        <label htmlFor="sale" className="font-semibold">
+                          For Sale
+                        </label>
+                      </div>
+
+                      <div className="mr-4">
+                        <input
+                          type="checkbox"
+                          id="rent"
+                          className="w-5 mr-2"
+                          onChange={handleChange}
+                          checked={formData.type === "rent"}
+                        />
+                        <label htmlFor="sale" className="font-semibold">
+                          For Rent
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <label
+                        htmlFor="pprice"
+                        className="block text-lg font-semibold"
+                      >
+                        Product Price (Rs:)
+                      </label>
+                      <input
+                        type="number"
+                        id="regularPrice"
+                        min="1"
+                        max="10000000"
+                        step="any"
+                        required
+                        className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
+                        onChange={handleChange}
+                        value={formData.regularPrice}
+                      />
+                    </div>
+
+                    <div className="space-y-4">
+                      <label
+                        htmlFor="pprice"
+                        className="block text-lg font-semibold"
+                      >
+                        Quantity
+                      </label>
+                      <input
+                        type="number"
+                        id="quantity"
+                        min="1"
+                        max="10000000"
+                        required
+                        className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
+                        onChange={handleChange}
+                        value={formData.quantity}
+                      />
+                    </div>
+
+                    <div className="space-y-4">
+                      <label
+                        htmlFor="pcategory"
+                        className="block text-lg font-semibold"
+                      >
+                        Product category
+                      </label>
+
+                      <select
+                        id="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                        className="block w-full py-2 pl-3 pr-10 mt-1 text-base border border-gray-300 focus:outline-none focus:border-blue-500 rounded-md"
+                      >
+                        <option value="">Select Category</option>
+                        {categories.map((category) => (
+                          <option key={category._id} value={category._id}>
+                            {category.categoryname}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                {/* Image upload and create listing part */}
+                <div className="basis-1/2">
+                  <div className="bg-green-100 rounded-lg  ml-8  ">
+                    <div className="space-y-4">
+                      <label
+                        htmlFor="images"
+                        className="block text-lg font-semibold"
+                      >
+                        Product Images
+                      </label>
+
+                      <div className="flex items-center">
+                        <input
+                          onChange={(e) => setFiles(e.target.files)}
+                          className="p-3 border border-gray-300 rounded w-full"
+                          type="file"
+                          id="images"
+                          accept="image/*"
+                          multiple
+                        />
+
                         <button
                           type="button"
-                          onClick={() => handleRemoveImage(index)}
-                          className="absolute top-0 right-0 m-2 px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out focus:outline-none"
+                          disabled={uploading}
+                          onClick={handleImageSubmit}
+                          className="bg-green-400 text-white px-6 py-3 rounded-lg ml-4 hover:bg-green-500 focus:outline-none focus:bg-green-600"
                         >
-                          Delete
+                          {uploading ? "Uploading..." : "Upload"}
                         </button>
                       </div>
-                    ))}
+
+                      <p className="text-gray-500 text-sm">
+                        The first image will be the cover photo
+                      </p>
+                    </div>
+
+                    <div className="flex justify-center items-center h-full">
+                      <div className="grid grid-cols-3 gap-4 mb-8 mt-8">
+                        {formData.imageUrls.length > 0 &&
+                          formData.imageUrls.map((url, index) => (
+                            <div key={url} className="relative">
+                              <img
+                                src={url}
+                                alt="listing image"
+                                className="w-full h-auto object-contain rounded-lg"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveImage(index)}
+                                className="absolute top-0 right-0 m-2 px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out focus:outline-none"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <div className="sm:col-span-2">
+              <div className="flex justify-center">
                 <button
                   disabled={loading || uploading}
-                  className="bg-blue-500 text-white px-8 py-4 rounded-lg w-full hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                  className="bg-green-600 text-white px-8 py-4 rounded-lg  hover:bg-green-700 focus:outline-none focus:bg-blue-600 w-2/4 "
                 >
                   {loading ? "Creating..." : "Create listing"}
                 </button>

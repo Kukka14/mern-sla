@@ -33,7 +33,7 @@ export const updateProduct = async (req, res, next) => {
 };
 
 
-export const getProductById = async (req, res) => {
+export const getProductById = async (req, res, next) => {
   try {
     const category = await Listing.findById(req.params.id);
     if (!category) {

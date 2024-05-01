@@ -23,7 +23,7 @@ const ReviewProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchCategorie = async () => {
       setLoading(true);
       try {
         const res = await fetch(`/api/category/`);
@@ -36,7 +36,7 @@ const ReviewProductList = () => {
       setLoading(false);
     };
 
-    fetchCategories();
+    fetchCategorie();
   }, []);
 
   const handleChange = (e) => {
@@ -44,11 +44,11 @@ const ReviewProductList = () => {
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProduct = async () => {
       try {
         let url = "/api/listing?";
-        if (search) {
-          url += `productName=${search}`;
+        if (searchQuery) {
+          url += `productName=${searchQuery}`;
           if (selectedCategory) {
             url += `&category=${selectedCategory}`;
           }
@@ -57,14 +57,14 @@ const ReviewProductList = () => {
         }
 
         const response = await axios.get(url);
-        setProduct(response.data);
+        setProducts(response.data);
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchProducts();
-  }, [search, selectedCategory]);
+    fetchProduct();
+  }, [searchQuery, selectedCategory]);
 
   //   console.log(product);
 
@@ -76,7 +76,7 @@ const ReviewProductList = () => {
       theme: "striped",
       startY: 22,
       head: [["Name", "Description", "Price", "Type", "Stock", "Category"]],
-      body: product.map((product) => {
+      body: products.map((product) => {
         const category = categories.find(
           (category) => category._id === product.category
         );
@@ -122,23 +122,11 @@ const ReviewProductList = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/api/listing/${id}`);
-      setProducts(products.filter((product) => product._id !== id));
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product._id !== id)
+      );
     } catch (error) {
-      console.error("Error deleting review:", error);
-    }
-  };
-
-  const handleEdit = (id) => {
-    // Implement edit functionality here
-    console.log(`Edit review with ID: ${id}`);
-  };
-
-  const handleSearch = async () => {
-    try {
-      const response = await axios.get(`/api/listing?search=${searchQuery}`);
-      setProducts(response.data);
-    } catch (error) {
-      console.error("Error searching Products:", error);
+      console.error("Error deleting product:", error);
     }
   };
 
@@ -172,15 +160,18 @@ const ReviewProductList = () => {
       <div className="basis-4/5 ">
         <AdminHeader />
         <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-center"><h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">Listed Products</h1></div>
-
+          <div className="flex justify-center">
+            <h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">
+              Listed Products
+            </h1>
+          </div>
 
           <div className="flex justify-center mb-10  ">
             <form className="flex items-center bg-sectionBackground rounded-lg shadow-md border border-green-200 px-4 py-2">
               <input
                 type="text"
                 placeholder="Search by name..."
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-green-100 w-80 rounded-lg border border-green-300 h-10 px-4 mr-4 focus:outline-none"
               />
               <select
@@ -216,14 +207,18 @@ const ReviewProductList = () => {
                   <th className="px-4 py-2 text-left">Quantity</th>
                   <th className="px-4 py-2 text-left">Category</th>
                   <th className="px-4 py-2 text-left">Images</th>
-                  <th className="px-4 py-2 text-left rounded-tr-lg">Delete/Update</th>
+                  <th className="px-4 py-2 text-left rounded-tr-lg">
+                    Delete/Update
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {product.map((product, index) => (
+                {products.map((product, index) => (
                   <tr
                     key={product._id}
-                    className={index % 2 === 0 ? "bg-green-100" : "bg-green-200"}
+                    className={
+                      index % 2 === 0 ? "bg-green-100" : "bg-green-200"
+                    }
                   >
                     <td className="border px-4 py-2">{product.name}</td>
                     <td className="border px-4 py-2">{product.description}</td>
@@ -271,8 +266,6 @@ const ReviewProductList = () => {
               </tbody>
             </table>
           </div>
-
-          
         </div>
       </div>
     </div>
