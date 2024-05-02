@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-import logo from "./../../images/logo2.png";
-import dashboard from "./../../images/icons8-arrow-50 (1).png";
-import AdminHeader from "../../components/AdminHeader";
+import logo from "../../../images/logo2.png";
+import dashboard from "../../../images/icons8-arrow-50 (1).png";
+import AdminHeader from "../../../components/AdminHeader";
 
 const ReviewProductList = () => {
   const [products, setProducts] = useState([]);

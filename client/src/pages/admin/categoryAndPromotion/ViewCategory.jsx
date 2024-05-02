@@ -1,9 +1,10 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "./../../../images/logo2.png";
-import dashboard from "./../../../images/icons8-arrow-50 (1).png";
+import React, { useState, useEffect } from "react";
+
+import { Link } from "react-router-dom";
+import logo from "../../../images/logo2.png";
+import dashboard from "../../../images/icons8-arrow-50 (1).png";
+import { FaSortAmountDown } from "react-icons/fa";
 import AdminHeader from "../../../components/AdminHeader";
-import { useRef, useState, useEffect } from "react";
 
 export default function ViewCategory() {
   const [categories, setCategories] = useState([]);
@@ -47,8 +48,9 @@ export default function ViewCategory() {
       console.error("Error deleting category:", error);
     }
   };
+
   return (
-    <div className="flex h-screen">
+    <div className="flex h-auto">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
@@ -64,73 +66,63 @@ export default function ViewCategory() {
           <NavLink
             icon={dashboard}
             text="Main Dashboard"
-            to="/product-admin-dashboard"
+            to="/category-admin-dashboard"
           />
-          <NavLink icon={dashboard} text="Add Categories" to="/addCategory" />
-          <NavLink
-            icon={dashboard}
-            text="View Categories"
-            to="/viewCategories"
-          />
+          <NavLink icon={dashboard} text="Add Category" to="/addcategories" />
+          <NavLink icon={dashboard} text="View Category" to="/viewcategories" />
+          <NavLink icon={dashboard} text="Add Discount" to="/adddiscount" />
+          <NavLink icon={dashboard} text="View Discount" to="/viewdiscount" />
+          <NavLink icon={dashboard} text="Create Coupon" to="/couponadd" />
+          <NavLink icon={dashboard} text="View Coupon" to="/couponcodeview" />
+          {/* Add more navigation items as needed */}
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 basis-4/5">
-        {/* Header */}
+      <div className="basis-4/5 ">
         <AdminHeader />
-        <div className="p-3 flex justify-center items-center flex-col mx-auto mt-12">
-          <h2 className="text-2xl font-bold mb-4">Categories</h2>
-          <div className="overflow-x-auto  bg-sectionBackground rounded-lg">
-            <table className="table-auto border-collapse m-8">
-              <thead>
-                <tr className="">
-                  <th className="px-4 py-2">Category Name</th>
-                  <th className="px-4 py-2">Description</th>
-                  <th className="px-4 py-2">Avatar</th>
-                  <th className="px-4 py-2">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {categories.map((category) => (
-                  <tr key={category._id} className="border-b border-gray-200">
-                    <td className="px-4 py-2">{category.categoryname}</td>
-                    <td className="px-4 py-2">{category.description}</td>
-                    <td className="px-4 py-2">
-                      <img
-                        src={category.avatar}
-                        alt="Avatar"
-                        className="w-12 h-12 object-cover rounded-full"
-                      />
-                    </td>
-                    <td className="px-4 py-2">
-                      <button
-                        onClick={() => handleDelete(category._id)}
-                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-                      >
-                        Delete
-                      </button>
-                      <Link to={`/updatecategory/${category._id}`}>
-                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded ml-2">
-                          Update
-                        </button>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
 
-        {/* Main Content Area */}
-        <div className="p-8">{/* Your main content goes here */}</div>
+        <div>
+          <h2>Categories</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Category Name</th>
+                <th>Description</th>
+                <th>Avatar</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {categories.map((category) => (
+                <tr key={category._id}>
+                  <td>{category.categoryname}</td>
+                  <td>{category.description}</td>
+                  <td>
+                    <img
+                      src={category.avatar}
+                      alt="Avatar"
+                      style={{ width: "50px", height: "50px" }}
+                    />
+                  </td>
+                  <td>
+                    <button onClick={() => handleDelete(category._id)}>
+                      Delete
+                    </button>
+                    <Link to={`/updatecategory/${category._id}`}>
+                      <button>Update</button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
 }
 
-// NavLink Component for sidebar navigation items
 function NavLink({ icon, text, to }) {
   return (
     <Link
@@ -139,7 +131,6 @@ function NavLink({ icon, text, to }) {
     >
       <img src={icon} alt={text} className="w-6 h-6 mr-4" />
       <span className="text-lg font-semibold">{text}</span>
-        
     </Link>
   );
 }

@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import logo from './../../images/logo2.png';
-import dashboard from './../../images/icons8-arrow-50 (1).png';
+import logo from '../../../images/logo2.png';
+import dashboard from '../../../images/icons8-arrow-50 (1).png';
 import { FaSortAmountDown } from 'react-icons/fa';
-import AdminHeader from '../../components/AdminHeader';
+import AdminHeader from '../../../components/AdminHeader';
 
-export default function MainDashboard() {
+export default function ProductAdminDashboard() {
   return (
     <div className='flex h-screen'>
 

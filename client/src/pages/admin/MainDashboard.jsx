@@ -131,7 +131,7 @@ export default function MainDashboard() {
                 <p className="text-sectiontext">Employee Management</p>
               </div>
             </Link>
-            <Link to="/promotionDashboard">
+            <Link to="/category-admin-dashboard">
               <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
                 <img
                   src={promotion}

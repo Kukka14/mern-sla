@@ -7,19 +7,19 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { app } from "../../firebase";
+import { app } from "../../../firebase";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
-import logo from "./../../images/logo2.png";
-import dashboard from "./../../images/icons8-arrow-50 (1).png";
-import AdminHeader from "../../components/AdminHeader";
+import logo from "../../../images/logo2.png";
+import dashboard from "../../../images/icons8-arrow-50 (1).png";
+import { FaSortAmountDown } from "react-icons/fa";
+import AdminHeader from "../../../components/AdminHeader";
 
-export default function CreateListing() {
+export default function ProductListing() {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const params = useParams();
   const [files, setFiles] = useState([]);
   const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
@@ -27,15 +27,16 @@ export default function CreateListing() {
     name: "",
     description: "",
     address: "",
-    type: "rent",
-    regularPrice: 50,
-    quantity: 0,
+    type: "sale",
+    regularPrice: 0,
+    quantity: 1,
     category: "",
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  console.log(formData);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -47,25 +48,7 @@ export default function CreateListing() {
       }
     };
 
-    const fetchProduct = async () => {
-      const productId = params.id;
-      const res = await fetch(`/api/listing/${productId}`);
-      const data = await res.json();
-
-      if (data.success === false) {
-        console.log(data.message);
-        return;
-      }
-      setFormData(data);
-      // Set current category in formData
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        category: data.category._id,
-      }));
-    };
-
     fetchCategories();
-    fetchProduct();
   }, []);
 
   const handleImageSubmit = (e) => {
@@ -160,7 +143,7 @@ export default function CreateListing() {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch(`/api/listing/update/${params.id}`, {
+      const res = await fetch("/api/listing/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -176,7 +159,7 @@ export default function CreateListing() {
         setError(data.message);
       } else {
         // If successful, navigate to ProductAdminDashboard
-        navigate("/product-view");
+        navigate("/product-admin-dashboard");
       }
     } catch (error) {
       setError(error.message);
@@ -185,7 +168,7 @@ export default function CreateListing() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-auto">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
@@ -215,9 +198,9 @@ export default function CreateListing() {
       <div className="basis-4/5 ">
         <AdminHeader />
         <main className="p-3 w-11/12 mx-auto flex justify-center flex-col">
-          <div className="flex justify-center mt-3">
-            <h1 className="text-center text-3xl font-bold mb-4 w-1/2 border-b-2 border-green-600 py-2">
-              Update Listing
+          <div className="flex justify-center mt-4">
+            <h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">
+              Product Listing
             </h1>
           </div>
           <div className="bg-green-100 rounded-lg shadow-md p-8 mt-2 ">
@@ -424,7 +407,7 @@ export default function CreateListing() {
                   disabled={loading || uploading}
                   className="bg-green-600 text-white px-8 py-4 rounded-lg  hover:bg-green-700 focus:outline-none focus:bg-blue-600 w-2/4 "
                 >
-                  {loading ? "Updating..." : "Update listing"}
+                  {loading ? "Creating..." : "Create listing"}
                 </button>
                 {error && <p className="text-red-700 text-sm">{error}</p>}
               </div>
