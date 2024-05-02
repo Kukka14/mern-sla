@@ -145,13 +145,13 @@ const ProductDetail = () => {
                 className="object-contain w-4/5   rounded-lg transition-transform duration-300 transform hover:scale-105"
               />
               <button
-                className="absolute top-1/2 left-0 bg-black text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
+                className="absolute top-1/2 left-0 bg-backgreen2 bg-opacity-70 text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
                 onClick={handlePrevImage}
               >
                 &lt;
               </button>
               <button
-                className="absolute top-1/2 right-0 bg-black text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
+                className="absolute top-1/2 right-0 bg-backgreen2 bg-opacity-70 text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
                 onClick={handleNextImage}
               >
                 &gt;
