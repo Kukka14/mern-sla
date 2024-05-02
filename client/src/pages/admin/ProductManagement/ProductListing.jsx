@@ -376,6 +376,10 @@ export default function ProductListing() {
                       <p className="text-gray-500 text-sm">
                         The first image will be the cover photo
                       </p>
+
+                      <div> {error && <p className="text-red-700  text-sm  ">{error}</p>}</div>
+
+
                     </div>
 
                     <div className="flex justify-center items-center h-full">
@@ -403,14 +407,20 @@ export default function ProductListing() {
                 </div>
               </div>
               <div className="flex justify-center">
+             
                 <button
                   disabled={loading || uploading}
                   className="bg-green-600 text-white px-8 py-4 rounded-lg  hover:bg-green-700 focus:outline-none focus:bg-blue-600 w-2/4 "
                 >
                   {loading ? "Creating..." : "Create listing"}
+
+                   
+
                 </button>
-                {error && <p className="text-red-700 text-sm">{error}</p>}
+               
               </div>
+              
+             
             </form>
           </div>
         </main>

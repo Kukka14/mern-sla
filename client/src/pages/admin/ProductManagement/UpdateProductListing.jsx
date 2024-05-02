@@ -216,7 +216,7 @@ export default function CreateListing() {
         <AdminHeader />
         <main className="p-3 w-11/12 mx-auto flex justify-center flex-col">
           <div className="flex justify-center mt-3">
-            <h1 className="text-center text-3xl font-bold mb-4 w-1/2 border-b-2 border-green-600 py-2">
+            <h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">
               Update Listing
             </h1>
           </div>
@@ -393,6 +393,8 @@ export default function CreateListing() {
                       <p className="text-gray-500 text-sm">
                         The first image will be the cover photo
                       </p>
+
+                      <div> {error && <p className="text-red-700  text-sm  ">{error}</p>}</div>
                     </div>
 
                     <div className="flex justify-center items-center h-full">
@@ -426,7 +428,7 @@ export default function CreateListing() {
                 >
                   {loading ? "Updating..." : "Update listing"}
                 </button>
-                {error && <p className="text-red-700 text-sm">{error}</p>}
+                
               </div>
             </form>
           </div>
