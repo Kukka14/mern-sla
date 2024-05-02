@@ -4,6 +4,14 @@ import dashboard from './../../../images/icons8-arrow-50 (1).png';
 import AdminHeader from '../../../components/AdminHeader';
 
 export default function OrderDashboard() {
+  function NavLink({ icon, text, to }) {
+    return (
+      <Link to={to} className='flex items-center text-white py-2 px-4 rounded-md  bg-sideNavButton hover:bg-sideNavButtonhover '>
+        <img src={icon} alt={text} className='w-6 h-6 mr-4'/>
+        <span className='text-lg font-semibold'>{text}</span>
+      </Link>
+    );
+  }
   return (
     <div className='flex h-screen'>
 
@@ -44,12 +52,5 @@ export default function OrderDashboard() {
 }
 
 // NavLink Component for sidebar navigation items
-function NavLink({ icon, text, to }) {
-    return (
-      <Link to={to} className='flex items-center text-white py-2 px-4 rounded-md  bg-sideNavButton hover:bg-sideNavButtonhover '>
-        <img src={icon} alt={text} className='w-6 h-6 mr-4'/>
-        <span className='text-lg font-semibold'>{text}</span>
-      </Link>
-    );
-  }
+
   

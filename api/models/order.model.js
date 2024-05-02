@@ -22,7 +22,7 @@ const orderSchema = new mongoose.Schema({
   },
   orderStatus: {
     type: String,
-    enum: ['pending', 'processing', 'shipped', 'delivered'],
+    enum: ['pending', 'completed', 'cancelled'],
     default: 'pending'
   },
   promotionPrice: {
@@ -36,7 +36,8 @@ const orderSchema = new mongoose.Schema({
   },
   trackingStatus: {
     type: String,
-    default: null
+    enum: ['pending','processing', 'shipped', 'delivered'],
+    default: 'pending'
   },
   createdAt: {
     type: Date,

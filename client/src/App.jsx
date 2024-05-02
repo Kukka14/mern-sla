@@ -6,7 +6,7 @@ import SignIn from './pages/client/SignIn.jsx';
 import Home from './pages/client/Home.jsx';
 import Header from './components/Header.jsx';
 import Profile from './pages/client/Profile.jsx';
-import CustomerManagement from './pages/admin/MProfile.jsx';
+import ManageProfileReport from './pages/admin/customerManagement/ManageProfileReport.jsx';
 import PrivateRoute from './components/PrivateRoute';
 
 import AddEmployee from './pages/admin/AddEmployee.jsx';
@@ -28,6 +28,7 @@ import OrderDashboard from './pages/admin/OrderManagement/OrderDashboard.jsx';
 import NewOrders from './pages/admin/OrderManagement/NewOrders.jsx';
 import CompleteOrder from './pages/admin/OrderManagement/CompleteOrder.jsx';
 import ManageOrder from './pages/admin/OrderManagement/ManageOrder.jsx';
+
 import AddCategory from './pages/admin/categoryAndPromotion/AddCategory.jsx';
 import CategoryAdminDashboard from './pages/admin/categoryAndPromotion/CategoryAdminDashboard.jsx';
 import ViewCategory from './pages/admin/categoryAndPromotion/ViewCategory.jsx';
@@ -41,6 +42,13 @@ import ProductAdminDashboard from './pages/admin/ProductManagement/ProductAdminD
 import ProductListing from './pages/admin/ProductManagement/ProductListing.jsx';
 import ShowProductListing from './pages/admin/ProductManagement/ShowProductListing.jsx';
 import UpdateProductListing from './pages/admin/ProductManagement/UpdateProductListing.jsx';
+
+import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboard.jsx';
+import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
+
+import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
+
+
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -66,8 +74,11 @@ export default function App() {
           <Route path='cart' element={<Cart/>} />
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
-          <Route path="/customer-management" element={<CustomerManagement />} /> 
+
+         
           <Route path='/cartpop' element={<CartPopup/>} />
+
+
           <Route path="/shipping-address" element={<ShippingAddress />} />
           
          
@@ -77,6 +88,7 @@ export default function App() {
           <Route path="/order-dashboard" element={<OrderDashboard />} />
           <Route path="/new-orders-dashboard" element={<NewOrders />} />
           <Route path="/complete-orders-dashboard" element={<CompleteOrder />} />
+
           <Route path="/manage-orders-dashboard" element={<ManageOrder />} />
           <Route path='/addcategories' element={<AddCategory />} />
           <Route path='/viewcategories' element={<ViewCategory />} />
@@ -101,6 +113,15 @@ export default function App() {
 
 
           
+
+
+          <Route path="/manage-orders-dashboard" element={<ManageOrder/>}/>
+          <Route path="/customer-report" element={<ManageProfileReport />} />
+          <Route path="/customer-management" element={<ManageProfile />} />
+        
+          <Route path="/customerDashBoard" element={<CustomerDashboard />} />
+          <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
+
         </Route>
       </Routes>
     </BrowserRouter>

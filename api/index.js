@@ -1,4 +1,3 @@
-
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -12,8 +11,16 @@ import employeeRouter from './routes/employee.route.js';
 import cookieParser from 'cookie-parser';
 import cartRouter from './routes/cart.route.js';
 import catgoryRouter from './routes/category.route.js';
+
 import discountRouter from './routes/discount.route.js';
 import couponRouter from './routes/coupon.route.js';
+
+import orderRouter from './routes/order.route.js';
+import addressRouter from './routes/address.route.js';
+import paymentrouter from './routes/payment.route.js';
+
+
+
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(() => {
@@ -43,8 +50,15 @@ app.use('/api/employee', employeeRouter);
 app.use("/api/cart", cartRouter);
 app.use('/api/category', catgoryRouter);
 
+
 app.use("/api/discount", discountRouter);
 app.use("/api/coupon", couponRouter);
+
+app.use('/api/order', orderRouter);
+app.use('/api/address', addressRouter);
+app.use('/api/payment',paymentrouter);
+
+
 
 app.use((err, req, res, next) => { 
     const statusCode = res.statusCode || 500;
