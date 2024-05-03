@@ -1,11 +1,6 @@
 import { useSelector } from "react-redux";
-import { useRef, useState, useEffect } from "react";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { useState, useEffect, useRef } from "react";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../../firebase";
 import {
   updateUserStart,
@@ -16,7 +11,6 @@ import {
   deleteUserSuccess,
   signOutUserStart,
 } from "../../redux/user/userSlice";
-
 import { useDispatch } from "react-redux";
 
 export default function Profile() {
@@ -27,13 +21,34 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [addresses, setAddresses] = useState([]); // Initialize addresses as an empty array
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (file) {
-      handleFileUpload(file);
-    }
-  }, [file]);
+    fetchAddresses(); // Fetch addresses when the component mounts
+  }, []);
+
+  const fetchAddresses = () => {
+    fetch(`/api/address/get`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: currentUser._id }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch addresses");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setAddresses(data.addresses);
+      })
+      .catch((error) => {
+        console.error("Error fetching addresses:", error);
+      });
+  };
 
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
@@ -115,14 +130,14 @@ export default function Profile() {
       }
       dispatch(deleteUserSuccess(data)); // Navigate to sign-in page after sign-out
     } catch (error) {
-      dispatch(deleteUserFailure(data.message));
+      dispatch(deleteUserFailure(error.message));
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen ">
-      <div
-        className="p-5 bg-white rounded-lg shadow-lg w-3/5"
+     <div
+        className="p-5 bg-white rounded-lg shadow-lg w-3/5" // Increased width of the form container
         style={{ backgroundColor: "rgba(144, 162, 158, 0.8)" }}
       >
         <h1 className="text-3xl font-semibold text-center my-27">Profile</h1>
@@ -176,16 +191,18 @@ export default function Profile() {
                 onChange={handleChange}
               />
 
-              <input
-                type="text"
-                placeholder="Address"
-                defaultValue={currentUser.address}
-                id="address"
-                className="border p-3 rounded-lg w-5/6"
-                onChange={handleChange}
-              />
+<select id="address" className="border p-3 rounded-lg w-5/6" onChange={handleChange}>
+  <option value="">Select Address</option>
+  {addresses && addresses.map((address) => (
+    <option key={address._id} value={address._id}>
+      {`${address.addressLine1}, ${address.city}, ${address.country}`}
+    </option>
+  ))}
+</select>
+
             </div>
             <div className="flex flex-col w-1/2 justify-center items-center gap-4">
+             
               <input
                 type="tel"
                 placeholder="Telephone Number"
@@ -203,8 +220,7 @@ export default function Profile() {
                 className="border p-3 rounded-lg w-5/6"
                 onChange={handleChange}
               />
-
-              <input
+  <input
                 type="password"
                 placeholder="Password"
                 id="password"
@@ -214,8 +230,6 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* You can add more input fields for additional details if needed */}
-
           <div className="flex flex-col justify-center items-center">
             <button
               disabled={loading}
@@ -223,7 +237,6 @@ export default function Profile() {
             >
               {loading ? "Loading..." : "Update"}
             </button>
-            {/* Delete account and sign out buttons */}
             <div className="flex justify-between mt-5 w-3/5">
               <span
                 onClick={handleDeleteUser}
@@ -243,7 +256,6 @@ export default function Profile() {
           </div>
         </form>
 
-        {/* Error and success messages */}
         <p className="text-red-700 mt-5">{error ? error : ""}</p>
         <p className="text-green-700 mt-5">
           {updateSuccess ? "User is updated successfully!" : ""}
@@ -259,22 +271,23 @@ export default function Profile() {
             className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
             style={{ color: "#ffffff" }}
           >
-            Order
+            button 1
           </button>
           <button
             className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
             style={{ color: "#ffffff" }}
           >
-            Payments
+           button 2
           </button>
           <button
             className="bg-blue-900 text-white py-3 px-6 rounded-full"
             style={{ color: "#ffffff" }}
           >
-            Address
+            button 3
           </button>
         </div>
+        </div>
       </div>
-    </div>
+   
   );
 }
