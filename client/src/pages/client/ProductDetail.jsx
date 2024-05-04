@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaShoppingCart, FaMoneyBill } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';  
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [category, setCategory] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [cardHeight, setCardHeight] = useState("auto");
@@ -24,11 +22,6 @@ const ProductDetail = () => {
         const response = await axios.get(`/api/listing/${id}`);
         setProduct(response.data);
         setLoading(false);
-
-        const categoryResponse = await axios.get(
-          `/api/category/${response.data.category}`
-        );
-        setCategory(categoryResponse.data);
       } catch (error) {
         console.error("Error fetching product details:", error);
         setLoading(false);
@@ -40,18 +33,10 @@ const ProductDetail = () => {
 
   useEffect(() => {
     if (product) {
-      const descriptionWords = product.description.split(" ");
-      if (descriptionWords.length > 80) {
-        const truncatedDescription = descriptionWords.slice(0, 80).join(" ");
-        setProduct({ ...product, description: truncatedDescription });
+      const cardContent = document.getElementById("card-content");
+      if (cardContent) {
+        setCardHeight(`${cardContent.offsetHeight}px`);
       }
-    }
-  }, [product]);
-
-  useEffect(() => {
-    const cardContent = document.getElementById("card-content");
-    if (cardContent) {
-      setCardHeight(`${cardContent.offsetHeight}px`);
     }
   }, [product]);
 
@@ -86,7 +71,7 @@ const ProductDetail = () => {
   const handleAddToCart = async () => {
     if (!currentUser) {
       toast.error("Please login to add items to the cart");
-      history.push("/signin");
+      navigate("/signin");
       return;
     }
     try {
@@ -96,12 +81,12 @@ const ProductDetail = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: currentUser._id, // Use currentUser from Redux store
+          userId: currentUser._id,
           productId: product._id,
           productName: product.name,
           productImages: product.imageUrls,
           price: product.regularPrice,
-          quantity: count, // Pass count
+          quantity: count,
         }),
       });
 
@@ -112,7 +97,6 @@ const ProductDetail = () => {
       const data = await response.json();
 
       if (data.success && data.updated) {
-        console.log(data.success, data.updated);
         toast.success("Item quantity updated successfully");
       } else if (data.success && !data.updated) {
         toast.success("Item added to cart successfully");
@@ -125,7 +109,7 @@ const ProductDetail = () => {
   };
 
   const handleChangeCount = (event) => {
-    setCount(parseInt(event.target.value)); // Update count when user changes it
+    setCount(parseInt(event.target.value));
   };
 
   return (
@@ -142,7 +126,7 @@ const ProductDetail = () => {
               <img
                 src={product.imageUrls[currentImageIndex]}
                 alt={`Product Image ${currentImageIndex + 1}`}
-                className="object-contain w-4/5   rounded-lg transition-transform duration-300 transform hover:scale-105"
+                className="object-contain w-4/5 rounded-lg transition-transform duration-300 transform hover:scale-105"
               />
               <button
                 className="absolute top-1/2 left-0 bg-backgreen2 bg-opacity-70 text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
@@ -168,12 +152,10 @@ const ProductDetail = () => {
             <p className="text-lg  text-gray-500 mb-2">
               Stock: {product.quantity}
             </p>
-            {category && (
-              <p className="text-lg text-slate-600 font-semibold mb-2">
-                Category: {category.categoryname}
-              </p>
-            )}
-            <div className="flex items-center mb-4"> {/* Count selection */}
+            <p className="text-lg text-slate-600 font-semibold mb-2">
+              Category: {product.category}
+            </p>
+            <div className="flex items-center mb-4">
               <label className="text-lg font-semibold mr-2">Quantity:</label>
               <input
                 type="number"

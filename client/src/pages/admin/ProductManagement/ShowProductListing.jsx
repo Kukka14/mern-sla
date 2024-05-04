@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+import logoImg from "../../../images/logo2.png"; 
+
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -13,111 +15,78 @@ const ReviewProductList = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const [product, setProduct] = useState([]);
-  const [error, setError] = useState(null);
-  const [search, setSearch] = useState("");
-  const [selectedCatergories, setSelectedCatergories] = useState("");
-  const [loading, setLoading] = useState(false);
-
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    const fetchCategorie = async () => {
-      setLoading(true);
+    const fetchCategories = async () => {
       try {
-        const res = await fetch(`/api/category/`);
-        const data = await res.json();
-        console.log(data);
-        setCategories(data);
+        const response = await axios.get("/api/category/getAllCategories");
+        setCategories(response.data);
       } catch (error) {
-        setError(error.message);
+        console.error("Error fetching categories:", error);
       }
-      setLoading(false);
     };
 
-    fetchCategorie();
+    fetchCategories();
   }, []);
 
-  const handleChange = (e) => {
-    setSelectedCategory(e.target.value);
-  };
-
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProducts = async () => {
       try {
         let url = "/api/listing?";
         if (searchQuery) {
           url += `productName=${searchQuery}`;
-          if (selectedCategory) {
-            url += `&category=${selectedCategory}`;
-          }
-        } else if (selectedCategory) {
-          url += `category=${selectedCategory}`;
+        }
+        if (selectedCategory) {
+          url += `${searchQuery ? "&" : ""}category=${selectedCategory}`;
         }
 
         const response = await axios.get(url);
         setProducts(response.data);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching Products:", error);
       }
     };
 
-    fetchProduct();
+    fetchProducts();
   }, [searchQuery, selectedCategory]);
 
-  //   console.log(product);
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
 
   const downloadPdf = () => {
-    console.log(categories); // Check if categories state is populated
     const doc = new jsPDF();
-    doc.text("Product List", 14, 16);
+    
+    // Add company logo at the top-left corner
+    doc.addImage(logoImg, "PNG", 12.5, 10, 70, 30); // Adjust the width and height as needed
+  
+    // Add title
+    doc.text("Product List", 14, 60);
+  
+    // Add table
     doc.autoTable({
       theme: "striped",
-      startY: 22,
+      startY: 70, // Adjust based on logo size and title height
       head: [["Name", "Description", "Price", "Type", "Stock", "Category"]],
-      body: products.map((product) => {
-        const category = categories.find(
-          (category) => category._id === product.category
-        );
-        console.log(category); // Check if category object is retrieved correctly
-        const categoryname = category ? category.categoryname : ""; // Assuming categoryName is a property of your category object
-        console.log(categoryname); // Check if categoryName is correctly assigned
-        return [
-          product.name,
-          product.description,
-          product.regularPrice,
-          product.type,
-          product.quantity,
-          categoryname,
-        ];
-      }),
+      body: products.map((product) => [
+        product.name,
+        product.description,
+        product.regularPrice,
+        product.type,
+        product.quantity,
+        product.category,
+      ]),
     });
+  
     doc.save("product-list.pdf");
-  };
+};
 
-  useEffect(() => {
-    fetchProducts();
-    fetchCategories();
-  }, []);
-
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get("/api/listing/get/:id");
-      setProducts(response.data);
-    } catch (error) {
-      console.error("Error fetching Products:", error);
-    }
-  };
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get("/api/category/getAllCategories");
-      setCategories(response.data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
+  
 
   const handleDelete = async (id) => {
     try {
@@ -132,6 +101,7 @@ const ReviewProductList = () => {
 
   return (
     <div className="flex h-auto">
+      {/* Sidebar */}
       <div className="bg-sideNavBackground basis-1/5 p-4">
         {/* Logo */}
         <div className="flex justify-center items-center mb-8">
@@ -157,7 +127,8 @@ const ReviewProductList = () => {
         </div>
       </div>
 
-      <div className="basis-4/5 ">
+      {/* Main Content */}
+      <div className="basis-4/5">
         <AdminHeader />
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center">
@@ -166,22 +137,24 @@ const ReviewProductList = () => {
             </h1>
           </div>
 
-          <div className="flex justify-center mb-10  ">
+          {/* Search and Filter */}
+          <div className="flex justify-center mb-10">
             <form className="flex items-center bg-sectionBackground rounded-lg shadow-md border border-green-200 px-4 py-2">
               <input
                 type="text"
                 placeholder="Search by name..."
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={searchQuery}
+                onChange={handleSearchChange}
                 className="bg-green-100 w-80 rounded-lg border border-green-300 h-10 px-4 mr-4 focus:outline-none"
               />
               <select
-                onChange={handleChange}
+                onChange={handleCategoryChange}
                 value={selectedCategory}
                 className="p-2 rounded-lg border border-green-300 focus:outline-none bg-white"
               >
                 <option value="">All Categories</option>
                 {categories.map((category) => (
-                  <option key={category._id} value={category._id}>
+                  <option key={category._id} value={category.categoryname}>
                     {category.categoryname}
                   </option>
                 ))}
@@ -190,14 +163,15 @@ const ReviewProductList = () => {
 
             <button
               onClick={downloadPdf}
-              className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-md ml-4 "
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-md ml-4"
             >
               Report
             </button>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="table-auto w-full bg-white shadow-md rounded-lg">
+          {/* Product Table */}
+          <div className="flex justify-center items-center">
+            <table className="table-auto w-11/12 bg-white shadow-md rounded-lg">
               <thead>
                 <tr className="bg-green-300">
                   <th className="px-4 py-2 text-left rounded-tl-lg">Name</th>
@@ -225,13 +199,7 @@ const ReviewProductList = () => {
                     <td className="border px-4 py-2">{product.type}</td>
                     <td className="border px-4 py-2">{product.regularPrice}</td>
                     <td className="border px-4 py-2">{product.quantity}</td>
-                    <td className="border px-4 py-2">
-                      {
-                        categories.find(
-                          (category) => category._id === product.category
-                        )?.categoryname
-                      }
-                    </td>
+                    <td className="border px-4 py-2">{product.category}</td>
                     <td className="border px-4 py-2">
                       {product.imageUrls &&
                         Array.isArray(product.imageUrls) &&
@@ -249,7 +217,7 @@ const ReviewProductList = () => {
                       <div className="flex flex-col">
                         <button
                           onClick={() => handleDelete(product._id)}
-                          className="bg-red-500 text-white px-4 py-2 rounded mb-1 hover:bg-red-600 "
+                          className="bg-red-500 text-white px-4 py-2 rounded mb-1 hover:bg-red-600"
                         >
                           Delete
                         </button>

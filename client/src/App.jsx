@@ -47,6 +47,9 @@ import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboar
 import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
 
 import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
+import ProductByCategory from './pages/admin/ProductManagement/ProductByCategory.jsx';
+
+
 
 
 
@@ -64,6 +67,8 @@ export default function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/product-view-client" element={<ProductView/>} />
         <Route path="/product-detail/:id" element={<ProductDetail />} />
+        
+        
         
 
         <Route element={<PrivateRoute />}>
@@ -108,6 +113,9 @@ export default function App() {
           <Route path='/product-listing' element={<ProductListing/>} />
           <Route path='/product-view' element={<ShowProductListing/>} />
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
+          <Route path="/products/:categoryName" element={<ProductByCategory/>} />
+         
+          
 
 
 
@@ -121,6 +129,7 @@ export default function App() {
         
           <Route path="/customerDashBoard" element={<CustomerDashboard />} />
           <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
+       
 
         </Route>
       </Routes>
