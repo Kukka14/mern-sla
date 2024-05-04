@@ -31,6 +31,7 @@ export default {
         'sideNavText': '#485A41',
         'searchBarBackground': '#D9D9D9',
         'sectionBackground': '#D3FFC1',
+        'sectionBackgroundHover': '#bde5ad',
         'sectionhr': '#7C9074',
         'sectiontext': '#4C6653',
         'buttonbackground': '#50A72C',

@@ -160,6 +160,12 @@ export default function CreateListing() {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
+  
+      // Find the category name corresponding to the selected category ID
+      const selectedCategory = categories.find(
+        (category) => category._id === formData.category
+      );
+  
       const res = await fetch(`/api/listing/update/${params.id}`, {
         method: "POST",
         headers: {
@@ -168,6 +174,8 @@ export default function CreateListing() {
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
+          // Send category name instead of ID
+          category: selectedCategory ? selectedCategory.categoryname : "",
         }),
       });
       const data = await res.json();
@@ -183,7 +191,7 @@ export default function CreateListing() {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="flex h-screen">
       {/* Sidebar */}

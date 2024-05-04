@@ -143,6 +143,13 @@ export default function ProductListing() {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
+      // Fetch category name based on category ID
+      const selectedCategory = categories.find(
+        (category) => category._id === formData.category
+      );
+      if (!selectedCategory) {
+        return setError("Invalid category");
+      }
       const res = await fetch("/api/listing/create", {
         method: "POST",
         headers: {
@@ -151,6 +158,7 @@ export default function ProductListing() {
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
+          category: selectedCategory.categoryname, // Store category name instead of ID
         }),
       });
       const data = await res.json();
@@ -377,9 +385,12 @@ export default function ProductListing() {
                         The first image will be the cover photo
                       </p>
 
-                      <div> {error && <p className="text-red-700  text-sm  ">{error}</p>}</div>
-
-
+                      <div>
+                        {" "}
+                        {error && (
+                          <p className="text-red-700  text-sm  ">{error}</p>
+                        )}
+                      </div>
                     </div>
 
                     <div className="flex justify-center items-center h-full">
@@ -407,20 +418,13 @@ export default function ProductListing() {
                 </div>
               </div>
               <div className="flex justify-center">
-             
                 <button
                   disabled={loading || uploading}
                   className="bg-green-600 text-white px-8 py-4 rounded-lg  hover:bg-green-700 focus:outline-none focus:bg-blue-600 w-2/4 "
                 >
                   {loading ? "Creating..." : "Create listing"}
-
-                   
-
                 </button>
-               
               </div>
-              
-             
             </form>
           </div>
         </main>

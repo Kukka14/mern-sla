@@ -74,3 +74,47 @@ export const getProduct = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const getAllListingsCount = async (req, res, next) => {
+  try {
+    const count = await Listing.countDocuments();
+    res.status(200).json({ count });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export const getAllListingsCountByCategory = async (req, res, next) => {
+  try {
+    const countsByCategory = await Listing.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    const countsByCategoryObject = countsByCategory.reduce((acc, categoryCount) => {
+      acc[categoryCount._id] = categoryCount.count;
+      return acc;
+    }, {});
+
+    res.status(200).json(countsByCategoryObject);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export const getProductByCategory = async (req, res, next) => {
+  try {
+    const { categoryName } = req.params;
+    const products = await Listing.find({ category: categoryName });
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+};
