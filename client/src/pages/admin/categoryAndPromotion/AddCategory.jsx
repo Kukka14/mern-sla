@@ -21,6 +21,10 @@ export default function About() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [avatarUploaded, setAvatarUploaded] = useState(false); // Track whether avatar is uploaded
+  const [errors, setErrors] = useState({
+    categoryName: "",
+    description: ""
+  });
 
   useEffect(() => {
     if (file) {

@@ -6,6 +6,10 @@ const couponSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    discountAmount: {
+      type: String,
+      required: true,
+    },
     status: {
         type: String,
         enum: ['active', 'reactive'],

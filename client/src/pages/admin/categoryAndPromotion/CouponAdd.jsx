@@ -18,6 +18,7 @@ export default function CouponAdd() {
   const [categories, setCategories] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [couponCode, setCouponCode] = useState("");
+  const [discountAmount, setDiscountAmount] = useState("");
   const [couponProducts, setCouponProducts] = useState([]);
 
   useEffect(() => {
@@ -86,6 +87,7 @@ export default function CouponAdd() {
       setLoading(true);
       const couponData = {
         couponCode: couponCode,
+        discountAmount: discountAmount,
         items: couponProducts,
       };
       const res = await fetch("/api/coupon/create", {
@@ -186,6 +188,16 @@ export default function CouponAdd() {
                   id="couponCode"
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value)}
+                  className="border rounded-lg px-4 py-2"
+                />
+              </div>
+              <div className="flex justify-between items-center mt-6">
+                <label htmlFor="couponCode">Discount Amount:</label>
+                <input
+                  type="text"
+                  id="discountAmount"
+                  value={discountAmount}
+                  onChange={(e) => setDiscountAmount(e.target.value)}
                   className="border rounded-lg px-4 py-2"
                 />
               </div>
