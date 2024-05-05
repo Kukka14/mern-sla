@@ -20,7 +20,24 @@ const ProductView = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get("/api/listing/get/:id");
-      setProducts(response.data);
+      const allProducts = response.data;
+      // Fetch discounts
+      const discountsResponse = await axios.get("/api/discount/get");
+      const discounts = discountsResponse.data;
+
+      // Map through each product and check if it has a discount
+      const productsWithDiscount = allProducts.map(product => {
+        const discount = discounts.find(discount => discount.productId === product._id);
+        if (discount) {
+          // Calculate discounted price
+          const discountedPrice = product.regularPrice - (product.regularPrice * discount.discountAmount) / 100;
+          return { ...product, discountedPrice };
+        } else {
+          // If no discount, keep the original price
+          return product;
+        }
+      });
+      setProducts(productsWithDiscount);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -50,6 +67,7 @@ const ProductView = () => {
       return;
     }
     try {
+      const priceToAdd = product.discountedPrice ? product.discountedPrice : product.regularPrice;
       const response = await fetch("/api/cart/addToCart", {
         method: "POST",
         headers: {
@@ -60,7 +78,7 @@ const ProductView = () => {
           productId: product._id,
           productName: product.name,
           productImages: product.imageUrls,
-          price: product.regularPrice,
+          price: priceToAdd,
           quantity: 1,
         }),
       });
@@ -106,13 +124,24 @@ const ProductView = () => {
                   {product.description}
                 </p>
                 <div className="flex justify-between items-center mb-4">
-                  <p className="text-lg text-blue-600 font-semibold">
-                    Rs. {product.regularPrice}
+                  <p className="text-lg text-blue-600 ">
+                  {product.discountedPrice ? (
+                <div>
+                  <p className="text-red-500 line-through text-xs"> Rs.{product.regularPrice.toFixed(2)}</p>
+                  <p className="font-bold">Rs.{product.discountedPrice.toFixed(2)}</p>
+                </div>
+              ): 
+              (
+                <div>
+                  <p className="font-bold" style={{ marginBottom: "1rem" }}> Rs.{product.regularPrice.toFixed(2)}</p>
+                </div>
+              )
+              }
                   </p>
                   <p className="text-gray-500">{product.quantity} in stock</p>
                 </div>
                 <p className="text-gray-500 mb-4">{product.category}</p>
-                <div className="flex justify-between">
+                <div className="flex justify-between ">
                   <button
                     onClick={() => handleBuy(product)}
                     className="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

@@ -4,7 +4,6 @@ import axios from "axios";
 
 import logo from "../../../images/logo2.png";
 import dashboard from "../../../images/icons8-arrow-50 (1).png";
-import { FaSortAmountDown } from "react-icons/fa";
 import AdminHeader from "../../../components/AdminHeader";
 
 export default function CouponCodeView() {
@@ -69,6 +68,21 @@ export default function CouponCodeView() {
     }
   };
 
+  const handleDeleteCoupon = async (couponId) => {
+    try {
+      const res = await axios.delete(`/api/coupon/delete/${couponId}`);
+      if (res.data.success) {
+        // If deletion is successful, remove the coupon from the state
+        const updatedCoupons = coupons.filter((coupon) => coupon._id !== couponId);
+        setCoupons(updatedCoupons);
+      } else {
+        setError(res.data.message);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <div className="flex h-auto">
       {/* Sidebar */}
@@ -112,10 +126,19 @@ export default function CouponCodeView() {
                       Coupon Code
                     </th>
                     <th scope="col" className="px-6 py-3">
+                      Discount Amount
+                    </th>
+                    <th scope="col" className="px-6 py-3">
                       Product Names
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Status
+                    Status
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                    Manage
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -126,6 +149,7 @@ export default function CouponCodeView() {
                       className="text-black bg-white border-b dark:bg-sideNavBackground dark:border-gray-700"
                     >
                       <td className="px-3 py-4">{coupon.couponCode}</td>
+                      <td className="px-3 py-4">{coupon.discountAmount}</td>
                       <td className="px-3 py-4">
                         {coupon.productNames.map((productName, index) => (
                           <div key={index}>{productName}</div>
@@ -159,6 +183,15 @@ export default function CouponCodeView() {
                           </button>
                         </Link>
                       </td>
+                      <td className="px-3 py-4">
+                        <button
+                          onClick={() => handleDeleteCoupon(coupon._id)}
+                          className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-full"
+                        >
+                          Delete
+                        </button>
+                      </td>
+
                     </tr>
                   ))}
                 </tbody>

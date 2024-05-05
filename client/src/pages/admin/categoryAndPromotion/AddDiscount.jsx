@@ -163,7 +163,7 @@ export default function AddDiscount() {
       <div className="basis-4/5 ">
         <AdminHeader />
 
-        <div className="flex flex-row max-w-7xl mx-auto h-screen ">
+        <div className="flex justify-center flex-row max-w-7xl mx-auto h-screen ">
           <div className="basis-3/4 ml-8">
             <div className="flex flex-row justify-between mt-9">
               <form>
@@ -191,19 +191,14 @@ export default function AddDiscount() {
                   ))}
                 </select>
               )}
-              <button
-                onClick={downloadPdf}
-                className="bg-sideNavButton hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Report
-              </button>
+              
             </div>
             <hr className="my-7 h-0.5 bg-searchBarBackground border-0 " />
-            <div className="overflow-x-auto ">
-              <table className=" mb-11 min-w-full table-auto text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-5 dark:bg-emerald-100 dark:text-gray-850">
-                  <tr>
-                    <th scope="col" className="px-6 py-3">
+            <div className="flex justify-center items-center">
+              <table className="table-auto w-11/12 bg-white shadow-md rounded-lg">
+                <thead>
+                  <tr className="bg-green-300">
+                    <th scope="col" className="px-6 py-3 rounded-tl-lg">
                       Name
                     </th>
                     <th scope="col" className="px-6 py-3">
@@ -212,13 +207,16 @@ export default function AddDiscount() {
                     <th scope="col" className="px-6 py-3">
                       Price
                     </th>
+                    <th className="px-6 py-3 rounded-tr-lg"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {product.map((prod) => (
+                  {product.map((prod, index) => (
                     <tr
                       key={prod._id}
-                      className="text-black bg-white border-b dark:bg-sideNavBackground dark:border-gray-700"
+                      className={
+                        index % 2 === 0 ? "bg-green-100" : "bg-green-200"
+                      }
                     >
                       <td className="px-3 py-4">{prod.name}</td>
                       <td className="px-3 py-4">{prod.description}</td>
@@ -238,7 +236,7 @@ export default function AddDiscount() {
                             onChange={handleChange1}
                           />
 
-                          <button className="bg-backgreen4 text-white rounded-2xl">
+                          <button className="bg-backgreen4 text-white rounded-xl h-9">
                             {loading ? "Adding..." : "Add Discount"}
                           </button>
                         </form>

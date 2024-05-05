@@ -137,7 +137,7 @@ export default function ViewDiscount() {
       <div className="basis-4/5 ">
         <AdminHeader />
 
-        <div className="flex flex-row max-w-7xl mx-auto h-screen">
+        <div className="flex justify-center flex-row max-w-7xl mx-auto h-screen">
           <div className="basis-3/4 ml-8">
             <hr className="my-7 h-0.5 bg-searchBarBackground border-0 " />
             <div className="overflow-x-auto">
