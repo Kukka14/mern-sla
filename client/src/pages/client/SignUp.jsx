@@ -164,6 +164,14 @@ export default function SignUp() {
               e.target.value = e.target.value.replace(/\D/, '').slice(0, 10);
             }}
           />
+
+<input
+            type='text'
+            placeholder='Address'
+            className='border border-gray-700 p-3 rounded-lg w-full' 
+            id='address'
+            onChange={handleChange}
+          />
        
           <button
             disabled={loading}
