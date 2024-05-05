@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
 export default function OrderDetails() {
@@ -61,27 +61,52 @@ export default function OrderDetails() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-semibold mb-4">Order Details</h1>
-            <div className="bg-white shadow-md rounded-lg overflow-hidden">
-                <div className="p-6">
-                    <h2 className="text-xl font-semibold mb-4">Order ID: {orderDetails._id}</h2>
-                    <h2 className="text-lg font-semibold mb-2">Cart Items:</h2>
-                    <ul className="space-y-4">
-                        {cartItems.map((item) => (
-                            <li key={item._id} className="flex flex-col border-b pb-4">
-                                <p className="text-gray-700"><span className="font-semibold">Product Name:</span> {item.productName}</p>
-                                <p className="text-gray-700"><span className="font-semibold">Quantity:</span> {item.quantity}</p>
-                                <p className="text-gray-700"><span className="font-semibold">Price:</span> {item.price}</p>
-                            </li>
-                        ))}
-                    </ul>
-                    <h2 className="text-lg font-semibold mt-6 mb-2">Address Details:</h2>
-                    <p className="text-gray-700"><span className="font-semibold">Address Line 1:</span> {addressDetails.addressLine1}</p>
-                    <p className="text-gray-700"><span className="font-semibold">City:</span> {addressDetails.city}</p>
-                    <p className="text-gray-700"><span className="font-semibold">State:</span> {addressDetails.state}</p>
-                    <p className="text-gray-700"><span className="font-semibold">Country:</span> {addressDetails.country}</p>
+        <div className="max-w-4xl mx-auto shadow-lg border p-6">
+            <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <div className="text-gray-800 font-bold mb-2">Billing Name: {orderDetails.billingName}</div>
+                    <div className="text-gray-600">Order Status: <span className="text-green-500">{orderDetails.orderStatus}</span></div>
+                    <div className="text-gray-600">Payment Status: <span className="text-green-500">{orderDetails.paymentStatus}</span></div>
+                    <div className="text-gray-600">{orderDetails.date}</div>
                 </div>
+                <div className="text-right">
+                    <div className="text-gray-800 font-bold">Order ID: {orderDetails._id}</div>
+                    <div className="text-gray-600">Tracking ID: {orderDetails.trackingId}</div>
+                    <div className="text-gray-600">Tracking Status <span className="text-red-500">{orderDetails.trackingStatus}</span></div>
+                </div>
+            </div>
+            <div className="mt-6">
+                    <div className="text-zinc-800 dark:text-zinc-200 font-bold mb-2">Shipping Address:</div>
+                    <div className="text-zinc-600 dark:text-zinc-400">
+                        {addressDetails.addressLine1}<br />
+                        {addressDetails.city}, {addressDetails.state}, {addressDetails.country}
+                    </div>
+                </div>
+            <div className="mt-6">
+                <table className="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr className="bg-gray-100">
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                        {cartItems.map((item) => (
+                            <tr key={item._id}>
+                                <td className="px-6 py-4 whitespace-nowrap">{item.p_name}</td>
+                                <td className="px-6 py-4 whitespace-nowrap"><img src={item.p_img} alt="product image" /></td>
+                                <td className="px-6 py-4 whitespace-nowrap">{item.price}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{item.quantity}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div className="mt-6 flex justify-between items-center">
+                <div className="text-2xl font-bold">Cost: {orderDetails.totalPrice}</div>
+                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">View</button>
             </div>
         </div>
     );

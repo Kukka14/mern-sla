@@ -31,15 +31,24 @@ export default function OrderHistory() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-semibold mb-8">Order History</h1>
-      <ul className="space-y-4">
-        {orders.map((order) => (
-          <li key={order._id} className="bg-white shadow-md rounded-lg p-6">
-            <p className="text-lg font-semibold">Order ID: {order._id}</p>
-            <p className="text-gray-600">Date: {order.createdAt}</p>
-            <Link to={`/order_details/orderId:${order._id}`} className="text-blue-600 hover:underline">View Details</Link>
-          </li>
-        ))}
-      </ul>
+      {orders.map((order) => (
+        <div key={order._id} className="bg-white border border-zinc-300 rounded-lg px-8 py-4 shadow-md max-w-4xl mx-auto my-4">
+          <div className="flex justify-between items-start">
+            <div className="flex flex-col space-y-1">
+              <span className="text-zinc-800 font-semibold">Order ID: {order._id}</span>
+              <span className="text-green-500">Status: <span className="font-semibold">{order.orderStatus}</span></span>
+              <span>Billing name: {order.billingName}</span>
+            </div>
+            <div className="text-right">
+              <span className="text-zinc-600 text-sm">{order.createdAt}</span>
+              <div className="text-2xl font-bold my-1">Cost: {order.totalPrice-order.promotionPrice}</div>
+              <Link to={`/order_details/orderId:${order._id}`} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded">
+                View
+              </Link>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
