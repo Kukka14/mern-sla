@@ -10,5 +10,4 @@ router.get('/', getAllCategoriesList);
 router.delete('/:id', deleteCategory);
 router.post('/update/:id', updateCategory);
 router.get('/:id', getCategoryById);
-
 export default router;

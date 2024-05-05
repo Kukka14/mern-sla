@@ -3,39 +3,45 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaShoppingCart, FaMoneyBill } from "react-icons/fa";
 import { useSelector } from 'react-redux';
-import { toast,ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';  
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProductView = () => {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.currentUser) || null;
 
   useEffect(() => {
     fetchProducts();
-    fetchCategories();
   }, []);
 
   const fetchProducts = async () => {
     try {
       const response = await axios.get("/api/listing/get/:id");
-      setProducts(response.data);
+      const allProducts = response.data;
+      // Fetch discounts
+      const discountsResponse = await axios.get("/api/discount/get");
+      const discounts = discountsResponse.data;
+
+      // Map through each product and check if it has a discount
+      const productsWithDiscount = allProducts.map(product => {
+        const discount = discounts.find(discount => discount.productId === product._id);
+        if (discount) {
+          // Calculate discounted price
+          const discountedPrice = product.regularPrice - (product.regularPrice * discount.discountAmount) / 100;
+          return { ...product, discountedPrice };
+        } else {
+          // If no discount, keep the original price
+          return product;
+        }
+      });
+      setProducts(productsWithDiscount);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching products:", error);
       setLoading(false);
-    }
-  };
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get("/api/category/getAllCategories");
-      setCategories(response.data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
     }
   };
 
@@ -53,7 +59,6 @@ const ProductView = () => {
       });
     }
   };
-  
 
   const handleAddToCart = async(product) => {
     if (!currentUser) {
@@ -62,18 +67,19 @@ const ProductView = () => {
       return;
     }
     try {
+      const priceToAdd = product.discountedPrice ? product.discountedPrice : product.regularPrice;
       const response = await fetch("/api/cart/addToCart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: currentUser._id, // Use currentUser from Redux store
+          userId: currentUser._id,
           productId: product._id,
           productName: product.name,
           productImages: product.imageUrls,
-          price: product.regularPrice,
-          quantity: 1, // Adjust quantity as needed
+          price: priceToAdd,
+          quantity: 1,
         }),
       });
 
@@ -97,7 +103,6 @@ const ProductView = () => {
     }
   };
 
-
   return (
     <div className="container mx-auto px-10">
       <h1 className="text-3xl font-semibold mb-8">Products</h1>
@@ -120,19 +125,24 @@ const ProductView = () => {
                   {product.description}
                 </p>
                 <div className="flex justify-between items-center mb-4">
-                  <p className="text-lg text-blue-600 font-semibold">
-                    Rs. {product.regularPrice}
+                  <p className="text-lg text-blue-600 ">
+                  {product.discountedPrice ? (
+                <div>
+                  <p className="text-red-500 line-through text-xs"> Rs.{product.regularPrice.toFixed(2)}</p>
+                  <p className="font-bold">Rs.{product.discountedPrice.toFixed(2)}</p>
+                </div>
+              ): 
+              (
+                <div>
+                  <p className="font-bold" style={{ marginBottom: "1rem" }}> Rs.{product.regularPrice.toFixed(2)}</p>
+                </div>
+              )
+              }
                   </p>
                   <p className="text-gray-500">{product.quantity} in stock</p>
                 </div>
-                <p className="text-gray-500 mb-4">
-                  {
-                    categories.find(
-                      (category) => category._id === product.category
-                    )?.categoryname
-                  }
-                </p>
-                <div className="flex justify-between">
+                <p className="text-gray-500 mb-4">{product.category}</p>
+                <div className="flex justify-between ">
                   <button
                     onClick={() => handleBuy(product)}
                     className="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -155,6 +165,5 @@ const ProductView = () => {
     </div>
   );
 }
-
 
 export default ProductView;

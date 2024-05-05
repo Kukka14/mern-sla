@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaShoppingCart, FaMoneyBill } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';  
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [category, setCategory] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [cardHeight, setCardHeight] = useState("auto");
@@ -22,36 +20,35 @@ const ProductDetail = () => {
     const fetchProductDetail = async () => {
       try {
         const response = await axios.get(`/api/listing/${id}`);
-        setProduct(response.data);
+        const productData = response.data;
+  
+        // Fetch discounts
+        const discountsResponse = await axios.get("/api/discount/get");
+        const discounts = discountsResponse.data;
+  
+        // Find discount for the current product
+        const discount = discounts.find(discount => discount.productId === productData._id);
+  
+        // Calculate discounted price if discount exists
+        const discountedPrice = discount ? productData.regularPrice - (productData.regularPrice * discount.discountAmount) / 100 : null;
+  
+        // Set product data with discounted price
+        setProduct({ ...productData, discountedPrice });
         setLoading(false);
-
-        const categoryResponse = await axios.get(
-          `/api/category/${response.data.category}`
-        );
-        setCategory(categoryResponse.data);
       } catch (error) {
         console.error("Error fetching product details:", error);
         setLoading(false);
       }
     };
-
+  
     fetchProductDetail();
   }, [id]);
-
   useEffect(() => {
     if (product) {
-      const descriptionWords = product.description.split(" ");
-      if (descriptionWords.length > 80) {
-        const truncatedDescription = descriptionWords.slice(0, 80).join(" ");
-        setProduct({ ...product, description: truncatedDescription });
+      const cardContent = document.getElementById("card-content");
+      if (cardContent) {
+        setCardHeight(`${cardContent.offsetHeight}px`);
       }
-    }
-  }, [product]);
-
-  useEffect(() => {
-    const cardContent = document.getElementById("card-content");
-    if (cardContent) {
-      setCardHeight(`${cardContent.offsetHeight}px`);
     }
   }, [product]);
 
@@ -86,22 +83,23 @@ const ProductDetail = () => {
   const handleAddToCart = async () => {
     if (!currentUser) {
       toast.error("Please login to add items to the cart");
-      history.push("/signin");
+      navigate("/signin");
       return;
     }
     try {
+      const priceToAdd = product.discountedPrice ? product.discountedPrice : product.regularPrice;
       const response = await fetch("/api/cart/addToCart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: currentUser._id, // Use currentUser from Redux store
+          userId: currentUser._id,
           productId: product._id,
           productName: product.name,
           productImages: product.imageUrls,
-          price: product.regularPrice,
-          quantity: count, // Pass count
+          price: priceToAdd,
+          quantity: count,
         }),
       });
 
@@ -112,7 +110,6 @@ const ProductDetail = () => {
       const data = await response.json();
 
       if (data.success && data.updated) {
-        console.log(data.success, data.updated);
         toast.success("Item quantity updated successfully");
       } else if (data.success && !data.updated) {
         toast.success("Item added to cart successfully");
@@ -125,11 +122,11 @@ const ProductDetail = () => {
   };
 
   const handleChangeCount = (event) => {
-    setCount(parseInt(event.target.value)); // Update count when user changes it
+    setCount(parseInt(event.target.value));
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center mt-24 bg-gray-100">
       {loading ? (
         <p className="text-center">Loading...</p>
       ) : product ? (
@@ -142,16 +139,16 @@ const ProductDetail = () => {
               <img
                 src={product.imageUrls[currentImageIndex]}
                 alt={`Product Image ${currentImageIndex + 1}`}
-                className="object-contain w-4/5   rounded-lg transition-transform duration-300 transform hover:scale-105"
+                className="object-contain w-4/5 rounded-lg transition-transform duration-300 transform hover:scale-105"
               />
               <button
-                className="absolute top-1/2 left-0 bg-black text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
+                className="absolute top-1/2 left-0 bg-backgreen2 bg-opacity-70 text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
                 onClick={handlePrevImage}
               >
                 &lt;
               </button>
               <button
-                className="absolute top-1/2 right-0 bg-black text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
+                className="absolute top-1/2 right-0 bg-backgreen2 bg-opacity-70 text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
                 onClick={handleNextImage}
               >
                 &gt;
@@ -163,17 +160,26 @@ const ProductDetail = () => {
             <p className="text-lg font-semibold mb-2">Description:</p>
             <p className="text-base mb-4 overflow-y-auto">{product.description}</p>
             <p className="text-lg font-semibold text-blue-600 mb-2">
-              Price: Rs. {product.regularPrice}
+            {product.discountedPrice ? (
+                <div className="flex flex-row ">
+                  <p className="text-red-500 line-through mr-3"> Rs.{product.regularPrice.toFixed(2)}</p>
+                  <p className="font-bold">Rs.{product.discountedPrice.toFixed(2)}</p>
+                </div>
+              ): 
+              (
+                <div>
+                  <p className="font-bold "> Rs.{product.regularPrice.toFixed(2)}</p>
+                </div>
+              )
+              }
             </p>
             <p className="text-lg  text-gray-500 mb-2">
               Stock: {product.quantity}
             </p>
-            {category && (
-              <p className="text-lg text-slate-600 font-semibold mb-2">
-                Category: {category.categoryname}
-              </p>
-            )}
-            <div className="flex items-center mb-4"> {/* Count selection */}
+            <p className="text-lg text-slate-600 font-semibold mb-2">
+              Category: {product.category}
+            </p>
+            <div className="flex items-center mb-4">
               <label className="text-lg font-semibold mr-2">Quantity:</label>
               <input
                 type="number"
