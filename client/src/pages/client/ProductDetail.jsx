@@ -20,17 +20,29 @@ const ProductDetail = () => {
     const fetchProductDetail = async () => {
       try {
         const response = await axios.get(`/api/listing/${id}`);
-        setProduct(response.data);
+        const productData = response.data;
+  
+        // Fetch discounts
+        const discountsResponse = await axios.get("/api/discount/get");
+        const discounts = discountsResponse.data;
+  
+        // Find discount for the current product
+        const discount = discounts.find(discount => discount.productId === productData._id);
+  
+        // Calculate discounted price if discount exists
+        const discountedPrice = discount ? productData.regularPrice - (productData.regularPrice * discount.discountAmount) / 100 : null;
+  
+        // Set product data with discounted price
+        setProduct({ ...productData, discountedPrice });
         setLoading(false);
       } catch (error) {
         console.error("Error fetching product details:", error);
         setLoading(false);
       }
     };
-
+  
     fetchProductDetail();
   }, [id]);
-
   useEffect(() => {
     if (product) {
       const cardContent = document.getElementById("card-content");
@@ -75,6 +87,7 @@ const ProductDetail = () => {
       return;
     }
     try {
+      const priceToAdd = product.discountedPrice ? product.discountedPrice : product.regularPrice;
       const response = await fetch("/api/cart/addToCart", {
         method: "POST",
         headers: {
@@ -85,7 +98,7 @@ const ProductDetail = () => {
           productId: product._id,
           productName: product.name,
           productImages: product.imageUrls,
-          price: product.regularPrice,
+          price: priceToAdd,
           quantity: count,
         }),
       });
@@ -113,7 +126,7 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center mt-24 bg-gray-100">
       {loading ? (
         <p className="text-center">Loading...</p>
       ) : product ? (
@@ -147,7 +160,18 @@ const ProductDetail = () => {
             <p className="text-lg font-semibold mb-2">Description:</p>
             <p className="text-base mb-4 overflow-y-auto">{product.description}</p>
             <p className="text-lg font-semibold text-blue-600 mb-2">
-              Price: Rs. {product.regularPrice}
+            {product.discountedPrice ? (
+                <div className="flex flex-row ">
+                  <p className="text-red-500 line-through mr-3"> Rs.{product.regularPrice.toFixed(2)}</p>
+                  <p className="font-bold">Rs.{product.discountedPrice.toFixed(2)}</p>
+                </div>
+              ): 
+              (
+                <div>
+                  <p className="font-bold "> Rs.{product.regularPrice.toFixed(2)}</p>
+                </div>
+              )
+              }
             </p>
             <p className="text-lg  text-gray-500 mb-2">
               Stock: {product.quantity}
