@@ -94,7 +94,7 @@ export const getNewOrders = async (req, res) => {
 };
 export const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find({orderStatus: 'pending'});
 
     res.status(200).json({ orders });
   } catch (error) {
@@ -204,3 +204,28 @@ export const updateTrackingStatus = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while updating the tracking status' });
   }
 };
+export const getOrderCount = async (req, res) => {
+  try {
+    // Count all orders
+    const orderCount = await Order.countDocuments();
+
+    res.status(200).json({ orderCount });
+  } catch (error) {
+    console.error('Error getting order count:', error);
+    res.status(500).json({ error: 'An error occurred while getting the order count' });
+  }
+};
+
+export const getUserOrders = async (req, res) => {
+  try {
+    const userId = req.body.userId; 
+    const orders = await Order.find({ userId }).sort({ createdAt: -1 });
+    res.status(200).json({ orders });
+  } catch (error) {
+    console.error('Error fetching user orders:', error);
+    res.status(500).json({ error: 'An error occurred while fetching user orders' });
+  }
+};
+
+
+

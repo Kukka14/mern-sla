@@ -88,6 +88,7 @@ const ProductView = () => {
         toast.success("Item quantity updated successfully");
       } else if (data.success && !data.updated) {
         toast.success("Item added to cart successfully");
+       
       } else {
         console.error("Failed to add item to cart:", data.error);
       }
@@ -150,7 +151,7 @@ const ProductView = () => {
           ))}
         </div>
       )}
-      <ToastContainer />
+      <ToastContainer position="bottom-left"  />
     </div>
   );
 }

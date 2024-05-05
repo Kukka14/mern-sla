@@ -30,7 +30,7 @@ export default function Ordersummary() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ orderId: cleanOrderId }) // Wrap orderId in an object
+        body: JSON.stringify({ orderId: cleanOrderId }) 
       });
   
       if (!res.ok) {
@@ -60,12 +60,11 @@ export default function Ordersummary() {
       const data = await response.json();
 
       setOrderDetails(data.order);
-      console.log('Order details received:', data);
+      
       const cartId = data.order.cartId;
       fetchCartItems(cartId);
       fetchAddressDetails(data.order.addressId);
-      console.log('cartId:', cartId);
-      console.log('addressId:', data.order.addressId);
+    
     } catch (error) {
       console.error('Error fetching order details:', error);
     }
