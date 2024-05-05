@@ -8,6 +8,7 @@ import {
 import { app } from "../../../firebase";
 
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../../../images/logo2.png";
 import dashboard from "../../../images/icons8-arrow-50 (1).png";
 import { FaSortAmountDown } from "react-icons/fa";
@@ -19,12 +20,14 @@ export default function About() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [avatarUploaded, setAvatarUploaded] = useState(false); // Track whether avatar is uploaded
   const [errors, setErrors] = useState({
     categoryName: "",
     description: ""
   });
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     if (file) {
@@ -58,11 +61,28 @@ export default function About() {
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
+    const { id, value } = e.target;
+    let errorMessage = "";
+  
+    // Clear previous errors when input changes
+    setErrors({ ...errors, [id]: "" });
+  
+    // Validation for category name
+  if (id === "categoryname") {
+    if (!/^[a-zA-Z\s]+$/.test(value)) {
+      errorMessage = "Category name must contain only letters and spaces";
+    }
+  }
+  
+    // Update form data only if there are no errors
+    if (!errorMessage) {
+      setFormData({ ...formData, [id]: value });
+    } else {
+      // Set error message if validation fails
+      setErrors({ ...errors, [id]: errorMessage });
+    }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,12 +104,14 @@ export default function About() {
       }
       setLoading(false);
       setError(null);
+      setSuccessMessage("Category added successfully!"); 
+      navigate("/viewcategories");// Set success message
     } catch (error) {
       setLoading(false);
       setError(error.message);
     }
   };
-
+  
   return (
     <div className="flex h-auto">
       {/* Sidebar */}
@@ -154,7 +176,7 @@ export default function About() {
                 <img
                   src={URL.createObjectURL(file)}
                   alt="Selected"
-                  className="max-w-xs my-3"
+                  className="my-3 w-36 h-36 rounded-2xl"
                 />
               </div>
             )}
@@ -168,8 +190,16 @@ export default function About() {
           </form>
           {error && <p className="text-red-500 mt-5">{error}</p>}
         </div>
+        <div>
+  {successMessage && (
+    <p className="text-green-500 mt-5">{successMessage}</p>
+  )}
+  {error && <p className="text-red-500 mt-5">{error}</p>}
+</div>
+
       </div>
     </div>
+    
   );
 }
 
