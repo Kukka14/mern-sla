@@ -51,20 +51,11 @@ export default function SignIn() {
   };
 
   return (
-    <div>
-     
-      <div 
-      className="fixed top-0 left-0 w-full h-full flex items-center justify-center"
-     
+    <div className="flex items-center justify-center min-h-screen">
+    <div
+      className="p-5 bg-white rounded-lg shadow-lg w-3/5"
+      style={{ backgroundColor: "rgba(144, 162, 158, 0.8)" }}
     >
-      <div 
-        className="p-5 rounded-lg shadow-lg" 
-        style={{ 
-          maxWidth: '500px', 
-          width: '100%', 
-          backgroundColor: 'rgba(128, 128, 128, 0.5)', // Gray color with transparency
-        }}
-      >
             <h1 className='text-3xl text-center font-semibold my-3'>Sign In</h1>
             <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
               <input
@@ -106,7 +97,7 @@ export default function SignIn() {
             {error && <p className='text-red-500 mt-5'>{error}</p>}
           </div>
         </div>
-      </div>
+     
     
   );
 }
