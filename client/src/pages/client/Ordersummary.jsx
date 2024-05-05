@@ -111,15 +111,46 @@ export default function Ordersummary() {
     try {
       const response = await fetch(`/api/promo/apply?code=${promoCode}`);
       const data = await response.json();
-
+  
+      if (!data.valid) {
+        // If coupon is not valid, show error message
+        toast.error(data.message || 'Invalid coupon code');
+        return;
+      }
+  
+      // Coupon is valid, proceed to apply discount
+      const { coupon } = data;
+  
+      // Check if coupon is applicable to the current order
+  
+      // Iterate over cart items
+      const updatedCartItems = cartItems.map(item => {
+        // Check if any product ID in the cart matches with coupon's product IDs
+        if (coupon.productIds.includes(item.productId)) {
+          // Apply discount to the item
+          const discountedPrice = item.price - (item.price * (coupon.discountAmount / 100));
+          return { ...item, discountedPrice };
+        }
+        return item;
+      });
+  
+      // Calculate total price after applying discount
+      const totalPriceToPay = updatedCartItems.reduce((total, item) => total + (item.discountedPrice || item.price) * item.quantity, 0);
+  
+      // Update order details with discount
       setOrderDetails(prevOrderDetails => ({
         ...prevOrderDetails,
-        totalPriceToPay: data.totalPriceToPay
+        totalPriceToPay,
       }));
+  
+      // Show success message
+      toast.success('Coupon applied successfully');
     } catch (error) {
       console.error('Error applying promo code:', error);
+      toast.error('Failed to apply promo code. Please try again later.');
     }
   };
+  
 
   return (
     <div className="container mx-auto mt-8 p-8 bg-white rounded-lg shadow-lg">

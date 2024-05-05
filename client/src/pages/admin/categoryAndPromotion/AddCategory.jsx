@@ -113,7 +113,7 @@ export default function About() {
   };
   
   return (
-    <div className="flex h-auto">
+    <div className="flex h-screen">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
@@ -148,6 +148,7 @@ export default function About() {
           <h1 className="text-3xl text-center font-semibold my-7">
             Add New Category
           </h1>
+          <div className="bg-green-100 rounded-lg shadow-md p-8 mt-2 ">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
               type="text"
@@ -183,11 +184,12 @@ export default function About() {
 
             <button
               disabled={loading || !avatarUploaded}
-              className="bg-backgreen4 text-white rounded-2xl"
+              className="bg-backgreen4 text-white rounded-xl h-12 hover:bg-green-700"
             >
               {loading ? "Adding..." : "Add Category"}
             </button>
           </form>
+          </div>
           {error && <p className="text-red-500 mt-5">{error}</p>}
         </div>
         <div>

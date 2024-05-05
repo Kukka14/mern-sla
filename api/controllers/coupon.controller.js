@@ -71,3 +71,31 @@ export const deleteCouponById = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
+export const applyCoupon = async (req, res) => {
+  try {
+    const { code } = req.query;
+
+    // Validate coupon code
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // Find coupon by code in the database
+    const coupon = await Coupon.findOne({ code });
+
+    if (!coupon) {
+      return res.status(404).json({ message: 'Coupon not found' });
+    }
+
+    // Additional validation logic can be added here, such as expiry date check
+
+    // Return coupon details
+    res.json({ valid: true, coupon });
+  } catch (error) {
+    console.error('Error applying coupon:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
