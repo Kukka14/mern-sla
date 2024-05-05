@@ -3,20 +3,18 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaShoppingCart, FaMoneyBill } from "react-icons/fa";
 import { useSelector } from 'react-redux';
-import { toast,ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';  
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProductView = () => {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.currentUser) || null;
 
   useEffect(() => {
     fetchProducts();
-    fetchCategories();
   }, []);
 
   const fetchProducts = async () => {
@@ -27,15 +25,6 @@ const ProductView = () => {
     } catch (error) {
       console.error("Error fetching products:", error);
       setLoading(false);
-    }
-  };
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get("/api/category/getAllCategories");
-      setCategories(response.data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
     }
   };
 
@@ -53,7 +42,6 @@ const ProductView = () => {
       });
     }
   };
-  
 
   const handleAddToCart = async(product) => {
     if (!currentUser) {
@@ -68,12 +56,12 @@ const ProductView = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: currentUser._id, // Use currentUser from Redux store
+          userId: currentUser._id,
           productId: product._id,
           productName: product.name,
           productImages: product.imageUrls,
           price: product.regularPrice,
-          quantity: 1, // Adjust quantity as needed
+          quantity: 1,
         }),
       });
 
@@ -84,9 +72,10 @@ const ProductView = () => {
       const data = await response.json();
 
       if (data.success && data.updated) {
-        toast.success("Item added to cart successfully");
-      } else if (data.success && !data.updated) {
+        console.log(data.success, data.updated);
         toast.success("Item quantity updated successfully");
+      } else if (data.success && !data.updated) {
+        toast.success("Item added to cart successfully");
       } else {
         console.error("Failed to add item to cart:", data.error);
       }
@@ -94,7 +83,6 @@ const ProductView = () => {
       console.error("Error adding item to cart:", error);
     }
   };
-
 
   return (
     <div className="container mx-auto px-10">
@@ -123,13 +111,7 @@ const ProductView = () => {
                   </p>
                   <p className="text-gray-500">{product.quantity} in stock</p>
                 </div>
-                <p className="text-gray-500 mb-4">
-                  {
-                    categories.find(
-                      (category) => category._id === product.category
-                    )?.categoryname
-                  }
-                </p>
+                <p className="text-gray-500 mb-4">{product.category}</p>
                 <div className="flex justify-between">
                   <button
                     onClick={() => handleBuy(product)}
@@ -153,6 +135,5 @@ const ProductView = () => {
     </div>
   );
 }
-
 
 export default ProductView;

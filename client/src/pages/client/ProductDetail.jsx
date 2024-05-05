@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaShoppingCart, FaMoneyBill } from "react-icons/fa";
 import { useSelector } from 'react-redux';
-import { toast,ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';  
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [category, setCategory] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [cardHeight, setCardHeight] = useState("auto");
   const currentUser = useSelector((state) => state.user.currentUser) || null;
+  const [count, setCount] = useState(1); // State variable to store count
 
   useEffect(() => {
     const fetchProductDetail = async () => {
@@ -23,11 +22,6 @@ const ProductDetail = () => {
         const response = await axios.get(`/api/listing/${id}`);
         setProduct(response.data);
         setLoading(false);
-
-        const categoryResponse = await axios.get(
-          `/api/category/${response.data.category}`
-        );
-        setCategory(categoryResponse.data);
       } catch (error) {
         console.error("Error fetching product details:", error);
         setLoading(false);
@@ -39,18 +33,10 @@ const ProductDetail = () => {
 
   useEffect(() => {
     if (product) {
-      const descriptionWords = product.description.split(" ");
-      if (descriptionWords.length > 80) {
-        const truncatedDescription = descriptionWords.slice(0, 80).join(" ");
-        setProduct({ ...product, description: truncatedDescription });
+      const cardContent = document.getElementById("card-content");
+      if (cardContent) {
+        setCardHeight(`${cardContent.offsetHeight}px`);
       }
-    }
-  }, [product]);
-
-  useEffect(() => {
-    const cardContent = document.getElementById("card-content");
-    if (cardContent) {
-      setCardHeight(`${cardContent.offsetHeight}px`);
     }
   }, [product]);
 
@@ -82,12 +68,10 @@ const ProductDetail = () => {
     }
   };
   
-
-
   const handleAddToCart = async () => {
     if (!currentUser) {
       toast.error("Please login to add items to the cart");
-      history.push("/signin");
+      navigate("/signin");
       return;
     }
     try {
@@ -97,12 +81,12 @@ const ProductDetail = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: currentUser._id, // Use currentUser from Redux store
+          userId: currentUser._id,
           productId: product._id,
           productName: product.name,
           productImages: product.imageUrls,
           price: product.regularPrice,
-          quantity: 1, // Adjust quantity as needed
+          quantity: count,
         }),
       });
 
@@ -113,9 +97,9 @@ const ProductDetail = () => {
       const data = await response.json();
 
       if (data.success && data.updated) {
-        toast.success("Item added to cart successfully");
-      } else if (data.success && !data.updated) {
         toast.success("Item quantity updated successfully");
+      } else if (data.success && !data.updated) {
+        toast.success("Item added to cart successfully");
       } else {
         console.error("Failed to add item to cart:", data.error);
       }
@@ -124,30 +108,34 @@ const ProductDetail = () => {
     }
   };
 
+  const handleChangeCount = (event) => {
+    setCount(parseInt(event.target.value));
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       {loading ? (
         <p className="text-center">Loading...</p>
       ) : product ? (
         <div
-          className="flex bg-green-200 rounded-lg shadow-md max-w-4xl"
+          className="flex justify-center w-full px-4"
           style={{ minHeight: cardHeight }}
         >
-          <div className="relative flex-1 p-8">
-            <div className="relative h-80 w-80">
+          <div className="relative flex-1 w-full">
+            <div className="relative h-full w-full flex items-center justify-center">
               <img
                 src={product.imageUrls[currentImageIndex]}
                 alt={`Product Image ${currentImageIndex + 1}`}
-                className="w-full h-full object-contain rounded-lg transition-transform duration-300 transform hover:scale-105"
+                className="object-contain w-4/5 rounded-lg transition-transform duration-300 transform hover:scale-105"
               />
               <button
-                className="absolute top-1/2 left-0 bg-black text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
+                className="absolute top-1/2 left-0 bg-backgreen2 bg-opacity-70 text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
                 onClick={handlePrevImage}
               >
                 &lt;
               </button>
               <button
-                className="absolute top-1/2 right-0 bg-black text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
+                className="absolute top-1/2 right-0 bg-backgreen2 bg-opacity-70 text-white font-bold py-2 px-3 rounded-full m-2 transform -translate-y-1/2"
                 onClick={handleNextImage}
               >
                 &gt;
@@ -164,20 +152,29 @@ const ProductDetail = () => {
             <p className="text-lg  text-gray-500 mb-2">
               Stock: {product.quantity}
             </p>
-            {category && (
-              <p className="text-lg text-slate-600 font-semibold mb-2">
-                Category: {category.categoryname}
-              </p>
-            )}
+            <p className="text-lg text-slate-600 font-semibold mb-2">
+              Category: {product.category}
+            </p>
+            <div className="flex items-center mb-4">
+              <label className="text-lg font-semibold mr-2">Quantity:</label>
+              <input
+                type="number"
+                id="count"
+                min="1"
+                value={count}
+                onChange={handleChangeCount}
+                className="border border-gray-300 rounded-lg px-4 py-2 w-20 focus:outline-none focus:border-blue-500"
+              />
+            </div>
             <div className="flex ">
               <button
-                onClick={() => handleBuy(product.id)}
+                onClick={handleBuy}
                 className="flex items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded mr-3"
               >
                 <FaMoneyBill className="mr-2" /> Buy
               </button>
               <button
-                onClick={() => handleAddToCart()}
+                onClick={handleAddToCart}
                 className="flex items-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded"
               >
                 <FaShoppingCart className="mr-2" /> Add to Cart
@@ -188,7 +185,7 @@ const ProductDetail = () => {
       ) : (
         <p className="text-center">Product not found.</p>
       )}
-       <ToastContainer />
+      <ToastContainer />
     </div>
   );
 };

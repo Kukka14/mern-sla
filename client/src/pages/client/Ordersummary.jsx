@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 
 export default function Ordersummary() {
   const [orderDetails, setOrderDetails] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const [addressDetails, setAddressDetails] = useState({});
+  
   const { orderId } = useParams();
 
   console.log('Success! Got ID:', orderId);
@@ -17,76 +20,105 @@ export default function Ordersummary() {
     fetchOrderDetails(orderId);
   }, [orderId]);
 
-  const fetchOrderDetails = (orderId) => {
-    // Remove any extra characters from the orderId
-    const cleanOrderId = orderId.split(':')[1]; // Assuming the orderId is in the format "orderId:..."
-    fetch(`/api/order/get/${cleanOrderId}`)
-      .then(response => response.json())
-      .then(data => {
-        setOrderDetails(data.order);
-        console.log('Order details received:', data);
-        const cartId = data.order.cartId;
-        fetchCartItems(cartId);
-        fetchCartItems(cartId);
-        console.log('cartId:', cartId);
-        fetchAddressDetails(data.order.addressId);
-        console.log('addressId:', data.order.addressId);
-      })
-      .catch(error => console.error('Error fetching order details:', error));
+  const paymenthdl = async () => {
+    try {
+      const cleanOrderId = orderId.split(':')[1];
+      console.log('cleanOrderId:', cleanOrderId);
+  
+      const res = await fetch('/api/payment/checkout', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ orderId: cleanOrderId }) // Wrap orderId in an object
+      });
+  
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message + ' Please try again later.');
+      }
+  
+      const data = await res.json();
+      console.log('Payment data:', data);
+  
+      if (data.url) {
+        // Wait for the response from the server before redirecting
+        window.location.href = data.url;
+        toast.success('Payment Successful');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Error processing payment. Please try again later.');
+    }
+  };
+  
+  
+  const fetchOrderDetails = async (orderId) => {
+    try {
+      const cleanOrderId = orderId.split(':')[1];
+      const response = await fetch(`/api/order/get/${cleanOrderId}`);
+      const data = await response.json();
+
+      setOrderDetails(data.order);
+      console.log('Order details received:', data);
+      const cartId = data.order.cartId;
+      fetchCartItems(cartId);
+      fetchAddressDetails(data.order.addressId);
+      console.log('cartId:', cartId);
+      console.log('addressId:', data.order.addressId);
+    } catch (error) {
+      console.error('Error fetching order details:', error);
+    }
   };
 
   const fetchCartItems = async (cartId) => {
-    fetch(`/api/cart/getcart`, {
-      method: 'POST',
-      headers: {
+    try {
+      const response = await fetch(`/api/cart/getcart`, {
+        method: 'POST',
+        headers: {
           'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({cartId})
-  })
-  .then(response => response.json())
-  .then(data => {
-    setCartItems(data.items);
-    console.log('Cart items received:', data.items);
-  
-  
-})
-  .catch(error => console.error('Error fetching cart items:', error));
-};
+        },
+        body: JSON.stringify({ cartId })
+      });
+      const data = await response.json();
+
+      setCartItems(data.items);
+      console.log('Cart items received:', data.items);
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+    }
+  };
 
   const fetchAddressDetails = async (addressId) => {
     try {
-
-      fetch(`/api/address/getdetails`, {
+      const response = await fetch(`/api/address/getdetails`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ addressId })
-    })
-    .then(response => response.json())
-    .then(data => {
+      });
+      const data = await response.json();
+
       setAddressDetails(data.address);
-      console.log('address received:', data.address );
-    
-    })
+      console.log('Address received:', data.address);
     } catch (error) {
       console.error('Error fetching address details:', error);
     }
   };
 
-  const handleApplyPromoCode = (promoCode) => {
-    // Apply promo code logic
-    fetch(`/api/promo/apply?code=${promoCode}`)
-      .then(response => response.json())
-      .then(data => {
-        // Update total price to pay based on promo code
-        setOrderDetails(prevOrderDetails => ({
-          ...prevOrderDetails,
-          totalPriceToPay: data.totalPriceToPay
-        }));
-      })
-      .catch(error => console.error('Error applying promo code:', error));
-   
+  const handleApplyPromoCode = async (promoCode) => {
+    try {
+      const response = await fetch(`/api/promo/apply?code=${promoCode}`);
+      const data = await response.json();
+
+      setOrderDetails(prevOrderDetails => ({
+        ...prevOrderDetails,
+        totalPriceToPay: data.totalPriceToPay
+      }));
+    } catch (error) {
+      console.error('Error applying promo code:', error);
+    }
   };
 
   return (
@@ -109,7 +141,7 @@ export default function Ordersummary() {
             ))}
           </div>
         </div>
-        <div >
+        <div>
           <h3 className="text-xl font-semibold mb-4">Order Details</h3>
           <div>
             <p>Total Price: ${orderDetails.totalPrice}</p>
@@ -129,7 +161,7 @@ export default function Ordersummary() {
             <button onClick={() => handleApplyPromoCode(promoCode)} className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md focus:outline-none">Apply</button>
           </div>
           <div className="mt-8">
-            <button  className="px-8 py-3 bg-green-500 text-white rounded-md focus:outline-none hover:bg-green-600">Proceed to Payment</button>
+            <button onClick={paymenthdl} className="px-8 py-3 bg-green-500 text-white rounded-md focus:outline-none hover:bg-green-600">Proceed to Payment</button>
           </div>
         </div>
       </div>
