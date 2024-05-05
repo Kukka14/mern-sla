@@ -23,7 +23,7 @@ function ProductByCategory() {
   }, [categoryName]); // Dependency array to ensure useEffect runs when categoryName changes
 
   return (
-    <div className="flex h-s">
+    <div className="flex h-screen">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
