@@ -100,7 +100,7 @@ const ReviewProductList = () => {
   };
 
   return (
-    <div className="flex h-auto">
+    <div className="flex h-screen">
       {/* Sidebar */}
       <div className="bg-sideNavBackground basis-1/5 p-4">
         {/* Logo */}
@@ -133,7 +133,7 @@ const ReviewProductList = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center">
             <h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">
-              Listed Products
+              All Products
             </h1>
           </div>
 
@@ -171,7 +171,7 @@ const ReviewProductList = () => {
 
           {/* Product Table */}
           <div className="flex justify-center items-center">
-            <table className="table-auto w-11/12 bg-white shadow-md rounded-lg">
+            <table className="table-auto w-11/12 bg-white shadow-md rounded-lg mb-4">
               <thead>
                 <tr className="bg-green-300">
                   <th className="px-4 py-2 text-left rounded-tl-lg">Name</th>
