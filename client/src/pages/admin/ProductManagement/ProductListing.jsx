@@ -176,7 +176,7 @@ export default function ProductListing() {
   };
 
   return (
-    <div className="flex h-auto">
+    <div className="flex h-screen">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
