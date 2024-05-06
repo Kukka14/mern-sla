@@ -141,10 +141,10 @@ export default function ViewDiscount() {
           <div className="basis-3/4 ml-8">
             <hr className="my-7 h-0.5 bg-searchBarBackground border-0 " />
             <div className="overflow-x-auto">
-              <table className="mb-11 min-w-full table-auto text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-5 dark:bg-emerald-100 dark:text-gray-850">
-                  <tr>
-                    <th scope="col" className="px-6 py-3">
+              <table className="table-auto w-11/12 bg-white shadow-md rounded-lg">
+                <thead >
+                  <tr className="bg-green-300">
+                    <th scope="col" className="px-6 py-3 rounded-tl-lg">
                       Name
                     </th>
                     <th scope="col" className="px-6 py-3">
@@ -156,16 +156,18 @@ export default function ViewDiscount() {
                     <th scope="col" className="px-6 py-3">
                       Discount Amount
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-6 py-3 rounded-tr-lg">
                       Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {product.map((prod) => (
+                  {product.map((prod, index) => (
                     <tr
                       key={prod.productId}
-                      className="text-black bg-white border-b dark:bg-sideNavBackground dark:border-gray-700"
+                      className={
+                        index % 2 === 0 ? "bg-green-100" : "bg-green-200"
+                      }
                     >
                       <td className="px-3 py-4">{prod.productName}</td>
                       <td className="px-3 py-4">{prod.description}</td>

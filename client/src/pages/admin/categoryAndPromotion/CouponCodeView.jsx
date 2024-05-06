@@ -115,14 +115,14 @@ export default function CouponCodeView() {
       <div className="basis-4/5 ">
         <AdminHeader />
 
-        <div className="flex flex-col max-w-7xl mx-auto h-screen">
+        <div className="flex justify-center flex-col max-w-7xl mx-auto h-screen">
           <div className="basis-3/4 ml-8">
             <h1 className="text-2xl font-bold mt-8 mb-4">Coupon Codes</h1>
             <div className="overflow-x-auto">
-              <table className="mb-11 min-w-full table-auto text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-5 dark:bg-emerald-100 dark:text-gray-850">
-                  <tr>
-                    <th scope="col" className="px-6 py-3">
+              <table className="table-auto w-11/12 bg-white shadow-md rounded-lg">
+                <thead >
+                  <tr className="bg-green-300">
+                    <th scope="col" className="px-6 py-3 rounded-tl-lg">
                       Coupon Code
                     </th>
                     <th scope="col" className="px-6 py-3">
@@ -137,16 +137,18 @@ export default function CouponCodeView() {
                     <th scope="col" className="px-6 py-3">
                     Manage
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-6 py-3 rounded-tr-lg">
                       Action
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {coupons.map((coupon) => (
+                  {coupons.map((coupon, index) => (
                     <tr
                       key={coupon._id}
-                      className="text-black bg-white border-b dark:bg-sideNavBackground dark:border-gray-700"
+                      className={
+                        index % 2 === 0 ? "bg-green-100" : "bg-green-200"
+                      }
                     >
                       <td className="px-3 py-4">{coupon.couponCode}</td>
                       <td className="px-3 py-4">{coupon.discountAmount}</td>
