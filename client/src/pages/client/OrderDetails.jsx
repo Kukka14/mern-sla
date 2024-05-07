@@ -1,7 +1,9 @@
 import  { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function OrderDetails() {
+    const { currentUser } = useSelector((state) => state.user);
     const { orderId } = useParams();
     const [orderDetails, setOrderDetails] = useState({});
     const [cartItems, setCartItems] = useState([]);
@@ -64,7 +66,7 @@ export default function OrderDetails() {
         <div className="max-w-4xl mx-auto shadow-lg border p-6">
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <div className="text-gray-800 font-bold mb-2">Billing Name: {orderDetails.billingName}</div>
+                    <div className="text-gray-800 font-bold mb-2">Billing Name: {currentUser.username}</div>
                     <div className="text-gray-600">Order Status: <span className="text-green-500">{orderDetails.orderStatus}</span></div>
                     <div className="text-gray-600">Payment Status: <span className="text-green-500">{orderDetails.paymentStatus}</span></div>
                     <div className="text-gray-600">{orderDetails.date}</div>
@@ -96,7 +98,13 @@ export default function OrderDetails() {
                         {cartItems.map((item) => (
                             <tr key={item._id}>
                                 <td className="px-6 py-4 whitespace-nowrap">{item.p_name}</td>
-                                <td className="px-6 py-4 whitespace-nowrap"><img src={item.p_img} alt="product image" /></td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+    {item.p_img ? (
+        <img src={item.p_img} alt="product image" onError={(e) => e.target.src = 'https://via.placeholder.com/50x50'} />
+    ) : (
+        <span>No Image Available</span>
+    )}
+</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{item.price}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{item.quantity}</td>
                             </tr>

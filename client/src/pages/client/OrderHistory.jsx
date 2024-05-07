@@ -29,26 +29,31 @@ export default function OrderHistory() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-semibold mb-8">Order History</h1>
+    <div className="container mx-16 px-28 py-8 bg-green-100"> 
+    <div className="flex justify-center">
+    <h1 className="text-3xl font-semibold text-green-900 mb-8">Order History</h1>
+    </div>
+    <div className="grid grid-cols-1 gap-6 px-72">
       {orders.map((order) => (
-        <div key={order._id} className="bg-white border border-zinc-300 rounded-lg px-8 py-4 shadow-md max-w-4xl mx-auto my-4">
+        <div key={order._id} className="bg-white border border-zinc-300 rounded-lg p-6 shadow-md">
           <div className="flex justify-between items-start">
-            <div className="flex flex-col space-y-1">
+            <div className="flex flex-col space-y-4">
               <span className="text-zinc-800 font-semibold">Order ID: {order._id}</span>
               <span className="text-green-500">Status: <span className="font-semibold">{order.orderStatus}</span></span>
-              <span>Billing name: {order.billingName}</span>
+              <span>Billing name: {currentUser.username}</span>
             </div>
-            <div className="text-right">
-              <span className="text-zinc-600 text-sm">{order.createdAt}</span>
-              <div className="text-2xl font-bold my-1">Cost: {order.totalPrice-order.promotionPrice}</div>
+            <div className="flex flex-col items-end items">
+              <span className="text-zinc-600 text-sm">{order.createdAt.split('T')[0]}</span>
+              <div className="text-lg font-bold my-1">Total: {order.totalPrice-order.promotionPrice}</div>
+              <div className=' my-1 py-2'>
               <Link to={`/order_details/orderId:${order._id}`} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded">
                 View
-              </Link>
+              </Link></div>
             </div>
           </div>
         </div>
       ))}
     </div>
-  );
+  </div>
+);
 }

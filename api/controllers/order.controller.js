@@ -33,6 +33,7 @@ export const createOrder = async (req, res) => {
       totalPrice,
       orderStatus: 'pending',
       paymentStatus: 'pending'
+      
     });
 
     // Save the order
