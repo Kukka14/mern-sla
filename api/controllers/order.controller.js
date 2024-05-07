@@ -85,7 +85,7 @@ export const getNewOrders = async (req, res) => {
     const newOrders = await Order.find({
       orderStatus: 'pending',
       createdAt: { $gte: sevenDaysAgo }
-    });
+    }).sort({ createdAt: -1 });;
 
     res.status(200).json({ orders: newOrders });
   } catch (error) {
@@ -95,7 +95,7 @@ export const getNewOrders = async (req, res) => {
 };
 export const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find({orderStatus: 'pending'});
+    const orders = await Order.find({orderStatus: 'pending'}).sort({ createdAt: -1 });;
 
     res.status(200).json({ orders });
   } catch (error) {
