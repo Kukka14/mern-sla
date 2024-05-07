@@ -14,6 +14,10 @@ function ProductByCategory() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
+  const [categories, setCategories] = useState([]);
+ 
+ 
+
   useEffect(() => {
     const fetchProductsByCategory = async () => {
       try {
@@ -39,6 +43,42 @@ function ProductByCategory() {
       : filtered;
     setFilteredProducts(categoryFiltered);
   }, [searchQuery, products, selectedCategory]);
+
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("/api/category/getAllCategories");
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        let url = "/api/listing?";
+        if (searchQuery) {
+          url += `productName=${searchQuery}`;
+        }
+        if (selectedCategory) {
+          url += `${searchQuery ? "&" : ""}category=${selectedCategory}`;
+        }
+
+        const response = await axios.get(url);
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching Products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, [searchQuery, selectedCategory]);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -73,7 +113,7 @@ function ProductByCategory() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex max-h-max">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
@@ -102,7 +142,7 @@ function ProductByCategory() {
 
       <div className="basis-4/5">
         <AdminHeader /> 
-        <div className="overflow-x-auto">
+        <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center mt-5">
             <h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">
               {categoryName}s
@@ -119,15 +159,17 @@ function ProductByCategory() {
                 onChange={handleSearchChange}
                 className="bg-green-100 w-80 rounded-lg border border-green-300 h-10 px-4 mr-4 focus:outline-none"
               />
-              <select
+             <select
                 onChange={handleCategoryChange}
                 value={selectedCategory}
                 className="p-2 rounded-lg border border-green-300 focus:outline-none bg-white"
               >
                 <option value="">All Categories</option>
-                <option value="Category 1">Category 1</option>
-                <option value="Category 2">Category 2</option>
-                {/* Add more categories as needed */}
+                {categories.map((category) => (
+                  <option key={category._id} value={category.categoryname}>
+                    {category.categoryname}
+                  </option>
+                ))}
               </select>
             </form>
         

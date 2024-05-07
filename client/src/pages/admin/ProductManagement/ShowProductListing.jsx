@@ -100,7 +100,7 @@ const ReviewProductList = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex max-h-full">
       {/* Sidebar */}
       <div className="bg-sideNavBackground basis-1/5 p-4">
         {/* Logo */}
