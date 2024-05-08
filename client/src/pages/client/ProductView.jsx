@@ -10,6 +10,9 @@ import 'react-toastify/dist/ReactToastify.css';
 const ProductView = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.currentUser) || null;
 
@@ -21,29 +24,31 @@ const ProductView = () => {
     try {
       const response = await axios.get("/api/listing/get/:id");
       const allProducts = response.data;
-      // Fetch discounts
-      const discountsResponse = await axios.get("/api/discount/get");
-      const discounts = discountsResponse.data;
-
-      // Map through each product and check if it has a discount
-      const productsWithDiscount = allProducts.map(product => {
-        const discount = discounts.find(discount => discount.productId === product._id);
-        if (discount) {
-          // Calculate discounted price
-          const discountedPrice = product.regularPrice - (product.regularPrice * discount.discountAmount) / 100;
-          return { ...product, discountedPrice };
-        } else {
-          // If no discount, keep the original price
-          return product;
-        }
-      });
-      setProducts(productsWithDiscount);
+      // Store fetched products in state
+      setProducts(allProducts);
       setLoading(false);
+      // Extract unique categories
+      const uniqueCategories = Array.from(new Set(allProducts.map(product => product.category)));
+      setCategories(uniqueCategories);
     } catch (error) {
       console.error("Error fetching products:", error);
       setLoading(false);
     }
   };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory ? product.category.toLowerCase() === selectedCategory.toLowerCase() : true;
+    return matchesSearch && matchesCategory;
+  });
 
   const handleBuy = (product) => {
     if(currentUser) {
@@ -105,12 +110,34 @@ const ProductView = () => {
 
   return (
     <div className="container mx-auto px-10">
-      <h1 className="text-3xl font-semibold mb-8">Products</h1>
+      <h1 className="text-2xl mt-5 text-center font-semibold mb-8">Products</h1>
+      {/* Search and Category Filter */}
+      <div className="flex justify-center mb-8">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="bg-gray-100 border border-gray-300 p-2 mr-4 rounded"
+        />
+        <select
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+          className="bg-gray-100 border border-gray-300 p-2 rounded"
+        >
+          <option value="">All Categories</option>
+          {/* Populate options for categories */}
+          {categories.map((category, index) => (
+            <option key={index} value={category}>{category}</option>
+          ))}
+        </select>
+      </div>
+      {/* Product Grid */}
       {loading ? (
         <p>Loading...</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <div key={product._id} className="bg-green-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
               <Link to={`/product-detail/${product._id}`}>
                 <img

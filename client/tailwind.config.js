@@ -21,6 +21,7 @@ export default {
         backgreen4hover: '#489627',
         cartbackground: '#f5f5f5',
         carttableheader: '#316C42',
+        herobelow: '#EDFFEB',
         carttablerow: '#CDCDCD',
 
         
