@@ -47,10 +47,10 @@ import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboar
 import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
 import ManagerUI from './pages/admin/customerManagement/ManagerUI.jsx';
 import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
+import OrderHistory from './pages/client/OrderHistory.jsx';
+import OrderDetails from './pages/client/OrderDetails.jsx';
+import Footer from './components/Footer.jsx';
 import ProductByCategory from './pages/admin/ProductManagement/ProductByCategory.jsx';
-
-
-
 
 
 export default function App() {
@@ -129,10 +129,12 @@ export default function App() {
           <Route path="/managerUI" element={<ManagerUI />} />
           <Route path="/customerDashBoard" element={<CustomerDashboard />} />
           <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
-       
+          <Route path="/order-history" element={<OrderHistory />} />
+          <Route path="/order_details/:orderId" element={<OrderDetails />} />
 
         </Route>
       </Routes>
+      {isAdmin ? null : <Footer />}
     </BrowserRouter>
   );
 }

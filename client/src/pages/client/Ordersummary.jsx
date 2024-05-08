@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
 
 export default function Ordersummary() {
   const [orderDetails, setOrderDetails] = useState({});
@@ -23,7 +22,7 @@ export default function Ordersummary() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ orderId: cleanOrderId }),
+        body: JSON.stringify({ orderId: cleanOrderId }) // Wrap orderId in an object
       });
 
       if (!res.ok) {
@@ -50,9 +49,12 @@ export default function Ordersummary() {
       const data = await response.json();
 
       setOrderDetails(data.order);
+      console.log('Order details received:', data);
       const cartId = data.order.cartId;
       fetchCartItems(cartId);
       fetchAddressDetails(data.order.addressId);
+      console.log('cartId:', cartId);
+      console.log('addressId:', data.order.addressId);
     } catch (error) {
       console.error("Error fetching order details:", error);
     }
