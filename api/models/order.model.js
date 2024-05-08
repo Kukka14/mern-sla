@@ -36,7 +36,11 @@ const orderSchema = new mongoose.Schema({
   },
   trackingStatus: {
     type: String,
-    enum: ['pending','processing', 'shipped', 'delivered'],
+    enum: ['pending', 'processing', 'shipped', 'delivered'],
+    default: 'pending'
+  },
+  trackingId: {
+    type: String,
     default: 'pending'
   },
   createdAt: {

@@ -43,29 +43,53 @@ export default function MainDashboard() {
 
       <div className="basis-4/5 ">
         <AdminHeader />
-        
-        <div className='flex flex-col gap-10 mt-36'>
-          <div className='flex flex-row justify-center items-center gap-7'>
-            <Link to='/orderDashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
-              <img src={Order} alt="Order Management" className='w-16 h-15 mx-4 my-2'/>
-              <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
-              <p className='text-sectiontext'>Order Management</p>
-            </div></Link>
-            <Link to='/product-admin-dashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
-              <img src={product} alt="Product Management" className='w-16 h-15 mx-4 my-2'/>
-              <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
-              <p className='text-sectiontext'>Product Management</p>
-            </div></Link>
-            <Link to='/sdashboard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
-              <img src={supplier} alt="Supplier Management" className='w-16 h-15 mx-4 my-2'/>
-               <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
-              <p className='text-sectiontext'>Supplier Management</p>
-            </div></Link>
-            <Link to='/customerDashBoard'><div className='flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900'>
-              <img src={customer} alt="Customer Management" className='w-16 h-15 mx-4 my-2'/>
-              <hr className='mt-3 mb-2 w-40 h-px bg-sectionhr border-0 '/>
-              <p className='text-sectiontext'>Customer Management</p>
-            </div></Link>
+
+        <div className="flex flex-col gap-10 mt-36">
+          <div className="flex flex-row justify-center items-center gap-7">
+            <Link to="/orderDashboard">
+              <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
+                <img
+                  src={Order}
+                  alt="Order Management"
+                  className="w-16 h-15 mx-4 my-2"
+                />
+                <hr className="mt-3 mb-2 w-40 h-px bg-sectionhr border-0 " />
+                <p className="text-sectiontext">Order Management</p>
+              </div>
+            </Link>
+            <Link to="/product-admin-dashboard">
+              <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
+                <img
+                  src={product}
+                  alt="Product Management"
+                  className="w-16 h-15 mx-4 my-2"
+                />
+                <hr className="mt-3 mb-2 w-40 h-px bg-sectionhr border-0 " />
+                <p className="text-sectiontext">Product Management</p>
+              </div>
+            </Link>
+            <Link to="/supplierDashboard">
+              <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
+                <img
+                  src={supplier}
+                  alt="Supplier Management"
+                  className="w-16 h-15 mx-4 my-2"
+                />
+                <hr className="mt-3 mb-2 w-40 h-px bg-sectionhr border-0 " />
+                <p className="text-sectiontext">Supplier Management</p>
+              </div>
+            </Link>
+            <Link to="/customerDashBoard">
+              <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
+                <img
+                  src={customer}
+                  alt="Customer Management"
+                  className="w-16 h-15 mx-4 my-2"
+                />
+                <hr className="mt-3 mb-2 w-40 h-px bg-sectionhr border-0 " />
+                <p className="text-sectiontext">Customer Management</p>
+              </div>
+            </Link>
           </div>
           <div className="flex flex-row justify-center items-center gap-7">
             <Link to="/cusCareDashBoard">

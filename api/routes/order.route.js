@@ -1,5 +1,5 @@
 import express from 'express';
-import {createOrder,getOrderDetails,getAllDeliveredOrders,getNewOrders,getAllOrders,searchOrder,deleteOrder,updatePaymentStatus,updateTrackingStatus} from '../controllers/order.controller.js';
+import {getUserOrders,createOrder,getOrderDetails,getAllDeliveredOrders,getNewOrders,getAllOrders,searchOrder,deleteOrder,updatePaymentStatus,updateTrackingStatus,getOrderCount} from '../controllers/order.controller.js';
 
 const router = express.Router();
 
@@ -15,6 +15,8 @@ router.get('/search', searchOrder);
 router.delete('/delete/:orderId', deleteOrder);
 router.put('/update-payment-status/:orderId', updatePaymentStatus);
 router.put('/update-tracking-status/:orderId', updateTrackingStatus);
+router.get('/count', getOrderCount);
+router.post('/user_orders', getUserOrders);
 
 
 
