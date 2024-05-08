@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import logo from './../../images/logo2.png';
-import dashboard from './../../images/icons8-arrow-50 (1).png';
+import logo from './../../../images/logo2.png';
+import dashboard from './../../../images/icons8-arrow-50 (1).png';
 import { FaSortAmountDown } from 'react-icons/fa';
-import AdminHeader from '../../components/AdminHeader';
+import AdminHeader from '../../../components/AdminHeader';
 
-export default function MainDashboard() {
+export default function CustomerDashboard() {
   return (
     <div className='flex h-screen'>
 
@@ -21,9 +21,10 @@ export default function MainDashboard() {
 
         {/* Navigation */}
         <div className='space-y-1'>
-          <NavLink icon={dashboard} text="Main Dashboard" to="/product-admin-dashboard" />
-          <NavLink icon={dashboard} text="Create Listing" to="/product-listing" />
-          <NavLink icon={dashboard} text="View Products" to="/product-view" />
+          <NavLink icon={dashboard} text="Main Dashboard" to="/managerUI" />
+          <NavLink icon={dashboard} text="Manage Profile" to="/customer-management" />
+          
+          
           {/* Add more navigation items as needed */}
         </div>
       </div>

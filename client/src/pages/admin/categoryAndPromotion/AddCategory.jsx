@@ -1,9 +1,3 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "./../../../images/logo2.png";
-import dashboard from "./../../../images/icons8-arrow-50 (1).png";
-import { FaSortAmountDown } from "react-icons/fa";
-import AdminHeader from "../../../components/AdminHeader";
 import { useRef, useState, useEffect } from "react";
 import {
   getDownloadURL,
@@ -13,15 +7,27 @@ import {
 } from "firebase/storage";
 import { app } from "../../../firebase";
 
-export default function AddCategory() {
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import logo from "../../../images/logo2.png";
+import dashboard from "../../../images/icons8-arrow-50 (1).png";
+import { FaSortAmountDown } from "react-icons/fa";
+import AdminHeader from "../../../components/AdminHeader";
+
+export default function About() {
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [avatarUploaded, setAvatarUploaded] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [avatarUploaded, setAvatarUploaded] = useState(false); // Track whether avatar is uploaded
+  const [errors, setErrors] = useState({
+    categoryName: "",
+    description: ""
+  });
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     if (file) {
@@ -55,11 +61,28 @@ export default function AddCategory() {
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
+    const { id, value } = e.target;
+    let errorMessage = "";
+  
+    // Clear previous errors when input changes
+    setErrors({ ...errors, [id]: "" });
+  
+    // Validation for category name
+  if (id === "categoryname") {
+    if (!/^[a-zA-Z\s]+$/.test(value)) {
+      errorMessage = "Category name must contain only letters and spaces";
+    }
+  }
+  
+    // Update form data only if there are no errors
+    if (!errorMessage) {
+      setFormData({ ...formData, [id]: value });
+    } else {
+      // Set error message if validation fails
+      setErrors({ ...errors, [id]: errorMessage });
+    }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,20 +96,22 @@ export default function AddCategory() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      
+      console.log(data);
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
         return;
       }
-      navigate('/viewCategories');
       setLoading(false);
       setError(null);
+      setSuccessMessage("Category added successfully!"); 
+      navigate("/viewcategories");// Set success message
     } catch (error) {
       setLoading(false);
       setError(error.message);
     }
   };
+  
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -104,44 +129,47 @@ export default function AddCategory() {
           <NavLink
             icon={dashboard}
             text="Main Dashboard"
-            to="/product-admin-dashboard"
+            to="/category-admin-dashboard"
           />
-          <NavLink icon={dashboard} text="Add Categories" to="/addCategory" />
-          <NavLink icon={dashboard} text="View Categories" to="/viewCategories" />
+          <NavLink icon={dashboard} text="Add Category" to="/addcategories" />
+          <NavLink icon={dashboard} text="View Category" to="/viewcategories" />
+          <NavLink icon={dashboard} text="Add Discount" to="/adddiscount" />
+          <NavLink icon={dashboard} text="View Discount" to="/viewdiscount" />
+          <NavLink icon={dashboard} text="Create Coupon" to="/couponadd" />
+          <NavLink icon={dashboard} text="View Coupon" to="/couponcodeview" />
+          {/* Add more navigation items as needed */}
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 basis-4/5">
-        {/* Header */}
+      <div className="basis-4/5 ">
         <AdminHeader />
-        <div className="p-3 max-w-lg mx-auto mt-12">
+
+        <div className="p-3 max-w-lg mx-auto">
+          <h1 className="text-3xl text-center font-semibold my-7">
+            Add New Category
+          </h1>
+          <div className="bg-green-100 rounded-lg shadow-md p-8 mt-2 ">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <label className="text-sideNavText text-lg">Category Name :</label>
             <input
               type="text"
               placeholder="Category name"
-              className="border p-3 rounded-lg bg-sideNavBackground"
+              className="border p-3 rounded-lg"
               id="categoryname"
               onChange={handleChange}
             />
-            <label className="text-sideNavText text-lg">Description :</label>
             <input
               type="text"
               placeholder="description"
-              className="border p-3 rounded-lg bg-sideNavBackground"
+              className="border p-3 rounded-lg"
               id="description"
               onChange={handleChange}
             />
 
-            <div className="flex justify-center items-center">
-              <input
-                onChange={(e) => setFile(e.target.files[0])}
-                type="file"
-                accept="image/*"
-                className=""
-              />
-            </div>
+            <input
+              onChange={(e) => setFile(e.target.files[0])}
+              type="file"
+              accept="image/*"
+            />
 
             {file && (
               <div>
@@ -149,29 +177,34 @@ export default function AddCategory() {
                 <img
                   src={URL.createObjectURL(file)}
                   alt="Selected"
-                  className="max-w-xs my-3 w-36 h-36"
+                  className="my-3 w-36 h-36 rounded-2xl"
                 />
               </div>
             )}
 
             <button
               disabled={loading || !avatarUploaded}
-              className="bg-backgreen4 text-white rounded-2xl h-12 font-semibold text-xl"
+              className="bg-backgreen4 text-white rounded-xl h-12 hover:bg-green-700"
             >
               {loading ? "Adding..." : "Add Category"}
             </button>
           </form>
+          </div>
           {error && <p className="text-red-500 mt-5">{error}</p>}
         </div>
+        <div>
+  {successMessage && (
+    <p className="text-green-500 mt-5">{successMessage}</p>
+  )}
+  {error && <p className="text-red-500 mt-5">{error}</p>}
+</div>
 
-        {/* Main Content Area */}
-        <div className="p-8">{/* Your main content goes here */}</div>
       </div>
     </div>
+    
   );
 }
 
-// NavLink Component for sidebar navigation items
 function NavLink({ icon, text, to }) {
   return (
     <Link
@@ -180,7 +213,6 @@ function NavLink({ icon, text, to }) {
     >
       <img src={icon} alt={text} className="w-6 h-6 mr-4" />
       <span className="text-lg font-semibold">{text}</span>
-        
     </Link>
   );
 }

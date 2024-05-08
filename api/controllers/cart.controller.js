@@ -46,10 +46,10 @@ export const addToCart = async (req, res) => {
             try {
                 existingCartItem.quantity += quantity;
                 await existingCartItem.save();
-                res.status(200).json({ success: true, message: 'Item quantity updated successfully' });
+                res.status(200).json({ success: true, updated:true, message: 'Item quantity updated successfully' });
             } catch (error) {
                 console.error('Error updating item quantity in cart:', error);
-                res.status(500).json({ success: false, error: 'Internal server error' });
+                res.status(500).json({ success: false, updated:true, error: 'Internal server error' });
             }
         } else {
             try {
@@ -64,10 +64,10 @@ export const addToCart = async (req, res) => {
                 await cartItem.save();
                 cart.items.push(cartItem._id);
                 await cart.save();
-                res.status(200).json({ success: true, message: 'Item added to cart successfully' });
+                res.status(200).json({ success: true,updated:false, message: 'Item added to cart successfully' });
             } catch (error) {
                 console.error('Error adding new item to cart:', error);
-                res.status(500).json({ success: false, error: 'Internal server error' });
+                res.status(500).json({ success: false,updated:false, error: 'Internal server error' });
             }
         }
     } catch (error) {
