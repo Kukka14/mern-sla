@@ -16,9 +16,12 @@ import discountRouter from './routes/discount.route.js';
 import couponRouter from './routes/coupon.route.js';
 
 import orderRouter from './routes/order.route.js';
+
+import SproductRouter from './routes/sproduct.route.js';
+import SupplierRouter from './routes/supplier.route.js'
+
 import addressRouter from './routes/address.route.js';
 import paymentrouter from './routes/payment.route.js';
-
 
 
 dotenv.config();
@@ -55,8 +58,13 @@ app.use("/api/discount", discountRouter);
 app.use("/api/coupon", couponRouter);
 
 app.use('/api/order', orderRouter);
+
+app.use('/api/sproduct',SproductRouter);
+app.use('/api/supplier',SupplierRouter)
+
 app.use('/api/address', addressRouter);
 app.use('/api/payment',paymentrouter);
+
 
 
 

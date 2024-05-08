@@ -46,7 +46,7 @@ export default function MainDashboard() {
 
         <div className="flex flex-col gap-10 mt-36">
           <div className="flex flex-row justify-center items-center gap-7">
-            <Link to="/order-dashboard">
+            <Link to="/orderDashboard">
               <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
                 <img
                   src={Order}
@@ -68,7 +68,7 @@ export default function MainDashboard() {
                 <p className="text-sectiontext">Product Management</p>
               </div>
             </Link>
-            <Link to="/supplierDashboard">
+            <Link to="/sdashboard">
               <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
                 <img
                   src={supplier}
