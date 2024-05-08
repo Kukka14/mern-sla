@@ -49,7 +49,7 @@ function UpdateSupplier() {
 
 
     return (
-        <div className="min-h-screen bg-green-200 flex items-center justify-center">
+        <div className="min-h-screen flex items-center justify-center">
             <div className="w-3/4 bg-white rounded p-3">
                 <div className="flex justify-between mb-4">
                     <h1 className="text-3xl font-semibold">Update Supplier</h1>

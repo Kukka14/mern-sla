@@ -46,7 +46,7 @@ function CreateSproduct() {
     };
 
     return (
-        <div className="min-h-screen bg-green-200 flex items-center justify-center">
+        <div className="min-h-screen flex items-center justify-center">
             <div className="w-3/4 bg-white rounded p-3">
                 <div className="flex justify-between mb-4">
                     <h1 className="text-3xl font-semibold">Add New Supplier</h1>
@@ -60,6 +60,7 @@ function CreateSproduct() {
                             id="fname"
                             minLength="2"
                             maxLength="62"
+                            pattern="[A-Za-z]*"
                             required
                             onChange={handleChange}
                             value={formData.fname}
@@ -71,6 +72,7 @@ function CreateSproduct() {
                             id="lname"
                             maxLength="62"
                             minLength="2"
+                            pattern="[A-Za-z]*"
                             required
                             onChange={handleChange}
                             value={formData.lname}
@@ -105,7 +107,7 @@ function CreateSproduct() {
                             className="border p-3 rounded-lg bg-gray-200"
                             id="address"
                             maxLength="225"
-                            minLength="5"
+                            minLength="4"
                             required
                             onChange={handleChange}
                             value={formData.address}
@@ -132,6 +134,7 @@ function CreateSproduct() {
                     </div>
                 </form>
             </div>
+            
         </div>
     );
 }

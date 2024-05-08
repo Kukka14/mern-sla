@@ -16,10 +16,21 @@ function CreateSproduct() {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
+    const { id, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.id]: e.target.value,
+      [id]: value,
     });
+  };
+
+  const handleKeyPress = (e) => {
+    const charCode = e.charCode;
+    const isLetter = (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122);
+    const isSpace = charCode === 32;
+
+    if (!isLetter || isSpace) { 
+      e.preventDefault();
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -41,7 +52,7 @@ function CreateSproduct() {
   };
   
   return (
-    <div className="min-h-screen bg-green-200 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="w-3/4 bg-white rounded p-3">
         <div className="flex justify-between mb-4">
           <h1 className="text-3xl font-semibold">Add New Supplier Product</h1>
@@ -51,19 +62,21 @@ function CreateSproduct() {
             <input
               type="text"
               placeholder="Supplier Name"
-              className="border p-3 rounded-lg bg-gray-200"
+              className="border p-3 rounded-lg bg-gray-300"
               id="Supplier_Name"
               maxLength="62"
               minLength="2"
+              title="Please enter only letters"
               required
               onChange={handleChange}
+              onKeyPress={handleKeyPress}
               value={formData.Supplier_Name}
             />
 
             <input
               type="email"
               placeholder="Supplier E-mail (eg: example@example.com)"
-              className="border p-3 rounded-lg bg-gray-200"
+              className="border p-3 rounded-lg bg-gray-300"
               id="Supplier_Email"
               maxLength="62"
               minLength="10"
@@ -75,19 +88,20 @@ function CreateSproduct() {
             <input
               type="text"
               placeholder="Product Name"
-              className="border p-3 rounded-lg bg-gray-200"
+              className="border p-3 rounded-lg bg-gray-300"
               id="Product_Name"
               maxLength="62"
               minLength="2"
               required
               onChange={handleChange}
+              onKeyPress={handleKeyPress}
               value={formData.Product_Name}
             />
 
             <input
               type="text"
               placeholder="Supplier Price"
-              className="border p-3 rounded-lg bg-gray-200"
+              className="border p-3 rounded-lg bg-gray-300"
               id="Supplier_Price"
               maxLength="8"
               minLength="4"
@@ -102,7 +116,7 @@ function CreateSproduct() {
             <input
               type="number"
               placeholder="Quantity"
-              className="border p-3 rounded-lg bg-gray-200"
+              className="border p-3 rounded-lg bg-gray-300"
               id="Quantity"
               maxLength="2"
               minLength="1"

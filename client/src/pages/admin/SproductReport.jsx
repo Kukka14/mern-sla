@@ -24,7 +24,6 @@ function Sproduct() {
         // Initialize jsPDF instance
         const doc = new jsPDF();
 
-        // Add header to the document
         doc.setFontSize(20);
         doc.setFont('bold');
         doc.text('Saradha Lanka Agro - Supplier Product Report', 105, 20, { align: 'center' });
