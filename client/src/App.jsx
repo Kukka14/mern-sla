@@ -29,11 +29,11 @@ import CompleteOrder from './pages/admin/OrderManagement/CompleteOrder.jsx';
 import ManageOrder from './pages/admin/OrderManagement/ManageOrder.jsx';
 
 
-import Sproduct from './pages/admin/Sproduct';
-import SproductReport from './pages/admin/SproductReport';
-import Sdashboard from './pages/admin/Sdashboard';
-import CreateSproduct from './pages/admin/CreateSproduct.jsx';
-import UpdateSproduct from './pages/admin/UpdateSproduct.jsx';
+import Sproduct from './pages/admin/supplierManagement/Sproduct.jsx';
+import SproductReport from './pages/admin/supplierManagement/SproductReport.jsx';
+
+
+
 import AddSuppler from './pages/admin/supplierManagement/AddSupplier.jsx';
 import Supplier from './pages/admin/supplierManagement/Supplier.jsx';
 import UpdateSupplier from './pages/admin/supplierManagement/UpdateSupplier.jsx'
@@ -57,6 +57,9 @@ import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
 import ManagerUI from './pages/admin/customerManagement/ManagerUI.jsx';
 import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
 import ProductByCategory from './pages/admin/ProductManagement/ProductByCategory.jsx';
+import SupplierAdminDashboard from './pages/admin/supplierManagement/SupplierAdminDashboard.jsx';
+import CreateSproduct from './pages/admin/supplierManagement/CreateSproduct.jsx';
+import UpdateSproduct from './pages/admin/supplierManagement/UpdateSproduct.jsx';
 
 
 
@@ -79,7 +82,7 @@ export default function App() {
 
         <Route path="/sproduct" element={<Sproduct />} />
           <Route path="/sproductreport" element={<SproductReport />} />
-          <Route path="/sdashboard" element={<Sdashboard />} />
+          <Route path="/sdashboard" element={<SupplierAdminDashboard />} />
           <Route path="/create-sproduct" element={<CreateSproduct />} />
           <Route path="/update-sproduct/:id" element={<UpdateSproduct />} />
           <Route path="/add-supplier" element={<AddSuppler />} />

@@ -3,6 +3,12 @@ import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
+import { Link } from "react-router-dom";
+import logo from "../../../images/logo2.png";
+import dashboard from "../../../images/icons8-arrow-50 (1).png";
+import { FaSortAmountDown } from "react-icons/fa";
+import AdminHeader from "../../../components/AdminHeader";
+
 function Sproduct() {
     const [products, setProducts] = useState([]);
     const [totalAmountPaid, setTotalAmountPaid] = useState(0);
@@ -69,6 +75,64 @@ function Sproduct() {
     };
 
     return (
+
+        <div className="flex h-screen">
+        {/* Sidebar */}
+        <div className="bg-sideNavBackground w-1/5 p-4">
+          {/* Logo */}
+          <div className="flex justify-center items-center mb-8">
+            <img src={logo} alt="Company Logo" className="w-48 h-auto" />
+          </div>
+  
+          {/* Separate Line */}
+          <hr className="border-gray-700 my-4" />
+  
+          {/* Navigation */}
+            
+          <div className="space-y-1">
+          <NavLink
+            icon={dashboard}
+            text="Main Dashboard"
+            to="/sdashboard"
+          />
+
+         <NavLink
+            icon={dashboard}
+            text="Add Supplier"
+            to="/add-supplier"
+          />
+          <NavLink
+            icon={dashboard}
+            text="View Suppliers"
+            to="/view-suppliers"
+          />
+          
+           <NavLink
+            icon={dashboard}
+            text="Add Product"
+            to="/create-sproduct"
+          />
+          <NavLink icon={dashboard} text="View Products" to="/sproduct" />
+          
+          <NavLink
+            icon={dashboard}
+            text="Generate Reports"
+            to="/sproductreport"
+          />
+          
+          
+          {/* Add more navigation items as needed */}
+        </div>
+
+
+
+
+        </div>
+  
+        <div className="basis-4/5 ">
+          <AdminHeader />
+     
+
         <div className="min-h-screen bg-primary flex items-center justify-center">
             <div className="w-3/4 bg-white rounded p-3">
                 <div className="flex justify-between mb-4">
@@ -101,7 +165,22 @@ function Sproduct() {
                 <div>Total Amount Paid for All Products: {(products.reduce((total, product) => total + parseFloat(product.Supplier_Price) * parseInt(product.Quantity), 0)).toFixed(2)} LKR</div>
             </div>
         </div>
+        </div>
+        </div>
     );
 }
 
 export default Sproduct;
+
+function NavLink({ icon, text, to }) {
+    return (
+      <Link
+        to={to}
+        className="flex items-center text-white py-2 px-4 rounded-md  bg-sideNavButton hover:bg-sideNavButtonhover "
+      >
+        <img src={icon} alt={text} className="w-6 h-6 mr-4" />
+        <span className="text-lg font-semibold">{text}</span>
+      </Link>
+    );
+  }
+  
