@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
 
 export default function Ordersummary() {
   const [orderDetails, setOrderDetails] = useState({});
