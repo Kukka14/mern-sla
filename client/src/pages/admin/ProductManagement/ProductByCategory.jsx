@@ -14,10 +14,6 @@ function ProductByCategory() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const [categories, setCategories] = useState([]);
- 
- 
-
   useEffect(() => {
     const fetchProductsByCategory = async () => {
       try {
@@ -43,42 +39,6 @@ function ProductByCategory() {
       : filtered;
     setFilteredProducts(categoryFiltered);
   }, [searchQuery, products, selectedCategory]);
-
-
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get("/api/category/getAllCategories");
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        let url = "/api/listing?";
-        if (searchQuery) {
-          url += `productName=${searchQuery}`;
-        }
-        if (selectedCategory) {
-          url += `${searchQuery ? "&" : ""}category=${selectedCategory}`;
-        }
-
-        const response = await axios.get(url);
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Error fetching Products:", error);
-      }
-    };
-
-    fetchProducts();
-  }, [searchQuery, selectedCategory]);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -113,9 +73,9 @@ function ProductByCategory() {
   };
 
   return (
-    <div className="flex max-h-max">
+    <div className="flex max-h-full">
       {/* Sidebar */}
-      <div className="bg-sideNavBackground w-1/5 p-4">
+      <div className="bg-sideNavBackground basis-1/5 p-4">
         {/* Logo */}
         <div className="flex justify-center items-center mb-8">
           <img src={logo} alt="Company Logo" className="w-48 h-auto" />
@@ -159,18 +119,7 @@ function ProductByCategory() {
                 onChange={handleSearchChange}
                 className="bg-green-100 w-80 rounded-lg border border-green-300 h-10 px-4 mr-4 focus:outline-none"
               />
-             <select
-                onChange={handleCategoryChange}
-                value={selectedCategory}
-                className="p-2 rounded-lg border border-green-300 focus:outline-none bg-white"
-              >
-                <option value="">All Categories</option>
-                {categories.map((category) => (
-                  <option key={category._id} value={category.categoryname}>
-                    {category.categoryname}
-                  </option>
-                ))}
-              </select>
+          
             </form>
         
 
