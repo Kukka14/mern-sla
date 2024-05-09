@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import SignUp from './pages/client/SignUp.jsx';
@@ -29,6 +28,16 @@ import NewOrders from './pages/admin/OrderManagement/NewOrders.jsx';
 import CompleteOrder from './pages/admin/OrderManagement/CompleteOrder.jsx';
 import ManageOrder from './pages/admin/OrderManagement/ManageOrder.jsx';
 
+
+import Sproduct from './pages/admin/supplierManagement/Sproduct.jsx';
+import SproductReport from './pages/admin/supplierManagement/SproductReport.jsx';
+
+
+
+import AddSuppler from './pages/admin/supplierManagement/AddSupplier.jsx';
+import Supplier from './pages/admin/supplierManagement/Supplier.jsx';
+import UpdateSupplier from './pages/admin/supplierManagement/UpdateSupplier.jsx'
+
 import AddCategory from './pages/admin/categoryAndPromotion/AddCategory.jsx';
 import CategoryAdminDashboard from './pages/admin/categoryAndPromotion/CategoryAdminDashboard.jsx';
 import ViewCategory from './pages/admin/categoryAndPromotion/ViewCategory.jsx';
@@ -51,6 +60,9 @@ import OrderHistory from './pages/client/OrderHistory.jsx';
 import OrderDetails from './pages/client/OrderDetails.jsx';
 import Footer from './components/Footer.jsx';
 import ProductByCategory from './pages/admin/ProductManagement/ProductByCategory.jsx';
+import SupplierAdminDashboard from './pages/admin/supplierManagement/SupplierAdminDashboard.jsx';
+import CreateSproduct from './pages/admin/supplierManagement/CreateSproduct.jsx';
+import UpdateSproduct from './pages/admin/supplierManagement/UpdateSproduct.jsx';
 
 
 export default function App() {
@@ -67,10 +79,17 @@ export default function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/product-view-client" element={<ProductView/>} />
         <Route path="/product-detail/:id" element={<ProductDetail />} />
-        
-        
-        
 
+        <Route path="/sproduct" element={<Sproduct />} />
+          <Route path="/sproductreport" element={<SproductReport />} />
+          <Route path="/sdashboard" element={<SupplierAdminDashboard />} />
+          <Route path="/create-sproduct" element={<CreateSproduct />} />
+          <Route path="/update-sproduct/:id" element={<UpdateSproduct />} />
+          <Route path="/add-supplier" element={<AddSuppler />} />
+          <Route path="/view-suppliers" element={<Supplier/>} />
+          <Route path="/update-supplier/:id" element={<UpdateSupplier/>} />
+          
+      
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/mainDashboard' element={<MainDashboard />} />
@@ -120,6 +139,7 @@ export default function App() {
 
 
 
+
           
 
 
@@ -131,6 +151,7 @@ export default function App() {
           <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order_details/:orderId" element={<OrderDetails />} />
+
 
         </Route>
       </Routes>
