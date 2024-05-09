@@ -160,12 +160,12 @@ export default function CreateListing() {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-  
+
       // Find the category name corresponding to the selected category ID
       const selectedCategory = categories.find(
         (category) => category._id === formData.category
       );
-  
+
       const res = await fetch(`/api/listing/update/${params.id}`, {
         method: "POST",
         headers: {
@@ -191,15 +191,18 @@ export default function CreateListing() {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
-        <div className="flex justify-center items-center mb-8">
-          <img src={logo} alt="Company Logo" className="w-48 h-auto" />
-        </div>
+
+        <Link to="/mainDashboard">
+          <div className="flex justify-center items-center mb-8">
+            <img src={logo} alt="Company Logo" className="w-48 h-auto" />
+          </div>
+        </Link>
 
         {/* Separate Line */}
         <hr className="border-gray-700 my-4" />
@@ -402,7 +405,12 @@ export default function CreateListing() {
                         The first image will be the cover photo
                       </p>
 
-                      <div> {error && <p className="text-red-700  text-sm  ">{error}</p>}</div>
+                      <div>
+                        {" "}
+                        {error && (
+                          <p className="text-red-700  text-sm  ">{error}</p>
+                        )}
+                      </div>
                     </div>
 
                     <div className="flex justify-center items-center h-full">
@@ -436,7 +444,6 @@ export default function CreateListing() {
                 >
                   {loading ? "Updating..." : "Update listing"}
                 </button>
-                
               </div>
             </form>
           </div>
