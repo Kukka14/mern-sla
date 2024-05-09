@@ -55,7 +55,6 @@ import UpdateProductListing from './pages/admin/ProductManagement/UpdateProductL
 import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboard.jsx';
 import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
 import ManagerUI from './pages/admin/customerManagement/ManagerUI.jsx';
-import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
 import OrderHistory from './pages/client/OrderHistory.jsx';
 import OrderDetails from './pages/client/OrderDetails.jsx';
 import Footer from './components/Footer.jsx';
@@ -64,6 +63,9 @@ import SupplierAdminDashboard from './pages/admin/supplierManagement/SupplierAdm
 import CreateSproduct from './pages/admin/supplierManagement/CreateSproduct.jsx';
 import UpdateSproduct from './pages/admin/supplierManagement/UpdateSproduct.jsx';
 
+
+import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
+import ViewPaymentDetails from './pages/admin/PaymentManagement/ViewPaymentDetails.jsx'
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -151,6 +153,8 @@ export default function App() {
           <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order_details/:orderId" element={<OrderDetails />} />
+
+          <Route path="/:userId" element={<ViewPaymentDetails/>} />
 
 
         </Route>
