@@ -143,7 +143,7 @@ export default function Ordersummary() {
               className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             />
             <button
-              onClick={handleApplyPromoCode}
+             
               className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md focus:outline-none"
             >
               Apply
