@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import axios from "axios";
 import logo from "../../../images/logo2.png";
 import dashboard from "../../../images/icons8-arrow-50 (1).png";
 import AdminHeader from "../../../components/AdminHeader";
@@ -17,11 +17,13 @@ function ProductByCategory() {
   useEffect(() => {
     const fetchProductsByCategory = async () => {
       try {
-        const response = await axios.get(`/api/listing/category/${categoryName}`);
+        const response = await axios.get(
+          `/api/listing/category/${categoryName}`
+        );
         setProducts(response.data); // Update the products state with fetched data
         setFilteredProducts(response.data); // Initialize filtered products with all products
       } catch (error) {
-        console.error('Error fetching products by category:', error);
+        console.error("Error fetching products by category:", error);
       }
     };
 
@@ -30,12 +32,12 @@ function ProductByCategory() {
 
   useEffect(() => {
     // Filter products based on search query
-    const filtered = products.filter(product =>
+    const filtered = products.filter((product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     // If a category is selected, further filter products by category
     const categoryFiltered = selectedCategory
-      ? filtered.filter(product => product.category === selectedCategory)
+      ? filtered.filter((product) => product.category === selectedCategory)
       : filtered;
     setFilteredProducts(categoryFiltered);
   }, [searchQuery, products, selectedCategory]);
@@ -50,10 +52,10 @@ function ProductByCategory() {
 
   const downloadPdf = () => {
     const doc = new jsPDF();
-    
+
     // Add title
     doc.text(`${categoryName} Product List`, 14, 10);
-  
+
     // Add table
     doc.autoTable({
       theme: "striped",
@@ -68,7 +70,7 @@ function ProductByCategory() {
         product.category,
       ]),
     });
-  
+
     doc.save(`${categoryName}-product-list.pdf`);
   };
 
@@ -77,9 +79,12 @@ function ProductByCategory() {
       {/* Sidebar */}
       <div className="bg-sideNavBackground basis-1/5 p-4">
         {/* Logo */}
-        <div className="flex justify-center items-center mb-8">
-          <img src={logo} alt="Company Logo" className="w-48 h-auto" />
-        </div>
+
+        <Link to="/mainDashboard">
+          <div className="flex justify-center items-center mb-8">
+            <img src={logo} alt="Company Logo" className="w-48 h-auto" />
+          </div>
+        </Link>
 
         {/* Separate Line */}
         <hr className="border-gray-700 my-4" />
@@ -101,14 +106,14 @@ function ProductByCategory() {
       </div>
 
       <div className="basis-4/5">
-        <AdminHeader /> 
+        <AdminHeader />
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center mt-5">
             <h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">
               {categoryName}s
             </h1>
           </div>
-          
+
           {/* Search and Filter */}
           <div className="flex justify-center mb-10">
             <form className="flex items-center bg-sectionBackground rounded-lg shadow-md border border-green-200 px-4 py-2">
@@ -119,13 +124,11 @@ function ProductByCategory() {
                 onChange={handleSearchChange}
                 className="bg-green-100 w-80 rounded-lg border border-green-300 h-10 px-4 mr-4 focus:outline-none"
               />
-          
             </form>
-        
 
-          {/* Report Button */}
-          
-          <button
+            {/* Report Button */}
+
+            <button
               onClick={downloadPdf}
               className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-md ml-4"
             >
@@ -148,7 +151,12 @@ function ProductByCategory() {
               </thead>
               <tbody>
                 {filteredProducts.map((product, index) => (
-                  <tr key={product._id} className={index % 2 === 0 ? "bg-green-100" : "bg-green-200"}>
+                  <tr
+                    key={product._id}
+                    className={
+                      index % 2 === 0 ? "bg-green-100" : "bg-green-200"
+                    }
+                  >
                     <td className="border px-4 py-2">{product.name}</td>
                     <td className="border px-4 py-2">{product.description}</td>
                     <td className="border px-4 py-2">{product.type}</td>
