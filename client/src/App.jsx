@@ -33,13 +33,12 @@ export default function App() {
         <Route path='/' element={<Home/>} />
         <Route path='/product-listing' element={<ProductListing/>} />
         <Route path='contactus' element={<ContactUs/>} />
-        
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/sign-in' element={<SignIn />} />
         
 
         <Route element={<PrivateRoute />}>
-        <Route path='/product-listing' element={<ProductListing/>} />
+          <Route path='/product-listing' element={<ProductListing/>} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
@@ -48,10 +47,6 @@ export default function App() {
           <Route path='/reviewadmin' element={<ReviewAdminDashboard/>} />
 
           <Route path='/product-admin-dashboard' element={<ProductAdminDashboard/>} />
-
-
-          
-
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
           <Route path="/customer-management" element={<CustomerManagement />} /> 
           <Route path='my-reviews/:userId' element={<MyReview />} />
