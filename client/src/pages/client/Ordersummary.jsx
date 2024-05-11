@@ -134,7 +134,6 @@ export default function Ordersummary() {
             <p>Zip: {addressDetails.postalCode}</p>
             <p>Country: {addressDetails.country}</p>
           </div>
-         
           <div className="mt-8">
             <button
               onClick={paymenthdl}
@@ -146,5 +145,6 @@ export default function Ordersummary() {
         </div>
       </div>
     </div>
+    
   );
 }
