@@ -6,15 +6,16 @@ const sproductSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        Supplier_Email:{
-            type: String,
-            required: true,
-            
-        },
         Product_Name:{
             type: String,
             required: true,
         },
+
+        Product_Category:{
+            type: String,
+            required: true,
+        },
+
         Supplier_Price:{
             type: Number,
             required: true,

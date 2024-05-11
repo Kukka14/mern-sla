@@ -1,55 +1,61 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { FaSearch } from "react-icons/fa";
+import logo from "../../../images/logo2.png";
+import dashboard from "../../../images/icons8-arrow-50 (1).png";
+import AdminHeader from "../../../components/AdminHeader";
 
 import logoImg from "../../../images/logo2.png";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-import logo from "../../../images/logo2.png";
-import dashboard from "../../../images/icons8-arrow-50 (1).png";
-import AdminHeader from "../../../components/AdminHeader";
-
-const ReviewProductList = () => {
+function Sproduct() {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get("/api/category/getAllCategories");
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get("/api/sproduct/getall");
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
 
-    fetchCategories();
+  useEffect(() => {
+    fetchProducts();
   }, []);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        let url = "/api/listing?";
-        if (searchQuery) {
-          url += `productName=${searchQuery}`;
+    const fetchCategories = async () => {
+        try {
+            const response = await axios.get("/api/category/getAllCategories");
+            setCategories(response.data);
+        } catch (error) {
+            console.error("Error fetching categories:", error);
         }
-        if (selectedCategory) {
-          url += `${searchQuery ? "&" : ""}category=${selectedCategory}`;
-        }
-
-        const response = await axios.get(url);
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Error fetching Products:", error);
-      }
     };
 
-    fetchProducts();
-  }, [searchQuery, selectedCategory]);
+    fetchCategories();
+}, []);
+
+
+const filteredProducts = products.filter((product) => {
+  const nameMatch =
+    !searchQuery ||
+    product.Product_Name.toLowerCase().includes(searchQuery.toLowerCase());
+  const priceMatch =
+    !searchQuery || product.Supplier_Price.toString().includes(searchQuery);
+  const categoryMatch =
+    !selectedCategory || product.Product_Category === selectedCategory;
+
+  return nameMatch && priceMatch && categoryMatch;
+});
+
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -57,6 +63,7 @@ const ReviewProductList = () => {
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
+    console.log("Selected Category:", e.target.value);
   };
 
   const downloadPdf = () => {
@@ -72,42 +79,32 @@ const ReviewProductList = () => {
     doc.autoTable({
       theme: "striped",
       startY: 70, // Adjust based on logo size and title height
-      head: [["Name", "Description", "Price", "Type", "Stock", "Category"]],
+      head: [["Product Name", "Product Category", "Supplier_Price", "Quantity"]],
       body: products.map((product) => [
-        product.name,
-        product.description,
-        product.regularPrice,
-        product.type,
-        product.quantity,
-        product.category,
+        product.Product_Name,
+        product.Product_Category,
+        product.Supplier_Price,
+        product.Quantity,
       ]),
     });
 
-    doc.save("product-list.pdf");
+    doc.save("Stock-list.pdf");
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/api/listing/${id}`);
-      setProducts((prevProducts) =>
-        prevProducts.filter((product) => product._id !== id)
-      );
-    } catch (error) {
-      console.error("Error deleting product:", error);
-    }
-  };
+
+
+
+
+
 
   return (
-    <div className="flex max-h-full">
+    <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="bg-sideNavBackground basis-1/5 p-4">
+      <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
-
-        <Link to="/mainDashboard">
-          <div className="flex justify-center items-center mb-8">
-            <img src={logo} alt="Company Logo" className="w-48 h-auto" />
-          </div>
-        </Link>
+        <div className="flex justify-center items-center mb-8">
+          <img src={logo} alt="Company Logo" className="w-48 h-auto" />
+        </div>
 
         {/* Separate Line */}
         <hr className="border-gray-700 my-4" />
@@ -129,17 +126,15 @@ const ReviewProductList = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="basis-4/5">
         <AdminHeader />
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center">
             <h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">
-              All Products
+              View Stocks
             </h1>
           </div>
 
-          {/* Search and Filter */}
           <div className="flex justify-center mb-10">
             <form className="flex items-center bg-sectionBackground rounded-lg shadow-md border border-green-200 px-4 py-2">
               <input
@@ -171,66 +166,36 @@ const ReviewProductList = () => {
             </button>
           </div>
 
-          {/* Product Table */}
           <div className="flex justify-center items-center">
             <table className="table-auto w-11/12 bg-white shadow-md rounded-lg mb-4">
               <thead>
                 <tr className="bg-green-300">
-                  <th className="px-4 py-2 text-left rounded-tl-lg">Name</th>
-                  <th className="px-4 py-2 text-left">Description</th>
-                  <th className="px-4 py-2 text-left">Type</th>
-                  <th className="px-4 py-2 text-left">Price</th>
-                  <th className="px-4 py-2 text-left">Quantity</th>
-                  <th className="px-4 py-2 text-left">Category</th>
-                  <th className="px-4 py-2 text-left">Images</th>
+                  <th className="px-4 py-2 text-left rounded-tl-lg">
+                    Product Name
+                  </th>
+                  <th className="px-4 py-2 text-left">Product Category</th>
+                  <th className="px-4 py-2 text-left">Supplier Price</th>
                   <th className="px-4 py-2 text-left rounded-tr-lg">
-                    Delete/Update
+                    Quantity
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {products.map((product, index) => (
+                {filteredProducts.map((product, index) => (
                   <tr
                     key={product._id}
                     className={
                       index % 2 === 0 ? "bg-green-100" : "bg-green-200"
                     }
                   >
-                    <td className="border px-4 py-2">{product.name}</td>
-                    <td className="border px-4 py-2">{product.description}</td>
-                    <td className="border px-4 py-2">{product.type}</td>
-                    <td className="border px-4 py-2">{product.regularPrice}</td>
-                    <td className="border px-4 py-2">{product.quantity}</td>
-                    <td className="border px-4 py-2">{product.category}</td>
+                    <td className="border px-4 py-2">{product.Product_Name}</td>
                     <td className="border px-4 py-2">
-                      {product.imageUrls &&
-                        Array.isArray(product.imageUrls) &&
-                        product.imageUrls.map((url) => (
-                          <img
-                            key={url}
-                            src={url}
-                            alt="Product"
-                            className="w-24 h-24 object-cover rounded-md mr-2 mb-2 shadow-sm"
-                          />
-                        ))}
+                      {product.Product_Category}
                     </td>
-
                     <td className="border px-4 py-2">
-                      <div className="flex flex-col">
-                        <button
-                          onClick={() => handleDelete(product._id)}
-                          className="bg-red-500 text-white px-4 py-2 rounded mb-1 hover:bg-red-600"
-                        >
-                          Delete
-                        </button>
-                        <Link
-                          to={`/update-product/${product._id}`}
-                          className="bg-blue-500 text-white px-4 py-2 rounded mt-1 hover:bg-blue-600 text-center"
-                        >
-                          Update
-                        </Link>
-                      </div>
+                      {product.Supplier_Price}
                     </td>
+                    <td className="border px-4 py-2">{product.Quantity}</td>
                   </tr>
                 ))}
               </tbody>
@@ -240,9 +205,9 @@ const ReviewProductList = () => {
       </div>
     </div>
   );
-};
+}
 
-export default ReviewProductList;
+export default Sproduct;
 
 function NavLink({ icon, text, to }) {
   return (

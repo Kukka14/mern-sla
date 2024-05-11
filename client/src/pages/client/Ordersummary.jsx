@@ -6,7 +6,7 @@ export default function Ordersummary() {
   const [orderDetails, setOrderDetails] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const [addressDetails, setAddressDetails] = useState({});
-  const [promoCode, setPromoCode] = useState("");
+
 
   const { orderId } = useParams();
 
@@ -134,21 +134,7 @@ export default function Ordersummary() {
             <p>Zip: {addressDetails.postalCode}</p>
             <p>Country: {addressDetails.country}</p>
           </div>
-          <div className="mt-8">
-            <input
-              type="text"
-              placeholder="Enter promo code"
-              value={promoCode}
-              onChange={(e) => setPromoCode(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-            />
-            <button
-              onClick={handleApplyPromoCode}
-              className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md focus:outline-none"
-            >
-              Apply
-            </button>
-          </div>
+         
           <div className="mt-8">
             <button
               onClick={paymenthdl}
