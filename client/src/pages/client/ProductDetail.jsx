@@ -157,8 +157,7 @@ const ProductDetail = () => {
           </div>
           <div id="card-content" className="flex-1 p-8 overflow-hidden">
             <h1 className="text-3xl font-semibold mb-4">{product.name}</h1>
-            <p className="text-lg font-semibold mb-2">Description:</p>
-            <p className="text-base mb-4 overflow-y-auto">{product.description}</p>
+           
             <p className="text-lg font-semibold text-blue-600 mb-2">
             {product.discountedPrice ? (
                 <div className="flex flex-row ">
@@ -203,7 +202,12 @@ const ProductDetail = () => {
               >
                 <FaShoppingCart className="mr-2" /> Add to Cart
               </button>
+
+             
             </div>
+
+            <p className="text-lg font-semibold mt-2 mb-2">Description:</p>
+            <p className="text-base mb-4 overflow-y-auto">{product.description}</p>
           </div>
         </div>
       ) : (

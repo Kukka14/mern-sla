@@ -63,6 +63,7 @@ import ProductByCategory from './pages/admin/ProductManagement/ProductByCategory
 import SupplierAdminDashboard from './pages/admin/supplierManagement/SupplierAdminDashboard.jsx';
 import CreateSproduct from './pages/admin/supplierManagement/CreateSproduct.jsx';
 import UpdateSproduct from './pages/admin/supplierManagement/UpdateSproduct.jsx';
+import ViewStocks from './pages/admin/ProductManagement/ViewStocks.jsx';
 
 
 export default function App() {
@@ -133,6 +134,7 @@ export default function App() {
           <Route path='/product-view' element={<ShowProductListing/>} />
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
           <Route path="/products/:categoryName" element={<ProductByCategory/>} />
+          <Route path="/view-stocks" element={<ViewStocks/>} />
          
           
 

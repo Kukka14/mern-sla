@@ -101,7 +101,14 @@ function ProductByCategory() {
             text="Create Listing"
             to="/product-listing"
           />
+
           <NavLink icon={dashboard} text="View Products" to="/product-view" />
+
+          <NavLink
+            icon={dashboard}
+            text="View Stocks"
+            to="/view-stocks"
+          />
         </div>
       </div>
 
