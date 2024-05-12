@@ -69,7 +69,7 @@ const ManageProfile = () => {
 
         {/* Navigation */}
         <div className='space-y-1'>
-          <NavLink icon={dashboard} text="Main Dashboard" to="/managerUI" />
+          <NavLink icon={dashboard} text="Main Dashboard" to="/customerDashBoard" />
           <NavLink icon={dashboard} text="Manage Profile" to="/customer-management" />
           
           

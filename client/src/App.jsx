@@ -30,8 +30,9 @@ import CompleteOrder from './pages/admin/OrderManagement/CompleteOrder.jsx';
 import ManageOrder from './pages/admin/OrderManagement/ManageOrder.jsx';
 import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboard.jsx';
 import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
-import ManagerUI from './pages/admin/customerManagement/ManagerUI.jsx';
+
 import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
+
 
 
 export default function App() {
@@ -76,7 +77,7 @@ export default function App() {
           <Route path="/manage-orders-dashboard" element={<ManageOrder/>}/>
           <Route path="/customer-report" element={<ManageProfileReport />} />
           <Route path="/customer-management" element={<ManageProfile />} />
-          <Route path="/managerUI" element={<ManagerUI />} />
+        
           <Route path="/customerDashBoard" element={<CustomerDashboard />} />
           <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
 

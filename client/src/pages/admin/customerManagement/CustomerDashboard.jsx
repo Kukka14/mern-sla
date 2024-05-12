@@ -5,10 +5,9 @@ import logo from './../../../images/logo2.png';
 import dashboard from './../../../images/icons8-arrow-50 (1).png';
 import AdminHeader from './../../../components/AdminHeader';
 
-const ManageDashboard = () => {
-  const [userCount, setUserCount] = useState(0);
-  const [averageCount, setAverageCount] = useState(0);
+const ManageDashboard = ({ userCount }) => {
   const [deleteCount, setDeleteCount] = useState(0);
+  const [averagePercentage, setAveragePercentage] = useState(0);
 
   useEffect(() => {
     fetchData();
@@ -17,11 +16,18 @@ const ManageDashboard = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get('/api/admin/user-stats');
-      setUserCount(response.data.userCount);
-      setAverageCount(response.data.averageCount);
-      setDeleteCount(response.data.deleteCount);
+      const { deleteCount, averageCount } = response.data;
+      setDeleteCount(deleteCount);
+      calculateAveragePercentage(userCount, averageCount);
     } catch (error) {
       console.error('Error fetching data:', error);
+    }
+  };
+
+  const calculateAveragePercentage = (userCount, averageCount) => {
+    if (userCount !== 0) {
+      const percentage = (averageCount / userCount) * 100;
+      setAveragePercentage(percentage.toFixed(2));
     }
   };
 
@@ -37,7 +43,8 @@ const ManageDashboard = () => {
         <hr className="border-gray-700 my-4"/>
         {/* Navigation */}
         <div className='space-y-1'>
-          <NavLink icon={dashboard} text="Main Dashboard" to="/managerUI" />
+          <NavLink icon={dashboard} text="Main Dashboard" to="/customerDashBoard" />
+          {/* Linking to Manage Profile page with user count */}
           <NavLink icon={dashboard} text="Manage Profile" to="/customer-management" />
           {/* Add more navigation items as needed */}
         </div>
@@ -51,18 +58,16 @@ const ManageDashboard = () => {
         <div className='p-8'>
           {/* Your main content goes here */}
           <div className='flex justify-around'>
-            <div className='text-center'>
-              <h2 className='text-3xl font-semibold'>Current Users</h2>
-              <p className='text-xl'>{userCount}</p>
-            </div>
-            <div className='text-center'>
-              <h2 className='text-3xl font-semibold'>Average Users</h2>
-              <p className='text-xl'>{averageCount}</p>
-            </div>
-            <div className='text-center'>
-              <h2 className='text-3xl font-semibold'>Deleted Users</h2>
-              <p className='text-xl'>{deleteCount}</p>
-            </div>
+            {/* Linking to Manage Profile page with different statistics */}
+            <Link to="/customer-management" className="text-decoration-none">
+              <UserStatistics title="Current Users" count={userCount} />
+            </Link>
+            <Link to="/customer-management" className="text-decoration-none">
+              <UserStatistics title="Deleted Users" count={deleteCount} />
+            </Link>
+            <Link to="/customer-management" className="text-decoration-none">
+              <UserStatistics title="Average Users (%)" count={averagePercentage} />
+            </Link>
           </div>
         </div>
       </div>
@@ -79,5 +84,15 @@ function NavLink({ icon, text, to }) {
       <img src={icon} alt={text} className='w-6 h-6 mr-4'/>
       <span className='text-lg font-semibold'>{text}</span>
     </Link>
+  );
+}
+
+// UserStatistics component
+function UserStatistics({ title, count }) {
+  return (
+    <div className="bg-green-200 rounded-md p-4 text-center w-3/3 mr-4 cursor-pointer">
+      <p className="text-2xl font-semibold text-green-900">{title}</p>
+      <p className="text-xl">{count}</p>
+    </div>
   );
 }
