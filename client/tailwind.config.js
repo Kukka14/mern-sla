@@ -20,6 +20,9 @@ export default {
         cartbackground: '#f5f5f5',
         carttableheader: '#316C42',
         carttablerow: '#CDCDCD',
+        form: 'DCEADC',
+        login: '#ACC1AC',
+        profile : '#B0B1B9',
 
         
         'sideNavBackground': '#ECFFEB',

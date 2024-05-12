@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import SignUpImage from '../../images/signup.jpg'; 
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -103,9 +104,16 @@ export default function SignUp() {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div
-        className="p-5 bg-white rounded-lg shadow-lg w-3/5" // Increased width of the form container
-        style={{ backgroundColor: "rgba(144, 162, 158, 0.8)" }}
+        className="p-5 bg-white rounded-lg shadow-lg lg:flex w-/5" // Increased width of the form container
+        style={{ backgroundColor: "rgba(172, 193, 172)" }}
       >
+         {/* Left side with image */}
+         <div className="lg:w-1/2 hidden lg:block">
+          <img src={SignUpImage} alt="Sign Up" className="w-full h-full object-cover" />
+        </div>
+        {/* Right side with form */}
+        <div className="lg:w-1/2 p-5 bg-form rounded-lg shadow-lg">
+       
         <h1 className='text-3xl text-center font-semibold my-3 '>Sign Up</h1>
         {errorMessage.general && <p className='text-red-500'>{errorMessage.general}</p>}
         <form onSubmit={handleSubmit} className='flex flex-col items-center gap-4'>
@@ -181,7 +189,7 @@ export default function SignUp() {
               borderRadius: '0.5rem',
               border: 'none',
               cursor: 'pointer',
-              backgroundColor: 'rgba(0, 128, 0, 0.8)', // Adjust the alpha value for transparency
+              backgroundColor: 'rgba(160, 27, 6)', // Adjust the alpha value for transparency
             }}
             className={loading ? 'opacity-80 cursor-not-allowed' : 'hover:opacity-95'}
           >
@@ -193,6 +201,8 @@ export default function SignUp() {
           <Link to='/sign-in' className='text-blue-700'>Sign In</Link>
         </div>
       </div>
+     
+    </div>
     </div>
   );
 }
