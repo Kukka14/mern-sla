@@ -21,7 +21,7 @@ export const updateUser = async (req, res, next) => {
             email: req.body.email,
             address:req.body.address,
             phoneNumber :req.body.phoneNumber,
-            nic : req.body.nic,
+            
             password: req.body.password,
             avatar: req.body.avatar,
           },
@@ -63,6 +63,5 @@ export const updateUser = async (req, res, next) => {
       console.error('Error fetching user:', error);
       res.status(500).json({ message: 'An error occurred while fetching the user' });
     }
-  };
 
-  
+  };

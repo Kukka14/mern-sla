@@ -1,8 +1,10 @@
 import express from 'express';
-import { createDiscount, getAllDiscounts, updateDiscount, deleteDiscount } from '../controllers/discount.controller.js';
+import { createDiscount, getAllDiscounts, updateDiscount, deleteDiscount, getAllDiscountCount } from '../controllers/discount.controller.js';
 
 
 const router = express.Router();
+
+router.get('/count', getAllDiscountCount);
 
 router.post('/create', createDiscount);
 router.get('/get', getAllDiscounts);

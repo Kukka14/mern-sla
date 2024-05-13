@@ -62,3 +62,13 @@ export const getAllDiscounts = async (req, res) => {
       res.status(500).json({ success: false, message: 'Internal server error' });
     }
   };
+
+  export const getAllDiscountCount = async (req, res, next) => {
+    try {
+      const count = await Discount.countDocuments();
+      res.status(200).json({ count });
+    } catch (error) {
+      next(error);
+    }
+    
+  };

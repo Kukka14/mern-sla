@@ -1,4 +1,6 @@
-import  { useEffect, useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
+
 import { Link, useNavigate } from 'react-router-dom';
 
 
@@ -23,7 +25,8 @@ const PaymentSuccessPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-     
+
+
       <h1 className="text-3xl font-bold mb-4">Payment Successful</h1>
       <p className="text-lg mb-4">Thank you for your purchase!</p>
       <p className="mt-4">Your payment details have been successfully processed.</p>
@@ -41,4 +44,6 @@ const PaymentSuccessPage = () => {
   );
 };
 
+
 export default PaymentSuccessPage;
+

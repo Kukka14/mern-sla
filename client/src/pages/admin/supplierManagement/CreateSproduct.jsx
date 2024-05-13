@@ -127,8 +127,8 @@ const handleSubmit = async (e) => {
   
         <div className="min-h-screen flex items-center justify-center">
           <div className="w-3/4 bg-white rounded p-3">
-            <div className="flex justify-between mb-4">
-              <h1 className="text-3xl font-semibold">Add New Supplier Product</h1>
+            <div className="flex justify-center mt-4">
+              <h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">Add New Supplier Product</h1>
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col">
               <div className="flex flex-col gap-4 flex-1">
@@ -208,7 +208,7 @@ const handleSubmit = async (e) => {
   
                 <button
                   type="submit"
-                  className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded"
+                  className="bg-green-600 text-white py-4 rounded-lg hover:bg-green-700 focus:outline-none focus:bg-blue-600 w-full"
                 >
                   {loading ? 'Adding Product...' : 'Add Product'}
                 </button>

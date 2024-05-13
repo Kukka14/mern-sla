@@ -111,7 +111,7 @@ export default function ManageOrder() {
   const handleDelete = async (orderId) => {
     try {
       await fetch(`/api/order/delete/${orderId}`, { method: 'DELETE' });
-      getAllOrders(); // Fetch updated orders after deletion
+      await getAllOrders();
     } catch (error) {
       console.error('Error deleting order:', error);
     }
