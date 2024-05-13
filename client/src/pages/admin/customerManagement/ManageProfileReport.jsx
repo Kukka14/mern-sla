@@ -94,9 +94,11 @@ const ManageProfileReport = () => {
       <div className='bg-sideNavBackground w-1/5 p-4'>
 
         {/* Logo */}
-        <div className='flex justify-center items-center mb-8'>
+        <Link to="/mainDashboard">
+       <div className='flex justify-center items-center mb-8'>
           <img src={logo} alt="Company Logo" className='w-48 h-auto'/>
-        </div>
+        </div>   
+       </Link>
         
         {/* Separate Line */}
         <hr className="border-gray-700 my-4"/>
