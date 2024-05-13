@@ -69,6 +69,7 @@ import AdminResponses from './pages/admin/customercareManagement/AdminResponses.
 import ReviewAdminDashboard from './pages/admin/customercareManagement/ReviewAdminDashboard.jsx';
 import ReviewReport from './pages/admin/customercareManagement/ReviewReport.jsx';
 import MyReview from './pages/client/MyReview.jsx';
+import ViewOrder from './pages/admin/OrderManagement/ViewOrder.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -129,6 +130,7 @@ export default function App() {
           <Route path='/viewdiscount' element={<ViewDiscount />} />
           <Route path='/couponcodeview' element={<CouponCodeView />} />
           <Route path='/managecoupon/:id' element={<ManageCoupon />} />
+          <Route path='/ViewOrder/:orderId' element={<ViewOrder />} />
 
 
 
