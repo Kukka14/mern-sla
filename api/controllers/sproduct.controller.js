@@ -2,12 +2,12 @@ import Sproduct from "../models/sproduct.model.js";
 
 export const createSproduct = async (req, res, next) => {
     try {
-        const { Supplier_Name, Supplier_Email, Product_Name, Supplier_Price, Quantity } = req.body;
+        const { Supplier_Name, Product_Name, Product_Category, Supplier_Price, Quantity } = req.body;
 
         const sproduct = await Sproduct.create({
             Supplier_Name,
-            Supplier_Email,
             Product_Name,
+            Product_Category,
             Supplier_Price,
             Quantity
         });
@@ -97,4 +97,27 @@ export const deleteProductById = async (req, res, next) => {
 };
 
 
-
+  
+export const getCategoryCounts = async (req, res, next) => {
+    try {
+      const countsByCategory = await Sproduct.aggregate([
+        {
+          $group: {
+            _id: "$Product_Category",
+            count: { $sum: 1 }
+          }
+        }
+      ]);
+  
+      const countsByCategoryObject = countsByCategory.reduce((acc, categoryCount) => {
+        acc[categoryCount._id] = categoryCount.count;
+        return acc;
+      }, {});
+  
+      res.status(200).json(countsByCategoryObject);
+    } catch (error) {
+      console.error("Error retrieving category counts:", error);
+      res.status(500).json({ message: "Failed to retrieve category counts." });
+    }
+  };
+  

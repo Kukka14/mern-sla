@@ -12,6 +12,7 @@ import AdminHeader from "../../../components/AdminHeader";
 function Sproduct() {
     const [products, setProducts] = useState([]); // Initialize products as an empty array
     const [searchQuery, setSearchQuery] = useState('');
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true); // State to manage loading status
     const [error, setError] = useState(null); // State to manage error status
 
@@ -30,6 +31,20 @@ function Sproduct() {
     useEffect(() => {
         fetchProducts();
     }, []);
+
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+          try {
+            const response = await axios.get("/api/category/getAllCategories");
+            setCategories(response.data);
+          } catch (error) {
+            console.error("Error fetching categories:", error);
+          }
+        };
+    
+        fetchCategories();
+      }, []);
 
     const handleDelete = async (id) => {
         try {
@@ -134,8 +149,8 @@ function Sproduct() {
                     <thead>
                         <tr>
                             <th className="px-4 py-2">Supplier Name</th>
-                            <th className="px-4 py-2">Supplier Email</th>
                             <th className="px-4 py-2">Product Name</th>
+                            <th className="px-4 py-2">Product Category</th>
                             <th className="px-4 py-2">Supplier Price</th>
                             <th className="px-4 py-2">Quantity</th>
                             <th className="px-4 py-2">Action</th>
@@ -145,8 +160,8 @@ function Sproduct() {
                         {filteredProducts.map((product) => (
                             <tr key={product._id}>
                                 <td className="border px-4 py-2">{product.Supplier_Name}</td>
-                                <td className="border px-4 py-2">{product.Supplier_Email}</td>
                                 <td className="border px-4 py-2">{product.Product_Name}</td>
+                                <td className="border px-4 py-2">{product.Product_Category}</td>
                                 <td className="border px-4 py-2">{product.Supplier_Price}</td>
                                 <td className="border px-4 py-2">{product.Quantity}</td>
                                 <td className="border px-4 py-2">

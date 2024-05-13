@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Chart from "chart.js/auto";
+
 import logo from "../../../images/logo2.png";
 import dashboard from "../../../images/icons8-arrow-50 (1).png";
 import AdminHeader from "../../../components/AdminHeader";
@@ -9,12 +10,14 @@ import AdminHeader from "../../../components/AdminHeader";
 export default function MainDashboard() {
   const [itemCount, setItemCount] = useState(0); // State variable to store total item count
   const [itemCountByCategory, setItemCountByCategory] = useState({}); // State variable to store item counts by category
+  const [totalSproductCount, setTotalSproductCount] = useState({}); // State variable to store total Sproduct count
   const [chartInstance, setChartInstance] = useState(null); // State variable to store the chart instance
 
   useEffect(() => {
     // Fetch item count and item counts by category when component mounts
     fetchItemCount();
     fetchItemCountByCategory();
+    fetchTotalSproductCount();
   }, []); // Empty dependency array to run effect only once when component mounts
 
   const fetchItemCount = async () => {
@@ -32,6 +35,15 @@ export default function MainDashboard() {
       setItemCountByCategory(response.data); // Update item counts by category state
     } catch (error) {
       console.error("Error fetching item count by category:", error);
+    }
+  };
+
+  const fetchTotalSproductCount = async () => {
+    try {
+      const response = await axios.get("/api/sproduct/categoryCounts");
+      setTotalSproductCount(response.data); // Update total Sproduct count state
+    } catch (error) {
+      console.error("Error fetching Sproduct count:", error);
     }
   };
 
@@ -80,8 +92,49 @@ export default function MainDashboard() {
     renderChart(); // Call the function to render the chart
   }, [itemCountByCategory]); // Add itemCountByCategory as dependency
 
+  const renderPieChart = () => {
+    if (!chartInstance || !totalSproductCount) return; // Check if totalSproductCount is available
+  
+    const ctx = document.getElementById("categoryPieChart").getContext("2d");
+    const categories = Object.keys(totalSproductCount);
+    const counts = Object.values(totalSproductCount);
+
+    const colors = [
+      "rgba(255, 99, 132, 0.6)",
+      "rgba(54, 162, 235, 0.6)",
+      "rgba(255, 206, 86, 0.6)",
+      "rgba(75, 192, 192, 0.6)",
+      "rgba(153, 102, 255, 0.6)",
+      "rgba(255, 159, 64, 0.6)",
+    ];
+
+    const newChartInstance = new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: categories,
+        datasets: [
+          {
+            label: "Sproduct Count",
+            data: counts,
+            backgroundColor: colors,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+      },
+    });
+
+    setChartInstance(newChartInstance);
+  };
+  
+
+  useEffect(() => {
+    renderPieChart();
+  }, [totalSproductCount]);
+
   return (
-    <div className="flex h-screen">
+    <div className="flex max-h-max">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
@@ -108,6 +161,8 @@ export default function MainDashboard() {
           />
           <NavLink icon={dashboard} text="View Products" to="/product-view" />
           {/* Add more navigation items as needed */}
+
+          <NavLink icon={dashboard} text="View Stocks" to="/view-stocks" />
         </div>
       </div>
 
@@ -115,7 +170,7 @@ export default function MainDashboard() {
       <div className="flex-1">
         {/* Header */}
         <AdminHeader />
-        <div className="flex flex-col gap-10 mt-16">
+        <div className="flex flex-col gap-10 mt-16 ">
           {/* Render cards for each category */}
           <div className="flex flex-wrap justify-center">
             {/* First card for total count of all products */}
@@ -142,9 +197,20 @@ export default function MainDashboard() {
             ))}
           </div>
           {/* Add canvas for the bar chart */}
-        </div>
-        <div className="w-1/2 h-1/2 mt-20 ml-auto mr-auto justify-center items-center">
-          <canvas id="categoryChart" width="400" height="200"></canvas>
+
+          <div className="flex justify-center ml-8 items-center mt-16 w-11/12">
+            <div className="w-1/3 h-1/3 mt-15 ml-auto mb-8 justify-center items-center">
+              <canvas
+                id="categoryPieChart"
+                width="100"
+                height="100"
+                className=""
+              ></canvas>
+            </div>
+            <div className="w-1/2 h-1/2 mb-8 mt-20 ml-auto mr-auto justify-center items-center">
+              <canvas id="categoryChart" width="400" height="200"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </div>
