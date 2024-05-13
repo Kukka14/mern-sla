@@ -42,7 +42,7 @@ export default function OrderHistory() {
   return (
     <div className="container mx-16 px-28 py-8 bg-green-100"> 
     <div className="flex justify-center">
-    <h1 className="text-3xl font-semibold text-green-900 mb-8">Order History</h1>
+    <h1 className="text-3xl font-semibold text-green-900 mb-8">My Orders</h1>
     </div>
     <div className="grid grid-cols-1 gap-6 px-72">
       {orders.map((order) => (
