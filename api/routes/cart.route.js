@@ -12,4 +12,5 @@ router.post('/checkout',checkoutcart);
 router.post('/getcart', getCartDetails);
 
 
+
 export default router;
