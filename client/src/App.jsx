@@ -12,16 +12,8 @@ import AddEmployee from './pages/admin/AddEmployee.jsx';
 import MainDashboard from './pages/admin/MainDashboard.jsx';
 import ContactUs from './pages/client/ContactUs.jsx';
 import ReviewPage from './pages/client/ReviewPage.jsx';
-import ReviewListingPage from './pages/admin/ReviewListingPage.jsx';
+import ReviewListingPage from './pages/admin/customercareManagement/ReviewListingPage.jsx';
 import UpdateReviewPage from './pages/client/UpdateReviewPage.jsx';
-
-import MyReview from './pages/client/MyReview.jsx';
-import AdminResponses from './pages/admin/AdminResponses.jsx';
-import AllResponses from './pages/admin/AllResponses.jsx';
-import ReviewAdminDashboard from './pages/admin/ReviewAdminDashboard.jsx';
-import ReviewReport from './pages/admin/ReviewReport.jsx';
-import ProductAdminDashboard from './pages/admin/ProductAdminDashboard.jsx';
-
 
 
 
@@ -73,8 +65,10 @@ import CreateSproduct from './pages/admin/supplierManagement/CreateSproduct.jsx'
 import UpdateSproduct from './pages/admin/supplierManagement/UpdateSproduct.jsx';
 import ViewStocks from './pages/admin/ProductManagement/ViewStocks.jsx';
 
-
-
+import AdminResponses from './pages/admin/customercareManagement/AdminResponses.jsx';
+import ReviewAdminDashboard from './pages/admin/customercareManagement/ReviewAdminDashboard.jsx';
+import ReviewReport from './pages/admin/customercareManagement/ReviewReport.jsx';
+import MyReview from './pages/client/MyReview.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -84,20 +78,12 @@ export default function App() {
     <BrowserRouter>
       {isAdmin ? null : <Header />}
       <Routes>
-
-        <Route path='/' element={<Home/>} />
-        <Route path='/product-listing' element={<ProductListing/>} />
-        <Route path='contactus' element={<ContactUs/>} />
-        <Route path='/sign-up' element={<SignUp />} />
-        <Route path='/sign-in' element={<SignIn />} />
-        
         <Route path="/" element={<Home />} />
         <Route path="contactus" element={<ContactUs />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/product-view-client" element={<ProductView/>} />
         <Route path="/product-detail/:id" element={<ProductDetail />} />
-
 
         <Route path="/sproduct" element={<Sproduct />} />
           <Route path="/sproductreport" element={<SproductReport />} />
@@ -110,23 +96,13 @@ export default function App() {
           
       
         <Route element={<PrivateRoute />}>
-          <Route path='/product-listing' element={<ProductListing/>} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
           <Route path='review' element={<ReviewPage/>} />
+          <Route path='cart' element={<Cart/>} />
           <Route path='/reviewlisting' element={<ReviewListingPage/>} />
-          <Route path='/reviewadmin' element={<ReviewAdminDashboard/>} />
-
-          <Route path='/product-admin-dashboard' element={<ProductAdminDashboard/>} />
           <Route path='/review/:id/update' element={<UpdateReviewPage />} />
-
-          <Route path="/customer-management" element={<CustomerManagement />} /> 
-          <Route path='my-reviews/:userId' element={<MyReview />} />
-          <Route path='/admin-responses' element={<AdminResponses />} />
-          <Route path='/all-responses' element={<AllResponses />} /> 
-          <Route path='/reviewreport' element={<ReviewReport />} />
-
 
          
           <Route path='/cartpop' element={<CartPopup/>} />
@@ -182,6 +158,10 @@ export default function App() {
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order_details/:orderId" element={<OrderDetails />} />
 
+           <Route path='/reviewadmin' element={<ReviewAdminDashboard/>} />
+          <Route path='/my-reviews/:userId' element={<MyReview />} />
+          <Route path='/admin-responses' element={<AdminResponses />} />
+          <Route path='/reviewreport' element={<ReviewReport />} />
 
 
         </Route>
@@ -189,6 +169,4 @@ export default function App() {
       {isAdmin ? null : <Footer />}
     </BrowserRouter>
   );
-
 }
-

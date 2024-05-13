@@ -12,10 +12,6 @@ import cookieParser from 'cookie-parser';
 import cartRouter from './routes/cart.route.js';
 import catgoryRouter from './routes/category.route.js';
 
-import responseRouter from './routes/response.route.js';
-
-
-
 import discountRouter from './routes/discount.route.js';
 import couponRouter from './routes/coupon.route.js';
 
@@ -29,7 +25,6 @@ import paymentrouter from './routes/payment.route.js';
 
 
 dotenv.config();
-
 
 mongoose.connect(process.env.MONGO).then(() => {
     console.log('Connected to MongoDB');
@@ -57,9 +52,6 @@ app.use("/api/contact", contactRouter);
 app.use('/api/employee', employeeRouter);
 app.use("/api/cart", cartRouter);
 app.use('/api/category', catgoryRouter);
-app.use("/api/response", responseRouter);
-
-//error handling middleware
 
 
 app.use("/api/discount", discountRouter);
@@ -85,7 +77,3 @@ app.use((err, req, res, next) => {
         message,
     });
 });
-
-/*In simple terms, this code creates a backend 
-server using Express, connects it to a MongoDB database, 
-sets up routes for various API endpoints, and handles errors centrally. */

@@ -2,11 +2,11 @@
 
 import { Label, TextInput, Button } from 'flowbite-react';
 import { useState } from 'react';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
-import { app } from '../../firebase';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { app } from "../../firebase";
 import StarRatingComponent from 'react-star-rating-component';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function ReviewPage() {
   const [files, setFiles] = useState([]);
