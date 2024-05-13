@@ -1,7 +1,5 @@
 import  { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 const PaymentSuccessPage = () => {
   const navigate = useNavigate(); // Use useNavigate instead of useHistory
@@ -24,7 +22,6 @@ const PaymentSuccessPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-5xl mb-8" />
       <h1 className="text-3xl font-bold mb-4">Payment Successful</h1>
       <p className="text-lg mb-4">Thank you for your purchase!</p>
       <p className="mt-4">Your payment details have been successfully processed.</p>

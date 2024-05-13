@@ -64,6 +64,15 @@ export const updateCategory = async (req, res) => {
     }
   };
 
+  export const getAllCategoriesCount = async (req, res, next) => {
+    try {
+      const count = await Category.countDocuments();
+      res.status(200).json({ count });
+    } catch (error) {
+      next(error);
+    }
+  };
+
 export const getCategoryById = async (req, res) => {
     try {
       const category = await Category.findById(req.params.id);
@@ -75,3 +84,7 @@ export const getCategoryById = async (req, res) => {
         next(error);
     }
   };
+
+
+
+
