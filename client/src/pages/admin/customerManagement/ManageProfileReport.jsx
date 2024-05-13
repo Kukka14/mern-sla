@@ -13,8 +13,8 @@ const ManageProfileReport = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [userCount, setUserCount] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("username"); // Default category
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('username'); // Default category
 
   useEffect(() => {
     fetchAllUsers();
@@ -40,12 +40,6 @@ const ManageProfileReport = () => {
       return categoryValue.includes(searchTerm.toLowerCase());
     });
     setFilteredUsers(filtered);
-    // Set report sign based on search status
-    if (searchTerm === "") {
-      setReportSign("Admin Signature");
-    } else {
-      setReportSign("Admin Signature and User");
-    }
   };
 
   const handleDownloadReport = () => {
@@ -86,9 +80,7 @@ const ManageProfileReport = () => {
     doc.text(`Date and Time :${downloadDate} at ${downloadTime}`, 10, doc.lastAutoTable.finalY + 10, { align: 'left' }); // Align to the left
   
     // Admin signature
-    doc.text("Admin Signature:", 165, doc.lastAutoTable.finalY + 20, {
-      align: "right",
-    }); // Align to the right
+    doc.text('Admin Signature:', 165, doc.lastAutoTable.finalY + 20, { align: 'right' }); // Align to the right
     doc.setLineWidth(0.5);
     doc.line(165, doc.lastAutoTable.finalY + 25, 250, doc.lastAutoTable.finalY + 25); // Display line
   
@@ -102,25 +94,21 @@ const ManageProfileReport = () => {
       <div className='bg-sideNavBackground w-1/5 p-4'>
 
         {/* Logo */}
-
         <Link to="/mainDashboard">
-          <div className="flex justify-center items-center mb-8">
-            <img src={logo} alt="Company Logo" className="w-48 h-auto" />
-          </div>
-        </Link>
-
+       <div className='flex justify-center items-center mb-8'>
+          <img src={logo} alt="Company Logo" className='w-48 h-auto'/>
+        </div>   
+       </Link>
+        
         {/* Separate Line */}
         <hr className="border-gray-700 my-4"/>
 
         {/* Navigation */}
-        <div className="space-y-1">
-          <NavLink icon={dashboard} text="Main Dashboard" to="/managerUI" />
-          <NavLink
-            icon={dashboard}
-            text="Manage Profile"
-            to="/customer-management"
-          />
-
+        <div className='space-y-1'>
+          <NavLink icon={dashboard} text="Main Dashboard" to="/customerDashBoard" />
+          <NavLink icon={dashboard} text="Manage Profile" to="/customer-management" />
+          
+          
           {/* Add more navigation items as needed */}
         </div>
       </div>
@@ -199,4 +187,3 @@ function NavLink({ icon, text, to }) {
     </Link>
   );
 }
-
