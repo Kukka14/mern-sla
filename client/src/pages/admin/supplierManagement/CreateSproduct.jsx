@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import logo from "../../../images/logo2.png";
 import dashboard from "../../../images/icons8-arrow-50 (1).png";
 import AdminHeader from "../../../components/AdminHeader";
+import { useNavigate } from 'react-router-dom';
 
 function CreateSproduct() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     Supplier_Name: '',
     Product_Name: '',
@@ -43,47 +45,58 @@ function CreateSproduct() {
 
     fetchSupplierNames();
   }, []);
-
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({
-      ...formData,
-      [id]: value,
-    });
-  };
+    // Prevent typing special characters and spaces in the 'Product_Name' field
+    if (e.target.id === 'Product_Name') {
+        const value = e.target.value.replace(/[!@#\$%\^&\*\(\)\<\>\[\]\{\};:'"|,\.\? ]/gi, '');
+        setFormData({
+            ...formData,
+            [e.target.id]: value,
+        });
+    } else {
+        const { id, value } = e.target;
+        setFormData({
+            ...formData,
+            [id]: value,
+        });
+    }
+};
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      setError(null);
+        setLoading(true);
+        setError(null);
 
-      // Fetch the selected category object
-      const selectedCategory = categories.find(cat => cat._id === formData.Product_Category);
-      if (!selectedCategory) {
-        throw new Error("Selected category not found.");
-      }
+        // Fetch the selected category object
+        const selectedCategory = categories.find(cat => cat._id === formData.Product_Category);
+        if (!selectedCategory) {
+            throw new Error("Selected category not found.");
+        }
 
-      // Include the category name in the form data
-      const updatedFormData = {
-        ...formData,
-        Product_Category: selectedCategory.categoryname,
-      };
+        // Include the category name in the form data
+        const updatedFormData = {
+            ...formData,
+            Product_Category: selectedCategory.categoryname,
+        };
 
-      // Send the request with updated form data
-      const response = await axios.post('/api/sproduct/add', updatedFormData);
+        // Send the request with updated form data
+        const response = await axios.post('/api/sproduct/add', updatedFormData);
 
-      setLoading(false);
-      
-      // Redirect to the product listing page
-      // You might need to adjust the route depending on your setup
-      // navigate('/sproduct');
+        setLoading(false);
+
+        navigate('/sproduct')
+        
+        // Redirect to the product listing page
+        // You might need to adjust the route depending on your setup
+        // navigate('/sproduct');
     } catch (error) {
-      setError(error.message || 'An error occurred.');
-      setLoading(false);
-      console.error('Error:', error);
+        setError(error.message || 'An error occurred.');
+        setLoading(false);
+        console.error('Error:', error);
     }
-  };
+};
+
   
   
   return (
