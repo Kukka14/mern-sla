@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+
 const orderSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -31,12 +32,12 @@ const orderSchema = new mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    enum: ['pending', 'paid'],
+    enum: ['pending', 'paid','cancelled'],
     default: 'pending'
   },
   trackingStatus: {
     type: String,
-    enum: ['pending', 'processing', 'shipped', 'delivered'],
+    enum: ['pending', 'processing', 'shipped', 'delivered','cancelled'],
     default: 'pending'
   },
   trackingId: {
@@ -52,6 +53,7 @@ const orderSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
 
 const Order = mongoose.model('Order', orderSchema);
 

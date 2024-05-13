@@ -70,6 +70,10 @@ import ReviewAdminDashboard from './pages/admin/customercareManagement/ReviewAdm
 import ReviewReport from './pages/admin/customercareManagement/ReviewReport.jsx';
 import MyReview from './pages/client/MyReview.jsx';
 
+
+import ViewPaymentDetails from './pages/admin/PaymentManagement/ViewPaymentDetails.jsx'
+import PaymentHistory from './pages/client/PaymentHistory.jsx';
+
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
   const isAdmin = currentUser && currentUser.isAdmin; // Check if user is admin
@@ -158,11 +162,13 @@ export default function App() {
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order_details/:orderId" element={<OrderDetails />} />
 
+
+          <Route path="/paymentdetails" element={<ViewPaymentDetails/>} />
+          <Route path="/payment-history" element={<PaymentHistory />} />
            <Route path='/reviewadmin' element={<ReviewAdminDashboard/>} />
           <Route path='/my-reviews/:userId' element={<MyReview />} />
           <Route path='/admin-responses' element={<AdminResponses />} />
           <Route path='/reviewreport' element={<ReviewReport />} />
-
 
         </Route>
       </Routes>

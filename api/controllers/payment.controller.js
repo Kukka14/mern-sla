@@ -6,20 +6,18 @@ export const getCheckoutSession = async (req, res) => {
     try {
         const orderId = req.body.orderId;
         
-        // Check if orderId is valid
+       
         if (!orderId) {
             return res.status(400).json({ success: false, message: 'orderId is required' });
         }
 
-        // Find the order by orderId
         const order = await Order.findById(orderId);
 
-        // Check if order exists
         if (!order) {
             return res.status(404).json({ success: false, message: 'Order not found' });
         }
 
-        // Calculate total price to pay
+       
         const totalPriceToPay = parseInt(order.totalPrice); // Example value, replace it with your actual calculation
         const totalPriceToPayInCents = Math.round(totalPriceToPay * 100);
 
@@ -65,3 +63,29 @@ export const getCheckoutSession = async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
+export const getAllPayments = async (req, res) => {
+    try {
+     
+      const pendingOrders = await Order.find({ orderStatus: 'pending' });
+  
+     
+      const pendingOrderIds = pendingOrders.map(order => order._id);
+  
+      const payments = await Payment.find({ orderId: { $in: pendingOrderIds } });
+  
+      res.json({ payments });
+    } catch (error) {
+      console.error('Error fetching payments:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  export const deletePayment = async (req, res) => {
+    const { paymentId } = req.params;
+    try {
+      await Payment.findByIdAndDelete(paymentId);
+      res.json({ message: 'Payment deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting payment:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
