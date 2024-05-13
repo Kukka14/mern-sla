@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import SignInImage from '../../images/register13.jpg';
+
 import { app } from "../../firebase";
 import {
   updateUserStart,
@@ -61,17 +61,21 @@ export default function Profile() {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setFilePerc(Math.round(progress));
       },
       (error) => {
         setFileUploadError(true);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-          setFormData({ ...formData, avatar: downloadURL })
-        );
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            setFormData({ ...formData, avatar: downloadURL });
+            setUpdateSuccess(true); // Trigger re-render once the avatar URL is updated
+          })
+          .catch((error) => {
+            console.error("Error getting download URL:", error);
+          });
       }
     );
   };
@@ -137,12 +141,15 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen" style={{ backgroundImage: `url(${SignInImage})`, backgroundSize: "cover" }}>
-      <div className="p-5 rounded-lg shadow-lg w-3/5" style={{ backgroundColor: 'rgba(172, 193, 172, 0.6)' }}>
-        <h1 className="text-3xl font-semibold text-center my-27">Profile</h1>
+    <div className="flex justify-center items-center h-screen" >
+      <div className="p-5 rounded-lg shadow-lg w-3/5 lg:w-3/5 " style={{ backgroundColor: 'rgba(172, 193, 172, 0.6)', marginTop: '.5rem' }}>
+        <h1 className="text-3xl font-semibold text-center my-2 ">Profile</h1>
         <form onSubmit={handleSubmit} className="flex flex-col ">
           <input
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={(e) => {
+              setFile(e.target.files[0]);
+              handleFileUpload(e.target.files[0]); // Trigger file upload when a file is selected
+            }}
             type="file"
             ref={fileRef}
             hidden
@@ -210,7 +217,7 @@ export default function Profile() {
                 className="border p-3 rounded-lg w-5/6"
                 onChange={handleChange}
               />
-{/* 
+
               <input
                 type="text"
                 placeholder="NIC"
@@ -218,8 +225,8 @@ export default function Profile() {
                 id="nic"
                 className="border p-3 rounded-lg w-5/6"
                 onChange={handleChange}
-              /> */}
-  <input
+              />
+              <input
                 type="password"
                 placeholder="Password"
                 id="password"
@@ -256,7 +263,7 @@ export default function Profile() {
         </form>
 
         <p className="text-red-700 mt-5">{error ? error : ""}</p>
-        <p className="text-green-700 mt-5">
+        <p className="text-red-700 mt-5">
           {updateSuccess ? "User is updated successfully!" : ""}
         </p>
         <div
@@ -266,12 +273,7 @@ export default function Profile() {
             justifyContent: "center",
           }}
         >
-          <button
-            className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
-            style={{ color: "#ffffff" }}
-          >
-            button 1
-          </button>
+       
           <Link to="/order-history">
             <button
               className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
@@ -288,13 +290,8 @@ export default function Profile() {
               Payment History
             </button>
           </Link>
-          <button
-            className="bg-blue-900 text-white py-3 px-6 rounded-full"
-            style={{ color: "#ffffff" }}
-          >
-            button 3
-          </button>
-        </div>
+          
+        
 
         <Link to={`/my-reviews/${currentUser._id}`} className="btn">
           <button className="bg-blue-900 text-white py-3 px-6 rounded-full" style={{ color: "#ffffff" }}>
@@ -307,7 +304,7 @@ export default function Profile() {
             Add Review
           </button>
         </Link>
-
+        </div>
       </div>
     </div>
   );

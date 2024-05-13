@@ -33,7 +33,7 @@ export default function SignUp() {
     e.preventDefault();
     const errors = {};
 
-    if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword || !formData.phoneNumber ) {
+    if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword || !formData.nic || !formData.phoneNumber ) {
       errors.general = 'Please fill out all fields.';
     }
 
@@ -42,6 +42,11 @@ export default function SignUp() {
     if (!emailRegex.test(formData.email)) {
       errors.email = 'Please enter a valid email address.';
     }
+     // NIC validation
+     const nicRegex = /^(\d{9}(?:[vV]|\d{3})|\d{12})$/;
+     if (!nicRegex.test(formData.nic)) {
+       errors.nic = 'Please enter a valid NIC (e.g., 123456789V or 123456789012).';
+     }
 
     // Phone number validation
     const phoneNumberRegex = /^\d{10}$/;
@@ -140,6 +145,21 @@ export default function SignUp() {
               style={{  color: '#fff', backgroundColor: 'rgb(255, 255, 255, 0.3)' }}
               onChange={handleChange}
             />
+
+{errorMessage.nic && <p className='text-red-500'>{errorMessage.nic}</p>}
+          <input
+            type='text'
+            placeholder='NIC'
+            className='border border-gray-700 p-3 rounded-lg w-1/3 h-full' // Increased width
+            id='nic'
+            style={{  color: '#fff', backgroundColor: 'rgb(255, 255, 255, 0.3)' }}
+            pattern='\d{9}[vV]|\d{12}'
+            onChange={handleChange}
+            onInput={(e) => {
+              e.target.value = e.target.value.replace(/[^0-9vV]/, '').slice(0, 12);
+            }}
+          />
+
             {errorMessage.phoneNumber && <p className='text-red-500'>{errorMessage.phoneNumber}</p>}
             <input
               type='text'
