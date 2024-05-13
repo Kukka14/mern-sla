@@ -1,5 +1,5 @@
-import  { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import  { useState, useEffect} from "react";
+import { useParams ,Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function OrderDetails() {
@@ -114,7 +114,10 @@ export default function OrderDetails() {
             </div>
             <div className="mt-6 flex justify-between items-center">
                 <div className="text-2xl font-bold">Cost: {orderDetails.totalPrice}</div>
-                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">View</button>
+                {orderDetails.paymentStatus === 'pending' && (
+                   <Link to={`/order-summary/orderId:${orderDetails._id}`} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Pay now</Link>
+                )}
+                
             </div>
         </div>
     );
