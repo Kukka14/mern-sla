@@ -54,7 +54,7 @@ import UpdateProductListing from './pages/admin/ProductManagement/UpdateProductL
 
 import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboard.jsx';
 import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
-import ManagerUI from './pages/admin/customerManagement/ManagerUI.jsx';
+
 import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
 import OrderHistory from './pages/client/OrderHistory.jsx';
 import OrderDetails from './pages/client/OrderDetails.jsx';
@@ -63,6 +63,8 @@ import ProductByCategory from './pages/admin/ProductManagement/ProductByCategory
 import SupplierAdminDashboard from './pages/admin/supplierManagement/SupplierAdminDashboard.jsx';
 import CreateSproduct from './pages/admin/supplierManagement/CreateSproduct.jsx';
 import UpdateSproduct from './pages/admin/supplierManagement/UpdateSproduct.jsx';
+import ViewStocks from './pages/admin/ProductManagement/ViewStocks.jsx';
+
 
 
 export default function App() {
@@ -133,6 +135,7 @@ export default function App() {
           <Route path='/product-view' element={<ShowProductListing/>} />
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
           <Route path="/products/:categoryName" element={<ProductByCategory/>} />
+          <Route path="/view-stocks" element={<ViewStocks/>} />
          
           
 
@@ -146,7 +149,7 @@ export default function App() {
           <Route path="/manage-orders-dashboard" element={<ManageOrder/>}/>
           <Route path="/customer-report" element={<ManageProfileReport />} />
           <Route path="/customer-management" element={<ManageProfile />} />
-          <Route path="/managerUI" element={<ManagerUI />} />
+        
           <Route path="/customerDashBoard" element={<CustomerDashboard />} />
           <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
           <Route path="/order-history" element={<OrderHistory />} />

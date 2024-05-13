@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-import logoImg from "../../../images/logo2.png"; 
+import logoImg from "../../../images/logo2.png";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -61,13 +61,13 @@ const ReviewProductList = () => {
 
   const downloadPdf = () => {
     const doc = new jsPDF();
-    
+
     // Add company logo at the top-left corner
     doc.addImage(logoImg, "PNG", 12.5, 10, 70, 30); // Adjust the width and height as needed
-  
+
     // Add title
     doc.text("Product List", 14, 60);
-  
+
     // Add table
     doc.autoTable({
       theme: "striped",
@@ -82,11 +82,9 @@ const ReviewProductList = () => {
         product.category,
       ]),
     });
-  
-    doc.save("product-list.pdf");
-};
 
-  
+    doc.save("product-list.pdf");
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -100,13 +98,16 @@ const ReviewProductList = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex max-h-full">
       {/* Sidebar */}
       <div className="bg-sideNavBackground basis-1/5 p-4">
         {/* Logo */}
-        <div className="flex justify-center items-center mb-8">
-          <img src={logo} alt="Company Logo" className="w-48 h-auto" />
-        </div>
+
+        <Link to="/mainDashboard">
+          <div className="flex justify-center items-center mb-8">
+            <img src={logo} alt="Company Logo" className="w-48 h-auto" />
+          </div>
+        </Link>
 
         {/* Separate Line */}
         <hr className="border-gray-700 my-4" />
@@ -124,6 +125,7 @@ const ReviewProductList = () => {
             to="/product-listing"
           />
           <NavLink icon={dashboard} text="View Products" to="/product-view" />
+          <NavLink icon={dashboard} text="View Stocks" to="/view-stocks" />
         </div>
       </div>
 

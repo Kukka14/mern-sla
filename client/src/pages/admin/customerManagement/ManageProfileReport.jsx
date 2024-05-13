@@ -13,8 +13,8 @@ const ManageProfileReport = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [userCount, setUserCount] = useState(0);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('username'); // Default category
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("username"); // Default category
 
   useEffect(() => {
     fetchAllUsers();
@@ -40,6 +40,12 @@ const ManageProfileReport = () => {
       return categoryValue.includes(searchTerm.toLowerCase());
     });
     setFilteredUsers(filtered);
+    // Set report sign based on search status
+    if (searchTerm === "") {
+      setReportSign("Admin Signature");
+    } else {
+      setReportSign("Admin Signature and User");
+    }
   };
 
   const handleDownloadReport = () => {
@@ -80,7 +86,9 @@ const ManageProfileReport = () => {
     doc.text(`Date and Time :${downloadDate} at ${downloadTime}`, 10, doc.lastAutoTable.finalY + 10, { align: 'left' }); // Align to the left
   
     // Admin signature
-    doc.text('Admin Signature:', 165, doc.lastAutoTable.finalY + 20, { align: 'right' }); // Align to the right
+    doc.text("Admin Signature:", 165, doc.lastAutoTable.finalY + 20, {
+      align: "right",
+    }); // Align to the right
     doc.setLineWidth(0.5);
     doc.line(165, doc.lastAutoTable.finalY + 25, 250, doc.lastAutoTable.finalY + 25); // Display line
   
@@ -94,19 +102,25 @@ const ManageProfileReport = () => {
       <div className='bg-sideNavBackground w-1/5 p-4'>
 
         {/* Logo */}
-        <div className='flex justify-center items-center mb-8'>
-          <img src={logo} alt="Company Logo" className='w-48 h-auto'/>
-        </div>
-        
+
+        <Link to="/mainDashboard">
+          <div className="flex justify-center items-center mb-8">
+            <img src={logo} alt="Company Logo" className="w-48 h-auto" />
+          </div>
+        </Link>
+
         {/* Separate Line */}
         <hr className="border-gray-700 my-4"/>
 
         {/* Navigation */}
-        <div className='space-y-1'>
+        <div className="space-y-1">
           <NavLink icon={dashboard} text="Main Dashboard" to="/managerUI" />
-          <NavLink icon={dashboard} text="Manage Profile" to="/customer-management" />
-          
-          
+          <NavLink
+            icon={dashboard}
+            text="Manage Profile"
+            to="/customer-management"
+          />
+
           {/* Add more navigation items as needed */}
         </div>
       </div>
@@ -144,26 +158,29 @@ const ManageProfileReport = () => {
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
           <p style={{ fontSize: '20px', fontWeight: 'bold' }}>Total Users: {userCount}</p>
         </div>
-        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+
+      <div className=" rounded-lg">
+        <table className="table-auto w-11/12 bg-white shadow-md rounded ">
           <thead>
-            <tr style={{ borderBottom: '1px solid black', backgroundColor: '#10b981' }}>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>List</th>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>ID</th>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>Username</th>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>Email</th>
+            <tr className= "bg-green-300">
+              <th className="px-4 py-2">List</th>
+              <th className="px-4 py-2">ID</th>
+              <th className="px-4 py-2">Username</th>
+              <th className="px-4 py-2">Email</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.map((user, index) => (
-              <tr key={user._id} style={{ backgroundColor: index % 2 === 0 ? '#fffffff' : '#e7e5e4' }}>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{index + 1}</td>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user._id}</td>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user.username}</td>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user.email}</td>
+              <tr key={user._id} className={index % 2 === 0 ? "bg-green-100" : "bg-green-200"}>
+                <td className="border px-4 py-2">{index + 1}</td>
+                <td className="border px-4 py-2">{user._id}</td>
+                <td className="border px-4 py-2">{user.username}</td>
+                <td className="border px-4 py-2">{user.email}</td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
     </div>

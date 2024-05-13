@@ -112,27 +112,38 @@ export default function ProductListing() {
   };
 
   const handleChange = (e) => {
-    if (e.target.id === "sale" || e.target.id === "rent") {
-      setFormData({
-        ...formData,
-        type: e.target.id,
-      });
+    // Prevent typing special characters and spaces in the 'name' field
+    if (e.target.id === 'name') {
+        const value = e.target.value.replace(/[!@#\$%\^&\*\(\)\<\>\[\]\{\};:'"|,\.\? ]/gi, '');
+        setFormData({
+            ...formData,
+            [e.target.id]: value,
+        });
+    } else if (e.target.id === "sale" || e.target.id === "rent") {
+        // Handle changes in 'sale' and 'rent' fields
+        setFormData({
+            ...formData,
+            type: e.target.id,
+        });
     } else if (e.target.id === "category") {
-      setFormData({
-        ...formData,
-        category: e.target.value,
-      });
+        // Handle changes in 'category' field
+        setFormData({
+            ...formData,
+            category: e.target.value,
+        });
     } else if (
-      e.target.type === "number" ||
-      e.target.type === "text" ||
-      e.target.type === "textarea"
+        e.target.type === "number" ||
+        e.target.type === "text" ||
+        e.target.type === "textarea"
     ) {
-      setFormData({
-        ...formData,
-        [e.target.id]: e.target.value,
-      });
+        // Handle changes in other input fields (number, text, textarea)
+        setFormData({
+            ...formData,
+            [e.target.id]: e.target.value,
+        });
     }
-  };
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -180,9 +191,12 @@ export default function ProductListing() {
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
-        <div className="flex justify-center items-center mb-8">
-          <img src={logo} alt="Company Logo" className="w-48 h-auto" />
-        </div>
+
+        <Link to="/mainDashboard">
+          <div className="flex justify-center items-center mb-8">
+            <img src={logo} alt="Company Logo" className="w-48 h-auto" />
+          </div>
+        </Link>
 
         {/* Separate Line */}
         <hr className="border-gray-700 my-4" />
@@ -200,6 +214,11 @@ export default function ProductListing() {
             to="/product-listing"
           />
           <NavLink icon={dashboard} text="View Products" to="/product-view" />
+          <NavLink
+            icon={dashboard}
+            text="View Stocks"
+            to="/view-stocks"
+          />
         </div>
       </div>
 
