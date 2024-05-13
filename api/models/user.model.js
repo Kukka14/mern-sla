@@ -18,11 +18,8 @@ const userSchema = new mongoose.Schema({
         required: true,
         
     },
-    nic: {
-        type: String,
-        required: true,
-        unique: true,
-    },
+    
+    
     phoneNumber: {
         type: String,
         required: true,
