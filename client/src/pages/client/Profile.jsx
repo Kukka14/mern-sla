@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import SignInImage from '../../images/profile.jpg';
 import { app } from "../../firebase";
 import {
   updateUserStart,
@@ -136,11 +137,11 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen ">
-     <div
-        className="p-5 bg-white rounded-lg shadow-lg w-3/5" // Increased width of the form container
-        style={{ backgroundColor: "rgba(144, 162, 158, 0.8)" }}
-      >
+    <div
+      className="flex justify-center items-center h-screen"
+      style={{ backgroundImage: `url(${SignInImage})`, backgroundSize: "cover" }}
+    >
+      <div className="p-5 bg-login rounded-lg shadow-lg w-3/5" >
         <h1 className="text-3xl font-semibold text-center my-27">Profile</h1>
         <form onSubmit={handleSubmit} className="flex flex-col ">
           <input

@@ -23,6 +23,9 @@ export default {
         carttableheader: '#316C42',
         herobelow: '#EDFFEB',
         carttablerow: '#CDCDCD',
+        form: 'DCEADC',
+        login: '#ACC1AC',
+        profile : '#B0B1B9',
 
         
         'sideNavBackground': '#ECFFEB',
