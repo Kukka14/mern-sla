@@ -14,6 +14,8 @@ export default function Ordersummary() {
     fetchOrderDetails(orderId);
   }, [orderId]);
 
+   
+
   const paymenthdl = async () => {
     try {
       const cleanOrderId = orderId.split(":")[1];
