@@ -52,7 +52,7 @@ const UpdateReviewPage = () => {
 
     return (
         <div className='flex items-center justify-center min-h-screen bg-gray-200'>
-            <div className='p-6 bg-white rounded-lg shadow-lg' style={{ maxWidth: '500px', width: '100%' }}>
+            <div className='p-6 bg-green-100 rounded-lg shadow-lg' style={{ maxWidth: '600px', width: '100%' }}>
                 <h1 className='text-3xl text-center font-semibold my-7'>Update Review</h1>
                 <form onSubmit={handleSubmit} className='flex flex-col items-center gap-4'>
                     <div>
@@ -60,16 +60,21 @@ const UpdateReviewPage = () => {
                         <TextInput type='text' placeholder='Comment' id='comment' required onChange={handleChange} value={formData.comment} style={{ height: '35px', width: '130%' }} />
                     </div>
                     <div>
-                        <Label>Rating</Label>
-                        <StarRatingComponent
+                    <div className='font-semibold'>
+                         <label htmlFor="rating">Review</label>
+                    </div>                        
+                    
+                    <StarRatingComponent
                             name="rating"
                             starCount={5}
                             value={formData.rating}
                             onStarClick={(nextValue) => setFormData({ ...formData, rating: nextValue })}
+                            className="text-4xl"
+
                         />
                     </div>
                     <div>
-                        <Button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95' type='submit'>Update</Button>
+                        <Button className='bg-green-800 text-white p-2 rounded-lg uppercase hover:opacity-95' type='submit'>Update</Button>
                     </div>
                     {successMessage && <p className="text-green-700 text-sm">{successMessage}</p>}
                 </form>

@@ -82,23 +82,26 @@ const MyReview = () => {
 
   return (
     <div className="container mx-auto py-8">
-      <h2 className="text-2xl font-bold mb-4">My Reviews</h2>
+        <h1 className='text-3xl font-bold text-center my-7'>My Review
+          <hr className="w-1/3 mx-auto border-b-2 border-green-600 my-3"  />
+        </h1>  
       {loading && <p className="text-gray-600">Loading...</p>}
       {error && <p className="text-red-500">Error: {error}</p>}
       {!loading && !error && reviews.length > 0 && (
+
         <div className="overflow-x-auto">
-          <table className="table-auto w-full border-collapse border border-gray-300">
+          <table className="table-auto w-11/12 bg-white shadow-md rounded">
             <thead className="bg-gray-200">
-              <tr className="bg-green-500">
-                <th className="px-4 py-2 border border-gray-300">Comment</th>
-                <th className="px-4 py-2 border border-gray-300">Rating</th>
-                <th className="px-4 py-2 border border-gray-300">Images</th>
-                <th className="px-4 py-2 border border-gray-300">Actions</th>
+              <tr className="bg-green-300">
+                <th className="px-4 py-2 ">Comment</th>
+                <th className="px-4 py-2 ">Rating</th>
+                <th className="px-4 py-2 ">Images</th>
+                <th className="px-4 py-2 ">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {reviews.map(review => (
-                <tr key={review._id}>
+              {reviews.map((review, index) => (
+                <tr key={review._id} className={index % 2 === 0 ? "bg-green-100" : "bg-green-200"}>
                   <td className="px-4 py-2 border border-gray-300">{review.comment}</td>
                   <td className="px-4 py-2 border border-gray-300">{review.rating}</td>
                   <td className="px-4 py-2 border border-gray-300">

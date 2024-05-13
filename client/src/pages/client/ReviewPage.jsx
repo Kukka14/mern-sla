@@ -139,24 +139,37 @@ export default function ReviewPage() {
 
   return (
     <div className='flex items-center justify-center min-h-screen bg-gray-200'>
-      <div className='p-6 bg-white rounded-lg shadow-lg' style={{ maxWidth: '500px', width: '100%' }}>
-        <h1 className='text-3xl text-center font-semibold my-7'> Add Review </h1>
+      <div className='p-6 bg-green-100 rounded-lg shadow-lg ' style={{ maxWidth: '800px', width: '100%' }}>
+        <h1 className='text-3xl text-center font-semibold my-7'> Share your experience</h1>
         <form onSubmit={handleSubmit} className='flex flex-col items-center gap-4'>
+
+      <div className="flex flex-row gap-4 justify-center items-center mt-9">
+        <div className="flex flex-col w-1/2 justify-center items-center gap-4">
+
+          <div className='font-semibold'>
+            <label htmlFor="rating">Review</label>
+          </div>
           <div>
-            <Label> Comment</Label>
             <TextInput type='text' placeholder='Comment' id='comment' required onChange={handleChange} value={formData.comment} style={{ height: '35px', width: '130%' }} />
           </div>
 
+          <div className='font-semibold'>
+            <label htmlFor="rating">How would you rate us?</label>
+          </div>
+
           <div>
-            <Label>Rating</Label>
             <StarRatingComponent
               name="rating"
               starCount={5}
               value={formData.rating}
               onStarClick={(nextValue) => setFormData({ ...formData, rating: nextValue })}
+              className="text-4xl"
+
             />
           </div>
+        </div>  
 
+        <div className="flex flex-col w-1/2 justify-center items-center gap-4" style={{marginLeft: '100px'}}>
           <div className="space-y-4">
             <label htmlFor="images" className="block text-lg font-semibold">
               Images
@@ -176,7 +189,7 @@ export default function ReviewPage() {
                 type="button"
                 disabled={uploading}
                 onClick={handleImageSubmit}
-                className="bg-green-500 text-white px-6 py-3 rounded-lg ml-4 hover:bg-green-600 focus:outline-none focus:bg-green-600"
+                className="bg-green-800 text-white px-2 py-2 rounded-lg ml-4 hover:bg-green-900 focus:outline-none focus:bg-green-900"
               >
                 {uploading ? "Uploading..." : "Upload"}
               </Button>
@@ -208,11 +221,13 @@ export default function ReviewPage() {
                 ))}
             </div>
           </div>
+        </div>
+      </div>  
 
           <div className="sm:col-span-2">
             <Button
               disabled={loading || uploading}
-              className="bg-blue-500 text-white px-8 py-4 rounded-lg w-full hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+              className="bg-green-700 text-white px-4 py-2 rounded-lg w-full hover:bg-green-800 focus:outline-none focus:bg-green-800"
               type="submit"
             >
               {loading ? "Submitting..." : "Submit"}

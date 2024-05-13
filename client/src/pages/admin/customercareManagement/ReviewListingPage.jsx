@@ -2,12 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
 import logo from './../../../images/logo2.png'; 
 import dashboard from './../../../images/icons8-arrow-50 (1).png';
-import { FaSortAmountDown } from "react-icons/fa";
 import AdminHeader from './../../../components/AdminHeader';
 
 const ReviewListingPage = () => {
@@ -84,31 +80,33 @@ const ReviewListingPage = () => {
                 {/* Header */}
                 <AdminHeader />
                 <div className="container mx-auto px-4 py-8">
-                    <h1 className="text-3xl font-bold mb-4">Review Listing</h1>
+                    <h1 className='text-3xl font-bold text-center my-7'>Review Listing
+                       <hr className="w-1/3 mx-auto border-b-2 border-green-600 my-3"  />
+                    </h1>
                     <div className="flex justify-end">
-                        <Link to="/admin-responses" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Respond to Reviews</Link>
+                        <Link to="/admin-responses" className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-600">Respond to Reviews</Link>
                         <Link to="/reviewreport" className="bg-blue-500 text-white px-4 py-2 rounded ml-4 hover:bg-blue-600">Generate Report</Link>
                     </div>
                     {/* Search input field */}
                     <div className="flex justify-center mb-4">
-                        <input
-                            type="number"
-                            placeholder="Search by rating (1-5)..."
-                            min="1"
-                            max="5"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="border border-gray-300 px-4 py-2 rounded"
-                        />
-                         <button onClick={handleSearch} className="bg-blue-500 text-white px-4 py-2 rounded ml-2">Search</button>                    </div>
+                        <div className="flex">
+                            <input
+                                type="number"
+                                placeholder="Search by rating ..."
+                                min="1"
+                                max="5"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="bg-green-100 w-80 rounded-l-lg border border-green-300 h-10 px-4 mr-2 focus:outline-none"
+                            />
+                            <button onClick={handleSearch} className="bg-green-500 text-white px-4 py-2 rounded-r-lg hover:bg-green-600">Search</button>
+                        </div>
+                    </div>
                     {/* Display search results or all reviews */}
-                    <div className="overflow-x-auto">
-                        {/* {searchNotFound && (
-                            <p className="text-red-500 text-center mb-4">Search result not found</p>
-                        )} */}
-                        <table className="table-auto w-full">
+                    <div className="overflow-x-auto rounded-lg"> 
+                        <table className="table-auto w-11/12 bg-white shadow-md rounded">
                             <thead>
-                                <tr className="bg-green-500">
+                                <tr className="bg-green-300">
                                     <th className="px-4 py-2">Comment</th>
                                     <th className="px-4 py-2">Rating</th>
                                     <th className="px-4 py-2">Images</th>
@@ -116,8 +114,8 @@ const ReviewListingPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {searchResults.length > 0 ? searchResults.map(review => (
-                                    <tr key={review._id}>
+                                {searchResults.length > 0 ? searchResults.map((review, index) => (
+                                    <tr key={review._id} className={index % 2 === 0 ? "bg-green-100" : "bg-green-200"}>
                                         <td className="border px-4 py-2">{review.comment}</td>
                                         <td className="border px-4 py-2">{review.rating}</td>
                                         <td className="border px-4 py-2">
@@ -129,8 +127,8 @@ const ReviewListingPage = () => {
                                             <button onClick={() => handleDelete(review._id)} className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600">Delete</button>
                                         </td>
                                     </tr>
-                                )) : reviews.map(review => (
-                                    <tr key={review._id}>
+                                )) : reviews.map((review, index) => (
+                                    <tr key={review._id} className={index % 2 === 0 ? "bg-green-100" : "bg-green-200"}>
                                         <td className="border px-4 py-2">{review.comment}</td>
                                         <td className="border px-4 py-2">{review.rating}</td>
                                         <td className="border px-4 py-2">

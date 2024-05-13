@@ -23,6 +23,9 @@ import SupplierRouter from './routes/supplier.route.js'
 import addressRouter from './routes/address.route.js';
 import paymentrouter from './routes/payment.route.js';
 
+import responseRouter from './routes/response.route.js';
+
+
 
 dotenv.config();
 
@@ -65,6 +68,7 @@ app.use('/api/supplier',SupplierRouter)
 app.use('/api/address', addressRouter);
 app.use('/api/payment',paymentrouter);
 
+app.use("/api/response", responseRouter);
 
 
 
