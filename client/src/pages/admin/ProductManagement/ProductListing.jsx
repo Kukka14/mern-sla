@@ -356,6 +356,7 @@ export default function ProductListing() {
                       <select
                         id="category"
                         value={formData.category}
+                        required
                         onChange={handleChange}
                         className="block w-full py-2 pl-3 pr-10 mt-1 text-base border border-gray-300 focus:outline-none focus:border-blue-500 rounded-md"
                       >
@@ -439,7 +440,7 @@ export default function ProductListing() {
               <div className="flex justify-center">
                 <button
                   disabled={loading || uploading}
-                  className="bg-green-600 text-white px-8 py-4 rounded-lg  hover:bg-green-700 focus:outline-none focus:bg-blue-600 w-2/4 "
+                  className="bg-green-600 text-white px-8 py-4 rounded-lg  hover:bg-green-700 focus:outline-none focus:bg-green-800 w-2/4 "
                 >
                   {loading ? "Creating..." : "Create listing"}
                 </button>
