@@ -54,7 +54,7 @@ import UpdateProductListing from './pages/admin/ProductManagement/UpdateProductL
 
 import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboard.jsx';
 import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
-
+import ManagerUI from './pages/admin/customerManagement/ManagerUI.jsx';
 import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
 import OrderHistory from './pages/client/OrderHistory.jsx';
 import OrderDetails from './pages/client/OrderDetails.jsx';
@@ -69,6 +69,10 @@ import AdminResponses from './pages/admin/customercareManagement/AdminResponses.
 import ReviewAdminDashboard from './pages/admin/customercareManagement/ReviewAdminDashboard.jsx';
 import ReviewReport from './pages/admin/customercareManagement/ReviewReport.jsx';
 import MyReview from './pages/client/MyReview.jsx';
+
+import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
+import ViewPaymentDetails from './pages/admin/PaymentManagement/ViewPaymentDetails.jsx'
+import PaymentHistory from './pages/client/PaymentHistory.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -158,11 +162,13 @@ export default function App() {
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order_details/:orderId" element={<OrderDetails />} />
 
+
+          <Route path="/paymentdetails" element={<ViewPaymentDetails/>} />
+          <Route path="/payment-history" element={<PaymentHistory />} />
            <Route path='/reviewadmin' element={<ReviewAdminDashboard/>} />
           <Route path='/my-reviews/:userId' element={<MyReview />} />
           <Route path='/admin-responses' element={<AdminResponses />} />
           <Route path='/reviewreport' element={<ReviewReport />} />
-
 
         </Route>
       </Routes>

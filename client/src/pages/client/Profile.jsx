@@ -285,6 +285,17 @@ export default function Profile() {
               Order History
             </button>
           </Link>
+
+
+          <Link to="/payment-history">
+            <button
+              className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
+              style={{ color: "#ffffff" }}
+            >
+              Payment History
+            </button>
+          </Link>
+
           <button
             className="bg-blue-900 text-white py-3 px-6 rounded-full"
             style={{ color: "#ffffff" }}
@@ -292,8 +303,31 @@ export default function Profile() {
             button 3
           </button>
         </div>
+
+
+
+
+          <Link to={`/my-reviews/${currentUser._id}`} className="btn">
+            <button className="bg-blue-900 text-white py-3 px-6 rounded-full" style={{ color: "#ffffff" }}>
+              My Review
+            </button>
+          </Link>
+
+
+          <Link to={`/review?userId=${currentUser._id}`} className="btn">
+            <button className="bg-blue-900 text-white py-3 px-6 rounded-full" style={{ color: "#ffffff" }}>
+              Add Review
+            </button>
+          </Link>
+
+
         </div>
       </div>
+    </div>
+
+  </div>
+      </div>
    
+
   );
 }
