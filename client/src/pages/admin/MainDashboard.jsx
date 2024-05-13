@@ -91,8 +91,9 @@ export default function MainDashboard() {
               </div>
             </Link>
           </div>
+        
           <div className="flex flex-row justify-center items-center gap-7">
-            <Link to="/cusCareDashBoard">
+            <Link to="/reviewadmin">
               <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
                 <img
                   src={customerCare}
@@ -105,7 +106,7 @@ export default function MainDashboard() {
                 </p>
               </div>
             </Link>
-            <Link to="/paymentDashboard">
+            <Link to="/paymentdetails">
               <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
                 <img
                   src={payment}
@@ -140,6 +141,7 @@ export default function MainDashboard() {
                 </p>
               </div>
             </Link>
+ 
           </div>
         </div>
       </div>

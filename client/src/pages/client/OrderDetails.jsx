@@ -1,5 +1,5 @@
-import  { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import  { useState, useEffect} from "react";
+import { useParams ,Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function OrderDetails() {
@@ -61,20 +61,30 @@ export default function OrderDetails() {
             console.error('Error fetching address details:', error);
         }
     };
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'completed':
+                return 'text-green-500';
+            case 'cancelled':
+                return 'text-red-500';
+            default:
+                return 'text-orange-500';
+        }
+    };
 
     return (
         <div className="max-w-4xl mx-auto shadow-lg border p-6">
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <div className="text-gray-800 font-bold mb-2">Billing Name: {currentUser.username}</div>
-                    <div className="text-gray-600">Order Status: <span className="text-green-500">{orderDetails.orderStatus}</span></div>
-                    <div className="text-gray-600">Payment Status: <span className="text-green-500">{orderDetails.paymentStatus}</span></div>
-                    <div className="text-gray-600">{orderDetails.date}</div>
+                <div className="text-gray-800 font-bold mb-2">Billing Name: {currentUser.username}</div>
+        <div className="text-gray-600">Order Status: <span className={getStatusColor(orderDetails.orderStatus)}>{orderDetails.orderStatus}</span></div>
+        <div className="text-gray-600">Payment Status: <span className={getStatusColor(orderDetails.paymentStatus)}>{orderDetails.paymentStatus}</span></div>
+        <div className="text-gray-600">{orderDetails.date}</div>
                 </div>
                 <div className="text-right">
-                    <div className="text-gray-800 font-bold">Order ID: {orderDetails._id}</div>
-                    <div className="text-gray-600">Tracking ID: {orderDetails.trackingId}</div>
-                    <div className="text-gray-600">Tracking Status <span className="text-red-500">{orderDetails.trackingStatus}</span></div>
+                <div className="text-gray-800 font-bold">Order ID: {orderDetails._id}</div>
+        <div className="text-gray-600">Tracking ID: {orderDetails.trackingId}</div>
+        <div className="text-gray-600">Tracking Status <span className={getStatusColor(orderDetails.trackingStatus)}>{orderDetails.trackingStatus}</span></div>
                 </div>
             </div>
             <div className="mt-6">
@@ -114,7 +124,10 @@ export default function OrderDetails() {
             </div>
             <div className="mt-6 flex justify-between items-center">
                 <div className="text-2xl font-bold">Cost: {orderDetails.totalPrice}</div>
-                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">View</button>
+                {orderDetails.paymentStatus === 'pending' && (
+                   <Link to={`/order-summary/orderId:${orderDetails._id}`} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Pay now</Link>
+                )}
+                
             </div>
         </div>
     );

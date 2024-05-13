@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import SignInImage from '../../images/profile.jpg';
+import SignInImage from '../../images/register13.jpg';
 import { app } from "../../firebase";
 import {
   updateUserStart,
@@ -141,7 +141,7 @@ export default function Profile() {
       className="flex justify-center items-center h-screen"
       style={{ backgroundImage: `url(${SignInImage})`, backgroundSize: "cover" }}
     >
-      <div className="p-5 bg-login rounded-lg shadow-lg w-3/5" >
+      <div className="p-5 rounded-lg shadow-lg w-3/5" style={{ backgroundColor: 'rgba(172, 193, 172, 0.6)' }}>
         <h1 className="text-3xl font-semibold text-center my-27">Profile</h1>
         <form onSubmit={handleSubmit} className="flex flex-col ">
           <input
@@ -213,7 +213,7 @@ export default function Profile() {
                 className="border p-3 rounded-lg w-5/6"
                 onChange={handleChange}
               />
-
+{/* 
               <input
                 type="text"
                 placeholder="NIC"
@@ -221,7 +221,7 @@ export default function Profile() {
                 id="nic"
                 className="border p-3 rounded-lg w-5/6"
                 onChange={handleChange}
-              />
+              /> */}
   <input
                 type="password"
                 placeholder="Password"
@@ -285,6 +285,17 @@ export default function Profile() {
               Order History
             </button>
           </Link>
+
+
+          <Link to="/payment-history">
+            <button
+              className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
+              style={{ color: "#ffffff" }}
+            >
+              Payment History
+            </button>
+          </Link>
+
           <button
             className="bg-blue-900 text-white py-3 px-6 rounded-full"
             style={{ color: "#ffffff" }}
@@ -292,8 +303,31 @@ export default function Profile() {
             button 3
           </button>
         </div>
+
+
+
+
+          <Link to={`/my-reviews/${currentUser._id}`} className="btn">
+            <button className="bg-blue-900 text-white py-3 px-6 rounded-full" style={{ color: "#ffffff" }}>
+              My Review
+            </button>
+          </Link>
+
+
+          <Link to={`/review?userId=${currentUser._id}`} className="btn">
+            <button className="bg-blue-900 text-white py-3 px-6 rounded-full" style={{ color: "#ffffff" }}>
+              Add Review
+            </button>
+          </Link>
+
+
         </div>
       </div>
+    </div>
+
+  </div>
+      </div>
    
+
   );
 }
