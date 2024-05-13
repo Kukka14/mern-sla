@@ -13,6 +13,7 @@ const ManageProfileReport = () => {
   const [userCount, setUserCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("username"); // Default category
+  const [reportSign, setReportSign] = useState("");
 
   useEffect(() => {
     fetchAllUsers();
@@ -38,6 +39,12 @@ const ManageProfileReport = () => {
       return categoryValue.includes(searchTerm.toLowerCase());
     });
     setFilteredUsers(filtered);
+    // Set report sign based on search status
+    if (searchTerm === "") {
+      setReportSign("Admin Signature");
+    } else {
+      setReportSign("Admin Signature and User");
+    }
   };
 
   const handleDownloadReport = () => {
@@ -88,7 +95,7 @@ const ManageProfileReport = () => {
     ); // Align to the left
 
     // Admin signature
-    doc.text("Admin Signature:", 165, doc.lastAutoTable.finalY + 20, {
+    doc.text(reportSign, 165, doc.lastAutoTable.finalY + 20, {
       align: "right",
     }); // Align to the right
     doc.setLineWidth(0.5);
@@ -107,7 +114,6 @@ const ManageProfileReport = () => {
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
-
         <Link to="/mainDashboard">
           <div className="flex justify-center items-center mb-8">
             <img src={logo} alt="Company Logo" className="w-48 h-auto" />
@@ -125,7 +131,6 @@ const ManageProfileReport = () => {
             text="Manage Profile"
             to="/customer-management"
           />
-
           {/* Add more navigation items as needed */}
         </div>
       </div>
