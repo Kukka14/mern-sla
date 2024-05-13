@@ -105,7 +105,7 @@ export default function MainDashboard() {
                 </p>
               </div>
             </Link>
-            <Link to="/paymentDashboard">
+            <Link to="/paymentdetails">
               <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
                 <img
                   src={payment}

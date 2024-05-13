@@ -66,6 +66,7 @@ import UpdateSproduct from './pages/admin/supplierManagement/UpdateSproduct.jsx'
 
 import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
 import ViewPaymentDetails from './pages/admin/PaymentManagement/ViewPaymentDetails.jsx'
+import PaymentHistory from './pages/client/PaymentHistory.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -154,8 +155,8 @@ export default function App() {
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order_details/:orderId" element={<OrderDetails />} />
 
-          <Route path="/:userId" element={<ViewPaymentDetails/>} />
-
+          <Route path="/paymentdetails" element={<ViewPaymentDetails/>} />
+          <Route path="/payment-history" element={<PaymentHistory />} />
 
         </Route>
       </Routes>
