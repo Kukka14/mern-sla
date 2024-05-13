@@ -187,4 +187,3 @@ function NavLink({ icon, text, to }) {
     </Link>
   );
 }
-
