@@ -142,8 +142,14 @@ function Supplier() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredSuppliers.map((supplier) => (
-                                        <tr key={supplier._id} >
+                                    {filteredSuppliers.map((supplier, index) => (
+                                        <tr key={supplier._id}
+                                         
+                                        className={
+                                            index % 2 === 0 ? "bg-green-100" : "bg-green-200"
+                                          }
+                                        
+                                        >
                                             <td className="border px-4 py-2">{supplier.fname}</td>
                                             <td className="border px-4 py-2">{supplier.lname}</td>
                                             <td className="border px-4 py-2">{supplier.Supplier_Email}</td>

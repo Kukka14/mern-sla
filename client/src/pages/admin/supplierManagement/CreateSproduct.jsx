@@ -208,7 +208,7 @@ const handleSubmit = async (e) => {
   
                 <button
                   type="submit"
-                  className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded"
+                  className="bg-green-600 text-white py-4 rounded-lg hover:bg-green-700 focus:outline-none focus:bg-blue-600 w-full"
                 >
                   {loading ? 'Adding Product...' : 'Add Product'}
                 </button>

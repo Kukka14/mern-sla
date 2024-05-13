@@ -157,8 +157,12 @@ function Sproduct() {
                 </tr>
               </thead>
               <tbody>
-                {filteredProducts.map((product) => (
-                  <tr key={product._id}>
+                {filteredProducts.map((product, index) => (
+                  <tr key={product._id}
+                  className={
+                    index % 2 === 0 ? "bg-green-100" : "bg-green-200"
+                  }
+                      >
                     <td className="border px-4 py-2">{product.Supplier_Name}</td>
                     <td className="border px-4 py-2">{product.Product_Name}</td>
                     <td className="border px-4 py-2">{product.Product_Category}</td>
