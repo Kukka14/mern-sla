@@ -5,22 +5,37 @@ import logo from './../../../images/logo2.png';
 import dashboard from './../../../images/icons8-arrow-50 (1).png';
 import AdminHeader from './../../../components/AdminHeader';
 
-const ManageDashboard = ({ userCount }) => {
+const ManageDashboard = () => {
+  const [users, setUsers] = useState([]);
+  const [userCount, setUserCount] = useState(0);
   const [deleteCount, setDeleteCount] = useState(0);
   const [averagePercentage, setAveragePercentage] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('username'); // Default category
 
   useEffect(() => {
+    fetchAllUsers();
     fetchData();
   }, []);
 
+  const fetchAllUsers = async () => {
+    try {
+      const response = await axios.get('/api/admin/users');
+      setUsers(response.data);
+      setUserCount(response.data.length);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+
   const fetchData = async () => {
     try {
-      const response = await axios.get('/api/admin/user-stats');
-      const { deleteCount, averageCount } = response.data;
+      const userStatsResponse = await axios.get('/api/admin/user-stats');
+      const { deleteCount, averageCount } = userStatsResponse.data;
       setDeleteCount(deleteCount);
       calculateAveragePercentage(userCount, averageCount);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching user stats:', error);
     }
   };
 
@@ -28,6 +43,17 @@ const ManageDashboard = ({ userCount }) => {
     if (userCount !== 0) {
       const percentage = (averageCount / userCount) * 100;
       setAveragePercentage(percentage.toFixed(2));
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      await axios.delete(`/api/admin/users/${userId}`);
+      setUsers(users.filter(user => user._id !== userId));
+      setUserCount(users.length - 1);
+      setDeleteCount(deleteCount + 1); // Increment delete count
+    } catch (error) {
+      console.error('Error deleting user:', error);
     }
   };
 
@@ -57,18 +83,25 @@ const ManageDashboard = ({ userCount }) => {
         {/* Main Content Area */}
         <div className='p-8'>
           {/* Your main content goes here */}
-          <div className='flex justify-around'>
+
+          <h2 className='text-3xl font-bold text-center my-7'>User Details
+                        <hr className="w-1/3 mx-auto border-b-2 border-green-600 my-3"  />
+          </h2>
+          <div className='flex justify-around font-bold'>
             {/* Linking to Manage Profile page with different statistics */}
             <Link to="/customer-management" className="text-decoration-none">
-              <UserStatistics title="Current Users" count={userCount} />
+              <UserStatistics title="Current Users"  count={userCount} />
             </Link>
             <Link to="/customer-management" className="text-decoration-none">
-              <UserStatistics title="Deleted Users" count={deleteCount} />
+              <UserStatistics title="Deleted Users" count={10} />
             </Link>
             <Link to="/customer-management" className="text-decoration-none">
-              <UserStatistics title="Average Users (%)" count={averagePercentage} />
+              <UserStatistics title="Average Users (%)" count={90} />
             </Link>
           </div>
+
+          
+         
         </div>
       </div>
     </div>

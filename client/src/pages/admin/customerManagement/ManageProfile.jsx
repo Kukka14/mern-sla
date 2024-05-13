@@ -91,7 +91,9 @@ const ManageProfile = () => {
 
     <div style={{ backgroundColor: '#F1F2EB', display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
       <div style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
-        <h1 className='text-3xl font-semibold text-center my-7'>User Details</h1>
+      <h2 className='text-3xl font-bold text-center my-7'>User Details
+                        <hr className="w-1/3 mx-auto border-b-2 border-green-600 my-3"  />
+                    </h2>
         <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
           <input
             type="text"
@@ -110,24 +112,29 @@ const ManageProfile = () => {
           <p style={{ fontSize: '20px', fontWeight: 'bold' }}>Total Users: {userCount}</p>
         </div>
 
-        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+        <div style={{ padding: '20px 0', textAlign: 'center' }}>
+  <button onClick={handleGenerateReport} style={{ backgroundColor: '#10b981', color: 'white', padding: '10px', borderRadius: '5px', border: 'none' }}>
+    Generate Report
+  </button>
+</div>
+
+      <div className="overflow-x-auto rounded-lg">
+        <table className="table-auto w-11/12 bg-white shadow-md rounded ">
           <thead>
-            <tr style={{ borderBottom: '1px solid black', backgroundColor: '#10b981' }}>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>List</th>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>ID</th>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>Username</th>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>Email</th>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>Actions</th>
+            <tr className= "bg-green-300">
+              <th className="px-4 py-2">List</th>
+              <th className="px-4 py-2">Username</th>
+              <th className="px-4 py-2">Email</th>
+              <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.map((user, index) => (
-              <tr key={user._id} style={{ backgroundColor: index % 2 === 0 ? '#fffffff' : '#e7e5e4' }}>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{index + 1}</td>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user._id}</td>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user.username}</td>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user.email}</td>
-                <td style={{ border: '1px solid black', padding: '8px' }}>
+              <tr key={user._id} className={index % 2 === 0 ? "bg-green-100" : "bg-green-200"}>
+                <td className="border px-4 py-2">{index + 1}</td>
+                <td className="border px-4 py-2">{user.username}</td>
+                <td className="border px-4 py-2">{user.email}</td>
+                <td className="border px-4 py-2">
                   <button
                     onClick={() => handleDeleteUser(user._id)}
                     className="bg-red-500 text-white py-2 px-4 rounded-lg"
@@ -139,12 +146,9 @@ const ManageProfile = () => {
             ))}
           </tbody>
         </table>
+      </div>
        
-        <div>
-          <button onClick={handleGenerateReport} style={{ backgroundColor: '#10b981', color: 'white', padding: '10px', borderRadius: '5px', border: 'none' }}>
-            Generate Report
-          </button>
-        </div>
+      
       </div>
     </div>
 

@@ -120,7 +120,7 @@ export default function SignUp() {
           <input
             type='text'
             placeholder='Username'
-            className='border border-gray-700 p-3 rounded-lg w-full' // Increased width
+            className='border border-gray-700 p-3 rounded-lg w-2/3 h-full' // Increased width
             id='username'
             value={formData.username || ''}
             onChange={handleChange}
@@ -129,7 +129,7 @@ export default function SignUp() {
           <input
             type='email'
             placeholder='Email'
-            className='border p-3 border-gray-700 rounded-lg w-full' // Increased width
+            className='border p-3 border-gray-700 rounded-lg w-2/3 h-full' // Increased width
             id='email'
             onChange={handleChange}
           />
@@ -137,14 +137,14 @@ export default function SignUp() {
           <input
             type='password'
             placeholder='Password'
-            className='border border-gray-700 p-3 rounded-lg w-full' // Increased width
+            className='border border-gray-700 p-3 rounded-lg w-2/3 h-full' // Increased width
             id='password'
             onChange={handleChange}
           />
           <input
             type='password'
             placeholder='Confirm Password'
-            className='border border-gray-700 p-3 rounded-lg w-full' // Increased width
+            className='border border-gray-700 p-3 rounded-lg w-2/3 h-full' // Increased width
             id='confirmPassword'
             onChange={handleChange}
           />
@@ -152,7 +152,7 @@ export default function SignUp() {
           <input
             type='text'
             placeholder='NIC'
-            className='border border-gray-700 p-3 rounded-lg w-full' // Increased width
+            className='border border-gray-700 p-3 rounded-lg w-2/3 h-full' // Increased width
             id='nic'
             pattern='\d{9}[vV]|\d{12}'
             onChange={handleChange}
@@ -164,7 +164,7 @@ export default function SignUp() {
           <input
             type='text'
             placeholder='Telephone Number'
-            className='border border-gray-700 p-3 rounded-lg w-full' // Increased width
+            className='border border-gray-700 p-3 rounded-lg w-2/3 h-full' // Increased width
             id='phoneNumber'
             pattern='\d{10}'
             onChange={handleChange}
@@ -176,7 +176,7 @@ export default function SignUp() {
 <input
             type='text'
             placeholder='Address'
-            className='border border-gray-700 p-3 rounded-lg w-full' 
+            className='border border-gray-700 p-3 rounded-lg w-2/3 h-full' 
             id='address'
             onChange={handleChange}
           />

@@ -144,26 +144,29 @@ const ManageProfileReport = () => {
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
           <p style={{ fontSize: '20px', fontWeight: 'bold' }}>Total Users: {userCount}</p>
         </div>
-        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+
+      <div className="overflow-x-auto rounded-lg">
+        <table className="table-auto w-11/12 bg-white shadow-md rounded ">
           <thead>
-            <tr style={{ borderBottom: '1px solid black', backgroundColor: '#10b981' }}>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>List</th>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>ID</th>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>Username</th>
-              <th style={{ border: '1px solid black', padding: '20px', color: 'black', backgroundColor: '#10b981' }}>Email</th>
+            <tr className= "bg-green-300">
+              <th className="px-4 py-2">List</th>
+              <th className="px-4 py-2">ID</th>
+              <th className="px-4 py-2">Username</th>
+              <th className="px-4 py-2">Email</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.map((user, index) => (
-              <tr key={user._id} style={{ backgroundColor: index % 2 === 0 ? '#fffffff' : '#e7e5e4' }}>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{index + 1}</td>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user._id}</td>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user.username}</td>
-                <td style={{ border: '1px solid black', padding: '8px', color: 'black' }}>{user.email}</td>
+              <tr key={user._id} className={index % 2 === 0 ? "bg-green-100" : "bg-green-200"}>
+                <td className="border px-4 py-2">{index + 1}</td>
+                <td className="border px-4 py-2">{user._id}</td>
+                <td className="border px-4 py-2">{user.username}</td>
+                <td className="border px-4 py-2">{user.email}</td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
     </div>
