@@ -6,15 +6,15 @@ import jwt from 'jsonwebtoken';
 
 
 export const signup = async (req,res,next) =>{
-    const {username,email,password,nic,phoneNumber,address} =req.body;
+    const {username,email,password,phoneNumber} =req.body;
     const hashedPassword = bcryptjs.hashSync(password,10);
     const newUser = new User({
         username,
         email,
         password: hashedPassword ,
-        nic,
+      
         phoneNumber,
-        address
+     
     });
     try {
         await newUser.save();
