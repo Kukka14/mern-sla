@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import SignInImage from '../../images/profile.jpg';
@@ -274,12 +275,16 @@ export default function Profile() {
           >
             button 1
           </button>
-          <button
-            className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
-            style={{ color: "#ffffff" }}
-          >
-           button 2
-          </button>
+         
+
+          <Link to="/order-history">
+            <button
+              className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
+              style={{ color: "#ffffff" }}
+            >
+              Order History
+            </button>
+          </Link>
           <button
             className="bg-blue-900 text-white py-3 px-6 rounded-full"
             style={{ color: "#ffffff" }}

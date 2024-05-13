@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import jsPDF from 'jspdf'; // Import jsPDF for PDF generation
 import logo from './../../../images/logo2.png';
 import dashboard from './../../../images/icons8-arrow-50 (1).png';
 import AdminHeader from '../../../components/AdminHeader';
@@ -22,6 +23,51 @@ export default function ManageOrder() {
     } catch (error) {
       console.error('Error fetching orders:', error);
     }
+  };
+  
+  // Function to handle download report button click
+  const handleDownloadReport = () => {
+    const doc = new jsPDF({
+      orientation: 'landscape',
+      unit: 'mm',
+      format: 'a4'
+    });
+
+    // Logo
+    const imgData = logo;
+    const logoWidth = 80;
+    const logoHeight = 30;
+    doc.addImage(imgData, 'PNG', 10, 10, logoWidth, logoHeight);
+
+    // Title
+    doc.setFontSize(25);
+    doc.setFont('bold');
+    doc.text('Manage Orders Report', 165, 25, { align: 'center' });
+
+    // Table
+    doc.autoTable({
+      startY: 60,
+      head: [['Order ID', 'Cart ID', 'User ID', 'Date', 'Total Price', 'Order Status', 'Payment Status', 'Tracking Status']],
+      body: orders.map(order => [
+        order._id,
+        order.cartId,
+        order.userId,
+        formatDate(order.createdAt),
+        order.totalPrice,
+        order.orderStatus,
+        order.paymentStatus,
+        order.trackingStatus
+      ]),
+    });
+
+    // Download time and date
+    const currentDate = new Date();
+    const downloadDate = currentDate.toLocaleDateString();
+    const downloadTime = currentDate.toLocaleTimeString();
+    doc.setFontSize(12);
+    doc.text(`Date and Time: ${downloadDate} at ${downloadTime}`, 10, doc.lastAutoTable.finalY + 10, { align: 'left' });
+
+    doc.save('order_report.pdf');
   };
 
   // Function to handle search input change
@@ -47,6 +93,7 @@ export default function ManageOrder() {
       console.error('Error deleting order:', error);
     }
   };
+
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString('en-US', {
       day: 'numeric',
@@ -68,6 +115,7 @@ export default function ManageOrder() {
       console.error('Error updating tracking status:', error);
     }
   };
+
   const handlePaymentStatusChange = async (orderId, newStatus) => {
     try {
       await fetch(`/api/order/update-payment-status/${orderId}`, {
@@ -82,27 +130,33 @@ export default function ManageOrder() {
       console.error('Error updating payment status:', error);
     }
   };
+
   const getNextTrackingStatus = (currentStatus) => {
     switch (currentStatus) {
       case 'pending':
-      return 'processing';
-    case 'processing':
-      return 'shipped';
-    case 'shipped':
-      return 'delivered';
+        return 'processing';
+      case 'processing':
+        return 'shipped';
+      case 'shipped':
+        return 'delivered';
       case 'delivered':
         return 'pending';
-    default:
-      return currentStatus; // Loop back to 'pending' status if already 'delivered' or if unknown status
+      default:
+        return currentStatus; // Loop back to 'pending' status if already 'delivered' or if unknown status
     }
   };
+
   return (
     <div className='flex h-screen'>
       {/* Sidebar */}
       <div className='bg-sideNavBackground w-1/5 p-4'>
-        <div className='flex justify-center items-center mb-8'>
-          <img src={logo} alt="Company Logo" className='w-48 h-auto'/>
+           
+      <Link  to="/mainDashboard">
+      <div className="flex justify-center items-center mb-8">
+          <img src={logo} alt="Company Logo" className="w-48 h-auto" />
         </div>
+      
+      </Link>
         <hr className="border-gray-700 my-4"/>
         <div className='space-y-1'>
           <NavLink icon={dashboard} text="Order Dashboard" to="/order-dashboard" />
@@ -128,6 +182,9 @@ export default function ManageOrder() {
               className="bg-green-100 w-80 rounded-lg border border-green-300 h-10 px-4 mr-4 focus:outline-none"
             />
           </div>
+          <button onClick={handleDownloadReport} className="bg-blue-500 text-white py-2 px-4 rounded-lg mb-4">
+            Download Report (PDF)
+          </button>
           <div className="overflow-x-auto">
             <table className="table-auto w-full bg-white shadow-md rounded-lg">
               <thead>
@@ -151,33 +208,33 @@ export default function ManageOrder() {
                     <td className="border px-4 py-2">{order.userId}</td>
                     <td className="border px-4 py-2">{formatDate(order.createdAt)}</td>
                     <td className="border px-4 py-2">{order.totalPrice}</td>
-                    <td className="border px-4 py-2">{order.orderStatus}</td>
-                    <td className="border px-2 py-1">
-  <button
-    onClick={() => handlePaymentStatusChange(order._id, order.paymentStatus === 'pending' ? 'paid' : 'pending')}
-    className={`px-2 py-1 rounded ${
-      order.paymentStatus === 'pending' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
-    }`}
-    style={{ fontSize: '0.8rem' }}
-  >
-    {order.paymentStatus}
-  </button>
-</td>
-<td className="border px-2 py-1">
-  <button
-    onClick={() => handleTrackingStatusChange(order._id, getNextTrackingStatus(order.trackingStatus))}
-    className={`px-2 py-1 rounded ${
-      order.trackingStatus === 'pending' ? 'bg-red-500 text-white' :
-      order.trackingStatus === 'processing' ? 'bg-yellow-500 text-black' :
-      order.trackingStatus === 'shipped' ? 'bg-blue-500 text-white' :
-      'bg-green-500 text-white'
-    }`}
-    style={{ fontSize: '0.8rem' }}
-  >
-    {order.trackingStatus}
-  </button>
-</td>
+                    <td className="border px-2 py-1" style={{ backgroundColor: order.orderStatus === 'pending' ? 'red' : 'green', color: 'white', fontWeight: 'bold' }}>{order.orderStatus}</td>
 
+                    <td className="border px-2 py-1">
+                      <button
+                        onClick={() => handlePaymentStatusChange(order._id, order.paymentStatus === 'pending' ? 'paid' : 'pending')}
+                        className={`px-2 py-1 rounded ${
+                          order.paymentStatus === 'pending' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
+                        }`}
+                        style={{ fontSize: '0.8rem' }}
+                      >
+                        {order.paymentStatus}
+                      </button>
+                    </td>
+                    <td className="border px-2 py-1">
+                      <button
+                        onClick={() => handleTrackingStatusChange(order._id, getNextTrackingStatus(order.trackingStatus))}
+                        className={`px-2 py-1 rounded ${
+                          order.trackingStatus === 'pending' ? 'bg-red-500 text-white' :
+                          order.trackingStatus === 'processing' ? 'bg-yellow-500 text-black' :
+                          order.trackingStatus === 'shipped' ? 'bg-blue-500 text-white' :
+                          'bg-green-500 text-white'
+                        }`}
+                        style={{ fontSize: '0.8rem' }}
+                      >
+                        {order.trackingStatus}
+                      </button>
+                    </td>
                     <td className="border px-4 py-2">
                       <div className="flex flex-col">
                         <button

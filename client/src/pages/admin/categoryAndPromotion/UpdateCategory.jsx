@@ -1,12 +1,18 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "./../../../images/logo2.png";
-import dashboard from "./../../../images/icons8-arrow-50 (1).png";
 import AdminHeader from "../../../components/AdminHeader";
 import { useRef, useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'; // Assuming these are defined in your user actions file
+import { useParams } from "react-router-dom";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage"; // Assuming these are defined in your user actions file
 import { app } from "../../../firebase";
+
+import dashboard from "../../../images/icons8-arrow-50 (1).png";
 
 export default function UpdateCategory() {
   const { id } = useParams();
@@ -56,21 +62,25 @@ export default function UpdateCategory() {
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on('state_changed',
+    uploadTask.on(
+      "state_changed",
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setFilePerc(Math.round(progress));
       },
       (error) => {
         setFileUploadError(true);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setFormData({ ...formData, avatar: downloadURL });
-        }).catch((error) => {
-          console.error("Error getting download URL:", error);
-          setFileUploadError(true);
-        });
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            setFormData({ ...formData, avatar: downloadURL });
+          })
+          .catch((error) => {
+            console.error("Error getting download URL:", error);
+            setFileUploadError(true);
+          });
       }
     );
   };
@@ -83,9 +93,9 @@ export default function UpdateCategory() {
     e.preventDefault();
     try {
       const res = await fetch(`/api/category/update/${id}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -93,20 +103,24 @@ export default function UpdateCategory() {
       if (data.success === false) {
         return;
       }
-      navigate('/viewCategories');
+      navigate("/viewCategories");
     } catch (error) {
       console.error("Error updating user:", error);
     }
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-auto">
       {/* Sidebar */}
       <div className="bg-sideNavBackground w-1/5 p-4">
         {/* Logo */}
-        <div className="flex justify-center items-center mb-8">
+          
+      <Link  to="/mainDashboard">
+      <div className="flex justify-center items-center mb-8">
           <img src={logo} alt="Company Logo" className="w-48 h-auto" />
         </div>
+      
+      </Link>
 
         {/* Separate Line */}
         <hr className="border-gray-700 my-4" />
@@ -116,21 +130,21 @@ export default function UpdateCategory() {
           <NavLink
             icon={dashboard}
             text="Main Dashboard"
-            to="/product-admin-dashboard"
+            to="/category-admin-dashboard"
           />
-          <NavLink icon={dashboard} text="Add Categories" to="/addCatecory" />
-          <NavLink
-            icon={dashboard}
-            text="View Categories"
-            to="/viewCategories"
-          />
+          <NavLink icon={dashboard} text="Add Category" to="/addcategories" />
+          <NavLink icon={dashboard} text="View Category" to="/viewcategories" />
+          <NavLink icon={dashboard} text="Add Discount" to="/adddiscount" />
+          <NavLink icon={dashboard} text="View Discount" to="/viewdiscount" />
+          <NavLink icon={dashboard} text="Create Coupon" to="/couponadd" />
+          <NavLink icon={dashboard} text="View Coupon" to="/couponcodeview" />
+          {/* Add more navigation items as needed */}
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 basis-4/5">
-        {/* Header */}
+      <div className="basis-4/5 ">
         <AdminHeader />
+
         <div className="p-3 max-w-lg mx-auto mt-12">
           <h1 className="text-3xl text-center font-semibold my-7 text-sideNavText">
             Update Category
@@ -139,7 +153,9 @@ export default function UpdateCategory() {
           {!loading && error && <p className="text-red-500 mt-5">{error}</p>}
           {!loading && category && (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <label className="text-sideNavText text-lg">Category Name :</label>
+              <label className="text-sideNavText text-lg">
+                Category Name :
+              </label>
               <input
                 type="text"
                 placeholder="Category name"
@@ -164,7 +180,6 @@ export default function UpdateCategory() {
                 ref={fileRef}
                 hidden
                 accept="image/*"
-                
               />
               <img
                 onClick={() => fileRef.current.click()}
