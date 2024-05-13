@@ -12,7 +12,7 @@ import AddEmployee from './pages/admin/AddEmployee.jsx';
 import MainDashboard from './pages/admin/MainDashboard.jsx';
 import ContactUs from './pages/client/ContactUs.jsx';
 import ReviewPage from './pages/client/ReviewPage.jsx';
-import ReviewListingPage from './pages/client/ReviewListingPage.jsx';
+import ReviewListingPage from './pages/admin/customercareManagement/ReviewListingPage.jsx';
 import UpdateReviewPage from './pages/client/UpdateReviewPage.jsx';
 
 
@@ -65,7 +65,10 @@ import CreateSproduct from './pages/admin/supplierManagement/CreateSproduct.jsx'
 import UpdateSproduct from './pages/admin/supplierManagement/UpdateSproduct.jsx';
 import ViewStocks from './pages/admin/ProductManagement/ViewStocks.jsx';
 
-
+import AdminResponses from './pages/admin/customercareManagement/AdminResponses.jsx';
+import ReviewAdminDashboard from './pages/admin/customercareManagement/ReviewAdminDashboard.jsx';
+import ReviewReport from './pages/admin/customercareManagement/ReviewReport.jsx';
+import MyReview from './pages/client/MyReview.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -154,6 +157,11 @@ export default function App() {
           <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order_details/:orderId" element={<OrderDetails />} />
+
+           <Route path='/reviewadmin' element={<ReviewAdminDashboard/>} />
+          <Route path='/my-reviews/:userId' element={<MyReview />} />
+          <Route path='/admin-responses' element={<AdminResponses />} />
+          <Route path='/reviewreport' element={<ReviewReport />} />
 
 
         </Route>

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const reveiwSchema = new mongoose.Schema({
-   
+
     comment:{
         type: String,
         required:true,
@@ -17,7 +17,13 @@ const reveiwSchema = new mongoose.Schema({
     imageUrls: {
         type: Array, // Store image URL in MongoDB
         required: true
-    }
+    },
+
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
 
     }, {timestamps: true}
 );

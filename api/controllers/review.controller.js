@@ -19,7 +19,7 @@ export const getAllReviews = async (req, res, next) => {
 };
 
 export const updateReview = async (req, res, next) => {
-    const { id } = req.params;
+    const { id } = req.params;                                        //get review id using request parameter
     const { comment, rating, imageUrl } = req.body;
     try {
         const updatedReview = await Review.findByIdAndUpdate(id, { comment, rating, imageUrl }, { new: true });
@@ -38,3 +38,19 @@ export const deleteReview = async (req, res, next) => {
         next(error);
     }
 };
+
+
+
+const getUserReviewsById = async (req, res) => {               //Gets reviews by a specific user ID
+  try {
+    const userId = req.params.userId;
+    const reviews = await Review.find({ userId });
+    res.status(200).json(reviews);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export { getUserReviewsById };
+
+
