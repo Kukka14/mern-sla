@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Label, TextInput } from 'flowbite-react';
-import StarRatingComponent from 'react-rating-stars-component';
+import StarRatingComponent from 'react-star-rating-component';
 
 const UpdateReviewPage = () => {
+    const navigate = useNavigate(); // Initialize navigate hook
     const { id } = useParams();
     const [formData, setFormData] = useState({
         comment: '',
         rating: 5,
         imageUrl: [],
     });
+    const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => {
         fetchReview();
@@ -37,8 +39,12 @@ const UpdateReviewPage = () => {
         e.preventDefault();
         try {
             await axios.put(`/api/review/${id}`, formData);
+            // Display success message after successful update
+            setSuccessMessage('Review updated successfully!');
             // Redirect user to review listing page after successful update
-            window.location.href = "/reviewlisting";
+            setTimeout(() => {
+                navigate('/profile'); // Navigate to the desired page
+            }, 2000); // Wait for 2 seconds before navigating
         } catch (error) {
             console.error('Error updating review:', error);
         }
@@ -65,6 +71,7 @@ const UpdateReviewPage = () => {
                     <div>
                         <Button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95' type='submit'>Update</Button>
                     </div>
+                    {successMessage && <p className="text-green-700 text-sm">{successMessage}</p>}
                 </form>
             </div>
         </div>
