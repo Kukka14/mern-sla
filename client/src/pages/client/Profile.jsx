@@ -275,7 +275,7 @@ export default function Profile() {
               className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
               style={{ color: "#ffffff" }}
             >
-              Order History
+              My Orders
             </button>
           </Link>
 
