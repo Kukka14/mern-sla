@@ -137,10 +137,7 @@ export default function Profile() {
   };
 
   return (
-    <div
-      className="flex justify-center items-center h-screen"
-      style={{ backgroundImage: `url(${SignInImage})`, backgroundSize: "cover" }}
-    >
+    <div className="flex justify-center items-center h-screen" style={{ backgroundImage: `url(${SignInImage})`, backgroundSize: "cover" }}>
       <div className="p-5 rounded-lg shadow-lg w-3/5" style={{ backgroundColor: 'rgba(172, 193, 172, 0.6)' }}>
         <h1 className="text-3xl font-semibold text-center my-27">Profile</h1>
         <form onSubmit={handleSubmit} className="flex flex-col ">
@@ -193,14 +190,14 @@ export default function Profile() {
                 onChange={handleChange}
               />
 
-<select id="address" className="border p-3 rounded-lg w-5/6" onChange={handleChange}>
-  <option value="">Select Address</option>
-  {addresses && addresses.map((address) => (
-    <option key={address._id} value={address._id}>
-      {`${address.addressLine1}, ${address.city}, ${address.country}`}
-    </option>
-  ))}
-</select>
+              <select id="address" className="border p-3 rounded-lg w-5/6" onChange={handleChange}>
+                <option value="">Select Address</option>
+                {addresses && addresses.map((address) => (
+                  <option key={address._id} value={address._id}>
+                    {`${address.addressLine1}, ${address.city}, ${address.country}`}
+                  </option>
+                ))}
+              </select>
 
             </div>
             <div className="flex flex-col w-1/2 justify-center items-center gap-4">
@@ -275,8 +272,6 @@ export default function Profile() {
           >
             button 1
           </button>
-         
-
           <Link to="/order-history">
             <button
               className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
@@ -285,8 +280,6 @@ export default function Profile() {
               Order History
             </button>
           </Link>
-
-
           <Link to="/payment-history">
             <button
               className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
@@ -295,7 +288,6 @@ export default function Profile() {
               Payment History
             </button>
           </Link>
-
           <button
             className="bg-blue-900 text-white py-3 px-6 rounded-full"
             style={{ color: "#ffffff" }}
@@ -304,30 +296,19 @@ export default function Profile() {
           </button>
         </div>
 
+        <Link to={`/my-reviews/${currentUser._id}`} className="btn">
+          <button className="bg-blue-900 text-white py-3 px-6 rounded-full" style={{ color: "#ffffff" }}>
+            My Review
+          </button>
+        </Link>
 
+        <Link to={`/review?userId=${currentUser._id}`} className="btn">
+          <button className="bg-blue-900 text-white py-3 px-6 rounded-full" style={{ color: "#ffffff" }}>
+            Add Review
+          </button>
+        </Link>
 
-
-          <Link to={`/my-reviews/${currentUser._id}`} className="btn">
-            <button className="bg-blue-900 text-white py-3 px-6 rounded-full" style={{ color: "#ffffff" }}>
-              My Review
-            </button>
-          </Link>
-
-
-          <Link to={`/review?userId=${currentUser._id}`} className="btn">
-            <button className="bg-blue-900 text-white py-3 px-6 rounded-full" style={{ color: "#ffffff" }}>
-              Add Review
-            </button>
-          </Link>
-
-
-        </div>
       </div>
     </div>
-
-  </div>
-      </div>
-   
-
   );
 }

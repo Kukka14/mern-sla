@@ -54,7 +54,7 @@ import UpdateProductListing from './pages/admin/ProductManagement/UpdateProductL
 
 import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboard.jsx';
 import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
-import ManagerUI from './pages/admin/customerManagement/ManagerUI.jsx';
+
 import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
 import OrderHistory from './pages/client/OrderHistory.jsx';
 import OrderDetails from './pages/client/OrderDetails.jsx';
@@ -70,7 +70,7 @@ import ReviewAdminDashboard from './pages/admin/customercareManagement/ReviewAdm
 import ReviewReport from './pages/admin/customercareManagement/ReviewReport.jsx';
 import MyReview from './pages/client/MyReview.jsx';
 
-import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
+
 import ViewPaymentDetails from './pages/admin/PaymentManagement/ViewPaymentDetails.jsx'
 import PaymentHistory from './pages/client/PaymentHistory.jsx';
 

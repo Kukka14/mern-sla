@@ -29,6 +29,14 @@ function CreateSproduct() {
                 ...formData,
                 [e.target.id]: value,
             });
+        }
+            else if (e.target.id === 'phone') {
+                // Allow only numbers for phone field
+                const value = e.target.value.replace(/\D/g, '');
+                setFormData({
+                    ...formData,
+                    [e.target.id]: value,
+                });
         } else {
             setFormData({
                 ...formData,
@@ -86,10 +94,10 @@ function CreateSproduct() {
             <div className="basis-4/5 ">
                 <AdminHeader />
     
-                <div className="min-h-screen flex items-center justify-center">
+                <div className="min-h-screen flex items-center justify-center ">
                     <div className="w-3/4 bg-white rounded p-3">
-                        <div className="flex justify-between mb-4">
-                            <h1 className="text-3xl font-semibold">Add New Supplier</h1>
+                        <div className="flex justify-center mt-4">
+                            <h1 className="text-center text-3xl font-bold mb-4 w-1/3 border-b-2 border-green-600 py-2">Add New Supplier</h1>
                         </div>
                         <form onSubmit={handleSubmit} className="flex flex-col">
                             <div className="flex flex-col gap-4 flex-1">
