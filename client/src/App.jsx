@@ -12,7 +12,7 @@ import AddEmployee from './pages/admin/AddEmployee.jsx';
 import MainDashboard from './pages/admin/MainDashboard.jsx';
 import ContactUs from './pages/client/ContactUs.jsx';
 import ReviewPage from './pages/client/ReviewPage.jsx';
-import ReviewListingPage from './pages/client/ReviewListingPage.jsx';
+import ReviewListingPage from './pages/admin/customercareManagement/ReviewListingPage.jsx';
 import UpdateReviewPage from './pages/client/UpdateReviewPage.jsx';
 
 
@@ -55,6 +55,7 @@ import UpdateProductListing from './pages/admin/ProductManagement/UpdateProductL
 import CustomerDashboard from './pages/admin/customerManagement/CustomerDashboard.jsx';
 import ManageProfile from './pages/admin/customerManagement/ManageProfile.jsx';
 import ManagerUI from './pages/admin/customerManagement/ManagerUI.jsx';
+import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
 import OrderHistory from './pages/client/OrderHistory.jsx';
 import OrderDetails from './pages/client/OrderDetails.jsx';
 import Footer from './components/Footer.jsx';
@@ -62,7 +63,12 @@ import ProductByCategory from './pages/admin/ProductManagement/ProductByCategory
 import SupplierAdminDashboard from './pages/admin/supplierManagement/SupplierAdminDashboard.jsx';
 import CreateSproduct from './pages/admin/supplierManagement/CreateSproduct.jsx';
 import UpdateSproduct from './pages/admin/supplierManagement/UpdateSproduct.jsx';
+import ViewStocks from './pages/admin/ProductManagement/ViewStocks.jsx';
 
+import AdminResponses from './pages/admin/customercareManagement/AdminResponses.jsx';
+import ReviewAdminDashboard from './pages/admin/customercareManagement/ReviewAdminDashboard.jsx';
+import ReviewReport from './pages/admin/customercareManagement/ReviewReport.jsx';
+import MyReview from './pages/client/MyReview.jsx';
 
 import PaymentSuccessPage from './pages/client/PaymentSuccessPage.jsx';
 import ViewPaymentDetails from './pages/admin/PaymentManagement/ViewPaymentDetails.jsx'
@@ -136,6 +142,7 @@ export default function App() {
           <Route path='/product-view' element={<ShowProductListing/>} />
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
           <Route path="/products/:categoryName" element={<ProductByCategory/>} />
+          <Route path="/view-stocks" element={<ViewStocks/>} />
          
           
 
@@ -149,14 +156,19 @@ export default function App() {
           <Route path="/manage-orders-dashboard" element={<ManageOrder/>}/>
           <Route path="/customer-report" element={<ManageProfileReport />} />
           <Route path="/customer-management" element={<ManageProfile />} />
-          <Route path="/managerUI" element={<ManagerUI />} />
+        
           <Route path="/customerDashBoard" element={<CustomerDashboard />} />
           <Route path="/paymentsuccess" element={<PaymentSuccessPage />} />
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order_details/:orderId" element={<OrderDetails />} />
 
+
           <Route path="/paymentdetails" element={<ViewPaymentDetails/>} />
           <Route path="/payment-history" element={<PaymentHistory />} />
+           <Route path='/reviewadmin' element={<ReviewAdminDashboard/>} />
+          <Route path='/my-reviews/:userId' element={<MyReview />} />
+          <Route path='/admin-responses' element={<AdminResponses />} />
+          <Route path='/reviewreport' element={<ReviewReport />} />
 
         </Route>
       </Routes>

@@ -88,3 +88,19 @@ export const deleteSupplierById = async (req, res, next) => {
         res.status(500).json({ message: "Failed to delete supplier." });
     }
 };
+
+
+export const getAllSupplierNames = async (req, res, next) => {
+    try {
+        // Fetch all suppliers and project only the 'fname' field
+        const suppliers = await Supplier.find({}, 'fname');
+
+        // Extract supplier names
+        const supplierNames = suppliers.map(supplier => supplier.fname);
+
+        res.status(200).json(supplierNames);
+    } catch (error) {
+        console.error("Error retrieving supplier names:", error);
+        res.status(500).json({ message: "Failed to retrieve supplier names." });
+    }
+};

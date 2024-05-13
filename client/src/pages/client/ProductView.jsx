@@ -134,7 +134,7 @@ const ProductView = () => {
       </div>
       {/* Product Grid */}
       {loading ? (
-        <p>Loading...</p>
+        <p>Loading...</p> 
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8">
           {filteredProducts.map((product) => (

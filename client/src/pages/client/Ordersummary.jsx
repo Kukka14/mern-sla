@@ -6,13 +6,15 @@ export default function Ordersummary() {
   const [orderDetails, setOrderDetails] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const [addressDetails, setAddressDetails] = useState({});
-  const [promoCode, setPromoCode] = useState("");
+
 
   const { orderId } = useParams();
 
   useEffect(() => {
     fetchOrderDetails(orderId);
   }, [orderId]);
+
+   
 
   const paymenthdl = async () => {
     try {
@@ -135,21 +137,6 @@ export default function Ordersummary() {
             <p>Country: {addressDetails.country}</p>
           </div>
           <div className="mt-8">
-            <input
-              type="text"
-              placeholder="Enter promo code"
-              value={promoCode}
-              onChange={(e) => setPromoCode(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-            />
-            <button
-             
-              className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md focus:outline-none"
-            >
-              Apply
-            </button>
-          </div>
-          <div className="mt-8">
             <button
               onClick={paymenthdl}
               className="px-8 py-3 bg-green-500 text-white rounded-md focus:outline-none hover:bg-green-600"
@@ -160,5 +147,6 @@ export default function Ordersummary() {
         </div>
       </div>
     </div>
+    
   );
 }

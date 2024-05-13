@@ -49,6 +49,7 @@ export const updateUser = async (req, res, next) => {
     }
   };
 
+
   export const getUserNameById = async (req, res, next) => {
     try {
       const userId = req.params.id;
@@ -61,4 +62,5 @@ export const updateUser = async (req, res, next) => {
       console.error('Error fetching user:', error);
       res.status(500).json({ message: 'An error occurred while fetching the user' });
     }
+
   };

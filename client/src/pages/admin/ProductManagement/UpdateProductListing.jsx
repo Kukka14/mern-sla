@@ -220,6 +220,12 @@ export default function CreateListing() {
             to="/product-listing"
           />
           <NavLink icon={dashboard} text="View Products" to="/product-view" />
+
+          <NavLink
+            icon={dashboard}
+            text="View Stocks"
+            to="/view-stocks"
+          />
         </div>
       </div>
 
