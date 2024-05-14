@@ -72,11 +72,61 @@ const ProductView = () => {
   });
 
   const handleBuy = (product) => {
-    // Handle buy logic
+    if(currentUser) {
+      handleAddToCart(product);
+      setTimeout(() => {
+        navigate("/cart");
+      }, 4500);
+    } else {
+      toast.error("Please login to buy items to the cart", {
+        onClose: () => {
+          navigate("/sign-in");
+        }
+      });
+    }
   };
 
-  const handleAddToCart = async (product) => {
-    // Handle add to cart logic
+  const handleAddToCart = async(product) => {
+    if (!currentUser) {
+      toast.error("Please login to add items to the cart");
+      navigate("/sign-in");
+      return;
+    }
+    try {
+      const priceToAdd = product.discountedPrice ? product.discountedPrice : product.regularPrice;
+      const response = await fetch("/api/cart/addToCart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: currentUser._id,
+          productId: product._id,
+          productName: product.name,
+          productImages: product.imageUrls,
+          price: priceToAdd,
+          quantity: 1,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add item to cart");
+      }
+
+      const data = await response.json();
+
+      if (data.success && data.updated) {
+        console.log(data.success, data.updated);
+        toast.success("Item quantity updated successfully");
+      } else if (data.success && !data.updated) {
+        toast.success("Item added to cart successfully");
+       
+      } else {
+        console.error("Failed to add item to cart:", data.error);
+      }
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+    }
   };
 
   return (
