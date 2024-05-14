@@ -69,16 +69,20 @@ import AdminResponses from './pages/admin/customercareManagement/AdminResponses.
 import ReviewAdminDashboard from './pages/admin/customercareManagement/ReviewAdminDashboard.jsx';
 import ReviewReport from './pages/admin/customercareManagement/ReviewReport.jsx';
 import MyReview from './pages/client/MyReview.jsx';
+import ViewOrder from './pages/admin/OrderManagement/ViewOrder.jsx';
 
 
 import ViewPaymentDetails from './pages/admin/PaymentManagement/ViewPaymentDetails.jsx'
 import PaymentHistory from './pages/client/PaymentHistory.jsx';
 
+<<<<<<< HEAD
 import EmployeeDashboard from './pages/admin/EmployeeManagement/EmployeeDashboard.jsx';
 import EmployeeList from './pages/admin/EmployeeManagement/EmployeeList.jsx';
 import EmployeePayment from './pages/admin/EmployeeManagement/EmployeePayment.jsx';
 import EmployeeUpdate from './pages/admin/EmployeeManagement/EmployeeUpdate.jsx';
 import AddEmployee from './pages/admin/EmployeeManagement/AddEmployee.jsx';
+=======
+>>>>>>> main
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -89,7 +93,7 @@ export default function App() {
       {isAdmin ? null : <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="contactus" element={<ContactUs />} />
+        <Route path="/contactus" element={<ContactUs />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/product-view-client" element={<ProductView/>} />
@@ -107,6 +111,8 @@ export default function App() {
       
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
+          
+
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
           <Route path='review' element={<ReviewPage/>} />
@@ -139,6 +145,7 @@ export default function App() {
           <Route path='/viewdiscount' element={<ViewDiscount />} />
           <Route path='/couponcodeview' element={<CouponCodeView />} />
           <Route path='/managecoupon/:id' element={<ManageCoupon />} />
+          <Route path='/ViewOrder/:orderId' element={<ViewOrder />} />
 
 
 

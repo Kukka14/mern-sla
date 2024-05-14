@@ -199,7 +199,7 @@ const ReviewProductList = () => {
                     <td className="border px-4 py-2">{product.name}</td>
                     <td className="border px-4 py-2">{product.description}</td>
                     <td className="border px-4 py-2">{product.type}</td>
-                    <td className="border px-4 py-2">{product.regularPrice}</td>
+                    <td className="border px-4 py-2">{product.regularPrice.toFixed(2)}</td>
                     <td className="border px-4 py-2">{product.quantity}</td>
                     <td className="border px-4 py-2">{product.category}</td>
                     <td className="border px-4 py-2">

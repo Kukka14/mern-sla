@@ -1,5 +1,5 @@
 import { useState } from "react";
-import loginback from '../../images/loginbg.jpg';
+import loginback from '../../images/sinsup.png';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {

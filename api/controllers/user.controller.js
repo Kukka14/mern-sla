@@ -50,6 +50,7 @@ export const updateUser = async (req, res, next) => {
   };
 
 
+  
   export const getUserNameById = async (req, res, next) => {
     try {
       const userId = req.params.id;
