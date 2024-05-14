@@ -5,11 +5,12 @@ import heroback3 from "../../images/heroBg3.jpg";
 import heroicon1 from "../../images/iconher01.png";
 import heroicon2 from "../../images/iconher02.png";
 import heroicon3 from "../../images/iconher03.png";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [heroback1, heroback2, heroback3];
-  const intervalDuration = 3000; // Change slide every 5 seconds
+  const intervalDuration = 3000; 
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -51,12 +52,13 @@ export default function Home() {
               <p className="text-2xl mb-10 leading-none">
                 Explore our latest machinery and tools.
               </p>
+              <Link to="/product-view-client">
               <a
-                href="#"
+                href="/client/src/pages/client/ProductView.jsx"
                 className="bg-green-500 py-2 px-4 text-lg text-white font-bold rounded-lg"
               >
                 Shop Now
-              </a>
+              </a></Link>
               <a
                 href="#"
                 className="bg-yellow-500 py-2 px-4 text-lg text-white font-bold rounded-lg ml-4"
