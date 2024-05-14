@@ -43,8 +43,6 @@ import CategoryAdminDashboard from './pages/admin/categoryAndPromotion/CategoryA
 import ViewCategory from './pages/admin/categoryAndPromotion/ViewCategory.jsx';
 import AddDiscount from './pages/admin/categoryAndPromotion/AddDiscount.jsx';
 import UpdateCategory from './pages/admin/categoryAndPromotion/UpdateCategory.jsx';
-import CouponAdd from './pages/admin/categoryAndPromotion/CouponAdd.jsx';
-import ViewDiscount from './pages/admin/categoryAndPromotion/ViewDiscount.jsx';
 import CouponCodeView from './pages/admin/categoryAndPromotion/CouponCodeView.jsx';
 import ManageCoupon from './pages/admin/categoryAndPromotion/ManageCoupon.jsx';
 import ProductAdminDashboard from './pages/admin/ProductManagement/ProductAdminDashboard.jsx';
