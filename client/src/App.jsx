@@ -72,8 +72,12 @@ import MyReview from './pages/client/MyReview.jsx';
 import ViewOrder from './pages/admin/OrderManagement/ViewOrder.jsx';
 
 
+
+
 import ViewPaymentDetails from './pages/admin/PaymentManagement/ViewPaymentDetails.jsx'
 import PaymentHistory from './pages/client/PaymentHistory.jsx';
+
+import PaymentDashboard from './pages/admin/PaymentManagement/PaymentDashboard.jsx';
 
 
 export default function App() {
@@ -148,6 +152,8 @@ export default function App() {
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
           <Route path="/products/:categoryName" element={<ProductByCategory/>} />
           <Route path="/view-stocks" element={<ViewStocks/>} />
+
+          <Route path="/payment-dashboard" element={<PaymentDashboard/>} />
          
           
 

@@ -64,21 +64,14 @@ export const getCheckoutSession = async (req, res) => {
     }
 };
 export const getAllPayments = async (req, res) => {
-    try {
-     
-      const pendingOrders = await Order.find({ orderStatus: 'pending' });
-  
-     
-      const pendingOrderIds = pendingOrders.map(order => order._id);
-  
-      const payments = await Payment.find({ orderId: { $in: pendingOrderIds } });
-  
+  try {
+      const payments = await Payment.find();
       res.json({ payments });
-    } catch (error) {
+  } catch (error) {
       console.error('Error fetching payments:', error);
       res.status(500).json({ error: 'Internal Server Error' });
-    }
-  };
+  }
+};
   export const deletePayment = async (req, res) => {
     const { paymentId } = req.params;
     try {
@@ -87,5 +80,26 @@ export const getAllPayments = async (req, res) => {
     } catch (error) {
       console.error('Error deleting payment:', error);
       res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  export const getUserPayments = async (req, res) => {
+    const { userId } = req.body;
+  
+    try {
+      const payments = await Payment.find({ userId });
+      res.json({ payments });
+    } catch (error) {
+      console.error('Error fetching payments:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
+  export const getpayments= async (req, res) => {
+    try {
+      const payments = await Payment.find();
+      res.json({ payments });
+    } catch (error) {
+      console.error('Error fetching payment data:', error);
+      res.status(500).json({ error: 'Internal server error' });
     }
   };
