@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import SignInImage from '../../images/register13.jpg';
+import SignInImage from '../../images/sinsup.png';
 import { app } from "../../firebase";
 import {
   updateUserStart,
