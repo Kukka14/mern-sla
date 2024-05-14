@@ -14,7 +14,7 @@ export default function MainDashboard() {
 
   useEffect(() => {
     fetchOrderCounts();
-  }, [ ]);
+  }, []);
 
   useEffect(() => {
     if (chartInstance) {
