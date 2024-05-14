@@ -208,9 +208,11 @@ export const updateTrackingStatus = async (req, res) => {
 export const getOrderCount = async (req, res) => {
   try {
     // Count all orders
-    const orderCount = await Order.countDocuments();
+    const totalOrders = await Order.countDocuments();
+    const pendingOrders = await Order.countDocuments({ orderStatus: "pending" });
+    const completedOrders = await Order.countDocuments({ orderStatus: "completed" });
 
-    res.status(200).json({ orderCount });
+    res.json({ total: totalOrders, pending: pendingOrders, completed: completedOrders });
   } catch (error) {
     console.error('Error getting order count:', error);
     res.status(500).json({ error: 'An error occurred while getting the order count' });

@@ -71,3 +71,13 @@ export const deleteCouponById = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
+export const getAllCouponCount = async (req, res, next) => {
+  try {
+    const count = await Coupon.countDocuments();
+    res.status(200).json({ count });
+  } catch (error) {
+    next(error);
+  }
+};

@@ -56,7 +56,7 @@ function Sproduct() {
       const totalAmountPaid = parseFloat(product.Supplier_Price) * parseInt(product.Quantity);
       const rowData = [
         product.Supplier_Name,
-        product.Supplier_Email,
+        
         product.Product_Name,
         product.Supplier_Price,
         product.Quantity,
@@ -99,7 +99,7 @@ function Sproduct() {
   const handleSearch = (e) => {
     const searchTerm = e.target.value;
     setSearchTerm(searchTerm);
-
+  
     const filtered = products.filter((product) => {
       return Object.values(product).some(
         (value) =>
@@ -107,7 +107,10 @@ function Sproduct() {
           value.toLowerCase().includes(searchTerm.toLowerCase())
       );
     });
+  
+    setFilteredProducts(filtered); // Update the filteredProducts state
   };
+  
 
   return (
 
@@ -188,7 +191,6 @@ function Sproduct() {
               <thead>
                 <tr>
                   <th className="px-4 py-2">Supplier Name</th>
-                  <th className="px-4 py-2">Supplier Email</th>
                   <th className="px-4 py-2">Product Name</th>
                   <th className="px-4 py-2">Supplier Price</th>
                   <th className="px-4 py-2">Quantity</th>
@@ -199,7 +201,6 @@ function Sproduct() {
                 {filteredProducts.map((product) => (
                   <tr key={product._id}>
                     <td className="border px-4 py-2">{product.Supplier_Name}</td>
-                    <td className="border px-4 py-2">{product.Supplier_Email}</td>
                     <td className="border px-4 py-2">{product.Product_Name}</td>
                     <td className="border px-4 py-2">{product.Supplier_Price}</td>
                     <td className="border px-4 py-2">{product.Quantity}</td>
