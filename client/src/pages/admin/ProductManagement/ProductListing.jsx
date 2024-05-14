@@ -114,7 +114,8 @@ export default function ProductListing() {
   const handleChange = (e) => {
     // Prevent typing special characters and spaces in the 'name' field
     if (e.target.id === 'name') {
-        const value = e.target.value.replace(/[!@#\$%\^&\*\(\)\<\>\[\]\{\};:'"|,\.\? ]/gi, '');
+      const value = e.target.value.replace(/[!@#\$%\^&\*\(\)\<\>\[\]\{\};:'"|,\.\?]/gi, '');
+
         setFormData({
             ...formData,
             [e.target.id]: value,

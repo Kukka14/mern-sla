@@ -364,6 +364,7 @@ export default function CreateListing() {
                         id="category"
                         value={formData.category}
                         onChange={handleChange}
+                        required
                         className="block w-full py-2 pl-3 pr-10 mt-1 text-base border border-gray-300 focus:outline-none focus:border-blue-500 rounded-md"
                       >
                         <option value="">Select Category</option>

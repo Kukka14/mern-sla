@@ -87,7 +87,7 @@ export default function Header() {
                 <a href="#">Products</a>
               </div>
             </Link>
-            <Link to="/contact">
+            <Link to="/contactus">
               <div className="mr-14 hover:opacity-50">
                 <a href="#">Contact Us</a>
               </div>

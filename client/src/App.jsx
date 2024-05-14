@@ -84,7 +84,7 @@ export default function App() {
       {isAdmin ? null : <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="contactus" element={<ContactUs />} />
+        <Route path="/contactus" element={<ContactUs />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/product-view-client" element={<ProductView/>} />

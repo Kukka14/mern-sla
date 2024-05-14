@@ -126,7 +126,7 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-24 bg-gray-100">
+    <div className="flex items-center justify-center mt-24 mb-24 bg-gray-100">
       {loading ? (
         <p className="text-center">Loading...</p>
       ) : product ? (
@@ -155,7 +155,7 @@ const ProductDetail = () => {
               </button>
             </div>
           </div>
-          <div id="card-content" className="flex-1 p-8 overflow-hidden">
+          <div id="card-content" className="flex-1 mt-2 p-8 overflow-hidden">
             <h1 className="text-3xl font-semibold mb-4">{product.name}</h1>
            
             <p className="text-lg font-semibold text-blue-600 mb-2">
