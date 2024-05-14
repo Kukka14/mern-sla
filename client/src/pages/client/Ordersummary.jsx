@@ -113,9 +113,9 @@ export default function Ordersummary() {
                 />
                 <div className="ml-4">
                   <h4 className="font-semibold">{item.p_name}</h4>
-                  <p>Price: ${item.price}</p>
-                  <p>Quantity: {item.quantity}</p>
-                  <p>Total Price: ${item.price * item.quantity}</p>
+                  <p>Price: Rs.{item.price}.00</p>
+                  <p>Quantity:{item.quantity}</p>
+                  <p>Total Price: Rs.{item.price * item.quantity}.00</p>
                 </div>
               </div>
             ))}
@@ -124,9 +124,9 @@ export default function Ordersummary() {
         <div>
           <h3 className="text-xl font-semibold mb-4">Order Details</h3>
           <div>
-            <p>Total Price: ${orderDetails.totalPrice}</p>
-            <p>Promotion Price: ${orderDetails.promotionPrice}</p>
-            <p>Total Price to Pay: ${orderDetails.totalPriceToPay}</p>
+            <p>Total Price: Rs.{orderDetails.totalPrice}.00</p>
+            <p>Promotion Price: Rs.{orderDetails.promotionPrice}.00</p>
+            <p className="text-xxl font-semibold mt-2 mb-2">Total Price to Pay: Rs.{orderDetails.totalPrice - orderDetails.promotionPrice}.00</p>
           </div>
           <h3 className="text-xl font-semibold mt-8 mb-4">Shipping Address</h3>
           <div>

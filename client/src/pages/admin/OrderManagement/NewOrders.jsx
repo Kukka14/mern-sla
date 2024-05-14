@@ -11,19 +11,41 @@ export default function ManageOrder() {
 
   useEffect(() => {
     // Fetch all orders when component mounts
-    getnewOrders();
+    getAllOrders();
   }, []);
 
   // Function to fetch all orders
-  const getnewOrders = async () => {
+  const getAllOrders = async () => {
     try {
       const response = await fetch('/api/order/new');
       const data = await response.json();
-      setOrders(data.orders);
+      const ordersWithUserNames = await Promise.all(
+        data.orders.map(async (order) => {
+          const userResponse = await fetch(`/api/user/name/${order.userId}`);
+          const userData = await userResponse.json();
+  
+          const addressResponse = await fetch(`/api/address/getdetails`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ addressId: order.addressId })
+          });
+          const addressData = await addressResponse.json();
+          console.log(addressData.address);
+          return {
+            ...order,
+            customerName: userData.username,
+            addressDetails:  `${addressData.address.addressLine1}, ${addressData.address.addressLine2}, ${addressData.address.city}, ${addressData.address.state}, ${addressData.address.country}`
+          };
+        })
+      );
+      setOrders(ordersWithUserNames);
     } catch (error) {
       console.error('Error fetching orders:', error);
     }
   };
+
   
   // Function to handle download report button click
   const handleDownloadReport = () => {
@@ -42,16 +64,16 @@ export default function ManageOrder() {
     // Title
     doc.setFontSize(25);
     doc.setFont('bold');
-    doc.text('New Orders Report', 165, 25, { align: 'center' });
+    doc.text('Manage Orders Report', 165, 25, { align: 'center' });
 
     // Table
     doc.autoTable({
       startY: 60,
-      head: [['Order ID', 'Cart ID', 'User ID', 'Date', 'Total Price', 'Order Status', 'Payment Status', 'Tracking Status']],
+      head: [['Order ID', 'Customer name ', 'Order Address', 'Date', 'Total Price', 'Order Status', 'Payment Status', 'Tracking Status']],
       body: orders.map(order => [
-        order._id,
-        order.cartId,
-        order.userId,
+        order._id.slice(-6),
+        order.customerName,
+        order.addressDetails,
         formatDate(order.createdAt),
         order.totalPrice,
         order.orderStatus,
@@ -88,7 +110,7 @@ export default function ManageOrder() {
   const handleDelete = async (orderId) => {
     try {
       await fetch(`/api/order/delete/${orderId}`, { method: 'DELETE' });
-      getnewOrders(); // Fetch updated orders after deletion
+      getAllOrders(); // Fetch updated orders after deletion
     } catch (error) {
       console.error('Error deleting order:', error);
     }
@@ -110,26 +132,13 @@ export default function ManageOrder() {
         },
         body: JSON.stringify({ trackingStatus: newStatus })
       });
-      getnewOrders(); // Fetch updated orders after status change
+      getAllOrders(); // Fetch updated orders after status change
     } catch (error) {
       console.error('Error updating tracking status:', error);
     }
   };
 
-  const handlePaymentStatusChange = async (orderId, newStatus) => {
-    try {
-      await fetch(`/api/order/update-payment-status/${orderId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ paymentStatus: newStatus })
-      });
-      getnewOrders(); // Fetch updated orders after status change
-    } catch (error) {
-      console.error('Error updating payment status:', error);
-    }
-  };
+  
 
   const getNextTrackingStatus = (currentStatus) => {
     switch (currentStatus) {
@@ -142,7 +151,7 @@ export default function ManageOrder() {
       case 'delivered':
         return 'pending';
       default:
-        return currentStatus; // Loop back to 'pending' status if already 'delivered' or if unknown status
+        return currentStatus; 
     }
   };
 
@@ -150,7 +159,7 @@ export default function ManageOrder() {
     <div className='flex h-screen'>
       {/* Sidebar */}
       <div className='bg-sideNavBackground w-1/5 p-4'>
-          
+           
       <Link  to="/mainDashboard">
       <div className="flex justify-center items-center mb-8">
           <img src={logo} alt="Company Logo" className="w-48 h-auto" />
@@ -190,8 +199,8 @@ export default function ManageOrder() {
               <thead>
                 <tr className="bg-green-300">
                   <th className="px-4 py-2 text-left rounded-tl-lg">Order Id</th>
-                  <th className="px-4 py-2 text-left">Cart Id</th>
-                  <th className="px-4 py-2 text-left">User Id</th>
+                  <th className="px-4 py-2 text-left">Customer Name</th>
+                  <th className="px-4 py-2 text-left">Order Address</th>
                   <th className="px-4 py-2 text-left">Date</th>
                   <th className="px-4 py-2 text-left">Total Price</th>
                   <th className="px-4 py-2 text-left">Order Status</th>
@@ -203,16 +212,16 @@ export default function ManageOrder() {
               <tbody>
                 {filteredOrders.map((order) => (
                   <tr key={order._id} className= "bg-green-100">
-                    <td className="border px-4 py-2">{order._id}</td>
-                    <td className="border px-4 py-2">{order.cartId}</td>
-                    <td className="border px-4 py-2">{order.userId}</td>
+                    <td className="border px-4 py-2">#{order._id.slice(-6)}</td>
+                    <td className="border px-4 py-2">{order.customerName}</td>
+                    <td className="border px-4 py-2">{order.addressDetails}</td>
                     <td className="border px-4 py-2">{formatDate(order.createdAt)}</td>
                     <td className="border px-4 py-2">{order.totalPrice}</td>
                     <td className="border px-2 py-1" style={{ backgroundColor: order.orderStatus === 'pending' ? 'red' : 'green', color: 'white', fontWeight: 'bold' }}>{order.orderStatus}</td>
 
                     <td className="border px-2 py-1">
                       <button
-                        onClick={() => handlePaymentStatusChange(order._id, order.paymentStatus === 'pending' ? 'paid' : 'pending')}
+                        
                         className={`px-2 py-1 rounded ${
                           order.paymentStatus === 'pending' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
                         }`}
@@ -243,7 +252,7 @@ export default function ManageOrder() {
                         >
                           Delete
                         </button>
-                        <Link to={`/order/${order._id}`} className="bg-blue-500 text-white px-4 py-2 rounded mt-1 hover:bg-blue-600 text-center">
+                        <Link to={`/ViewOrder/orderId:${order._id} `} className="bg-blue-500 text-white px-4 py-2 rounded mt-1 hover:bg-blue-600 text-center">
                           View
                         </Link>
                       </div>

@@ -31,7 +31,7 @@ export const getCheckoutSession = async (req, res) => {
             line_items: [
                 {
                     price_data: {
-                        currency: 'usd',
+                        currency: '',
                         unit_amount: totalPriceToPayInCents,
                         product_data: {
                             name: 'Your Product Name',
