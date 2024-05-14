@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // import SignUpImage from '../../images/register.jpg';
-import loginback from '../../images/register13.jpg'; 
+import loginback from '../../images/sinsup.png'; 
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -102,7 +102,7 @@ export default function SignUp() {
 
     <div 
     style={{
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${loginback})`, // Set the background image
+      backgroundImage: `url(${loginback})`, // Set the background image
       backgroundSize: "cover", // Cover the entire container
       backgroundPosition: "center", // Center the image
       backgroundRepeat: "no-repeat",
@@ -120,16 +120,16 @@ export default function SignUp() {
         {/* Right side with form */}
         <div className="lg:w-full p-5  rounded-lg shadow-lg bg-transparent" >
        
-        <h1 className='text-3xl text-center font-semibold mt-11 mb-9 text-white' >Sign Up</h1>
+        <h1 className='text-3xl text-center font-semibold mt-11 mb-9 text-black' >Sign Up</h1>
         {errorMessage.general && <p className='text-red-500'>{errorMessage.general}</p>}
         <form onSubmit={handleSubmit} className='flex flex-col items-center gap-4' >
   
 
           <input
             type='text ' 
-            placeholder='Username'
-            className='border border-gray-700 p-3 rounded-lg w-1/3 h-full  ' // Increased width
-            id='username' style={{ color: '#fff', backgroundColor: 'rgb(255, 255, 255, 0.3)' }} 
+            placeholder='Name'
+            className='border border-gray-700 p-3 rounded-3xl w-1/3 h-full  ' // Increased width
+            id='username'  
             value={formData.username || ''}
             onChange={handleChange}
            
@@ -138,23 +138,23 @@ export default function SignUp() {
           <input
             type='email'
             placeholder='Email'
-            className='border p-3 border-gray-700 rounded-lg w-1/3 h-full' // Increased width
-            id='email' style={{ color: '#fff', backgroundColor: 'rgb(255, 255, 255, 0.3)' }} 
+            className='border p-3 border-gray-700 rounded-3xl w-1/3 h-full' // Increased width
+            id='email'  
             onChange={handleChange}
           />
           {errorMessage.password && <p className='text-red-500'>{errorMessage.password}</p>}
           <input
             type='password'
             placeholder='Password'
-            className='border border-gray-700 p-3 rounded-lg w-1/3 h-full' // Increased width
-            id='password' style={{  color: '#fff', backgroundColor: 'rgb(255, 255, 255, 0.3)' }} 
+            className='border border-gray-700 p-3 rounded-3xl w-1/3 h-full' // Increased width
+            id='password'
             onChange={handleChange}
           />
           <input
             type='password'
             placeholder='Confirm Password'
-            className='border border-gray-700 p-3 rounded-lg w-1/3 h-full' // Increased width
-            id='confirmPassword' style={{  color: '#fff', backgroundColor: 'rgb(255, 255, 255, 0.3)' }} 
+            className='border border-gray-700 p-3 rounded-3xl w-1/3 h-full' // Increased width
+            id='confirmPassword' 
             onChange={handleChange}
           />
           {errorMessage.nic && <p className='text-red-500'>{errorMessage.nic}</p>}
@@ -173,8 +173,8 @@ export default function SignUp() {
           <input
             type='text'
             placeholder='Telephone Number'
-            className='border border-gray-700 p-3 rounded-lg w-1/3 h-full' // Increased width
-            id='phoneNumber' style={{  color: '#fff', backgroundColor: 'rgb(255, 255, 255, 0.3)' }} 
+            className='border border-gray-700 p-3 rounded-3xl w-1/3 h-full' // Increased width
+            id='phoneNumber' 
             pattern='\d{10}'
             onChange={handleChange}
             onInput={(e) => {
@@ -185,27 +185,28 @@ export default function SignUp() {
 <input
             type='text'
             placeholder='Address'
-            className='border border-gray-700 p-3 rounded-lg w-1/3 h-full' 
-            id='address' style={{ color: '#fff', backgroundColor: 'rgb(255, 255, 255, 0.4)' }} 
+            className='border border-gray-700 p-3 rounded-3xl w-1/3 h-full' 
+            id='address'  
             onChange={handleChange}
           />
        
-          <button
-            disabled={loading}
-            style={{
-              color: 'white',
-              padding: '.5rem 2rem',
-              borderRadius: '0.5rem',
-              marginBottom: '8rem',
-              marginTop: '1rem',
-              border: 'none',
-              cursor: 'pointer',
-              backgroundColor: 'rgba( 11, 128, 24)', // Adjust the alpha value for transparency
-            }}
-            className={loading ? 'opacity-80 cursor-not-allowed' : 'hover:opacity-95'}
-          >
-            {loading ? 'Loading...' : 'Sign Up'}
-          </button>
+       <button
+              disabled={loading}
+              style={{
+                marginTop: "15px",
+                color: "white",
+                padding: "0.75rem 2rem",
+                borderRadius: "1.5rem",
+                border: "none",
+                cursor: "pointer",
+                backgroundColor: "rgba(0, 128, 0, 0.8)", // Adjust the alpha value for transparency
+              }}
+              className={
+                loading ? "opacity-80 cursor-not-allowed" : "hover:opacity-95"
+              }
+            >
+              {loading ? "Loading..." : "Sign Up"}
+            </button>
         </form>
        
       </div>

@@ -13,6 +13,7 @@ const ProductView = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([]);
+  const [sortOption, setSortOption] = useState(""); // State to store the selected sorting option
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.currentUser) || null;
 
@@ -24,10 +25,8 @@ const ProductView = () => {
     try {
       const response = await axios.get("/api/listing/get/:id");
       const allProducts = response.data;
-      // Store fetched products in state
       setProducts(allProducts);
       setLoading(false);
-      // Extract unique categories
       const uniqueCategories = Array.from(new Set(allProducts.map(product => product.category)));
       setCategories(uniqueCategories);
     } catch (error) {
@@ -44,6 +43,28 @@ const ProductView = () => {
     setSelectedCategory(e.target.value);
   };
 
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+  };
+
+  const sortedProducts = () => {
+    let sorted = [...filteredProducts];
+    if (sortOption === "priceLowToHigh") {
+      sorted.sort((a, b) => {
+        const priceA = a.discountedPrice || a.regularPrice;
+        const priceB = b.discountedPrice || b.regularPrice;
+        return priceA - priceB;
+      });
+    } else if (sortOption === "priceHighToLow") {
+      sorted.sort((a, b) => {
+        const priceA = a.discountedPrice || a.regularPrice;
+        const priceB = b.discountedPrice || b.regularPrice;
+        return priceB - priceA;
+      });
+    }
+    return sorted;
+  };
+
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory ? product.category.toLowerCase() === selectedCategory.toLowerCase() : true;
@@ -51,67 +72,16 @@ const ProductView = () => {
   });
 
   const handleBuy = (product) => {
-    if(currentUser) {
-      handleAddToCart(product);
-      setTimeout(() => {
-        navigate("/cart");
-      }, 4500);
-    } else {
-      toast.error("Please login to buy items to the cart", {
-        onClose: () => {
-          navigate("/sign-in");
-        }
-      });
-    }
+    // Handle buy logic
   };
 
-  const handleAddToCart = async(product) => {
-    if (!currentUser) {
-      toast.error("Please login to add items to the cart");
-      navigate("/sign-in");
-      return;
-    }
-    try {
-      const priceToAdd = product.discountedPrice ? product.discountedPrice : product.regularPrice;
-      const response = await fetch("/api/cart/addToCart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: currentUser._id,
-          productId: product._id,
-          productName: product.name,
-          productImages: product.imageUrls,
-          price: priceToAdd,
-          quantity: 1,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add item to cart");
-      }
-
-      const data = await response.json();
-
-      if (data.success && data.updated) {
-        console.log(data.success, data.updated);
-        toast.success("Item quantity updated successfully");
-      } else if (data.success && !data.updated) {
-        toast.success("Item added to cart successfully");
-       
-      } else {
-        console.error("Failed to add item to cart:", data.error);
-      }
-    } catch (error) {
-      console.error("Error adding item to cart:", error);
-    }
+  const handleAddToCart = async (product) => {
+    // Handle add to cart logic
   };
 
   return (
     <div className="container mx-auto px-10">
       <h1 className="text-2xl mt-5 text-center font-semibold mb-8">Products</h1>
-      {/* Search and Category Filter */}
       <div className="flex justify-center mb-8">
         <input
           type="text"
@@ -126,18 +96,25 @@ const ProductView = () => {
           className="bg-gray-100 border border-gray-300 p-2 rounded"
         >
           <option value="">All Categories</option>
-          {/* Populate options for categories */}
           {categories.map((category, index) => (
             <option key={index} value={category}>{category}</option>
           ))}
         </select>
+        <select
+          value={sortOption}
+          onChange={handleSortChange}
+          className="bg-gray-100 border border-gray-300 p-2 rounded ml-4"
+        >
+          <option value="">Sort by Price</option>
+          <option value="priceLowToHigh">Price: Low to High</option>
+          <option value="priceHighToLow">Price: High to Low</option>
+        </select>
       </div>
-      {/* Product Grid */}
       {loading ? (
         <p>Loading...</p> 
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8">
-          {filteredProducts.map((product) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8 mb-20">
+          {sortedProducts().map((product) => (
             <div key={product._id} className="bg-green-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
               <Link to={`/product-detail/${product._id}`}>
                 <img
@@ -153,18 +130,16 @@ const ProductView = () => {
                 </p>
                 <div className="flex justify-between items-center mb-4">
                   <p className="text-lg text-blue-600 ">
-                  {product.discountedPrice ? (
-                <div>
-                  <p className="text-red-500 line-through text-xs"> Rs.{product.regularPrice.toFixed(2)}</p>
-                  <p className="font-bold">Rs.{product.discountedPrice.toFixed(2)}</p>
-                </div>
-              ): 
-              (
-                <div>
-                  <p className="font-bold" style={{ marginBottom: "1rem" }}> Rs.{product.regularPrice.toFixed(2)}</p>
-                </div>
-              )
-              }
+                    {product.discountedPrice ? (
+                      <div>
+                        <p className="text-red-500 line-through text-xs"> Rs.{product.regularPrice.toFixed(2)}</p>
+                        <p className="font-bold">Rs.{product.discountedPrice.toFixed(2)}</p>
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="font-bold" style={{ marginBottom: "1rem" }}> Rs.{product.regularPrice.toFixed(2)}</p>
+                      </div>
+                    )}
                   </p>
                   <p className="text-gray-500">{product.quantity} in stock</p>
                 </div>
@@ -188,7 +163,7 @@ const ProductView = () => {
           ))}
         </div>
       )}
-      <ToastContainer position="bottom-left"  />
+      <ToastContainer position="bottom-left" />
     </div>
   );
 }
