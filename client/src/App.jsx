@@ -8,7 +8,7 @@ import Profile from './pages/client/Profile.jsx';
 import ManageProfileReport from './pages/admin/customerManagement/ManageProfileReport.jsx';
 import PrivateRoute from './components/PrivateRoute';
 
-import AddEmployee from './pages/admin/AddEmployee.jsx';
+
 import MainDashboard from './pages/admin/MainDashboard.jsx';
 import ContactUs from './pages/client/ContactUs.jsx';
 import ReviewPage from './pages/client/ReviewPage.jsx';
@@ -43,6 +43,8 @@ import CategoryAdminDashboard from './pages/admin/categoryAndPromotion/CategoryA
 import ViewCategory from './pages/admin/categoryAndPromotion/ViewCategory.jsx';
 import AddDiscount from './pages/admin/categoryAndPromotion/AddDiscount.jsx';
 import UpdateCategory from './pages/admin/categoryAndPromotion/UpdateCategory.jsx';
+import CouponAdd from './pages/admin/categoryAndPromotion/CouponAdd.jsx';
+import ViewDiscount from './pages/admin/categoryAndPromotion/ViewDiscount.jsx';
 import CouponCodeView from './pages/admin/categoryAndPromotion/CouponCodeView.jsx';
 import ManageCoupon from './pages/admin/categoryAndPromotion/ManageCoupon.jsx';
 import ProductAdminDashboard from './pages/admin/ProductManagement/ProductAdminDashboard.jsx';
@@ -71,6 +73,12 @@ import MyReview from './pages/client/MyReview.jsx';
 
 import ViewPaymentDetails from './pages/admin/PaymentManagement/ViewPaymentDetails.jsx'
 import PaymentHistory from './pages/client/PaymentHistory.jsx';
+
+import EmployeeDashboard from './pages/admin/EmployeeManagement/EmployeeDashboard.jsx';
+import EmployeeList from './pages/admin/EmployeeManagement/EmployeeList.jsx';
+import EmployeePayment from './pages/admin/EmployeeManagement/EmployeePayment.jsx';
+import EmployeeUpdate from './pages/admin/EmployeeManagement/EmployeeUpdate.jsx';
+import AddEmployee from './pages/admin/EmployeeManagement/AddEmployee.jsx';
 
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -167,6 +175,12 @@ export default function App() {
           <Route path='/my-reviews/:userId' element={<MyReview />} />
           <Route path='/admin-responses' element={<AdminResponses />} />
           <Route path='/reviewreport' element={<ReviewReport />} />
+
+          <Route path="/empDashboard" element={<EmployeeDashboard />} />
+          <Route path="/addEmployee" element={<AddEmployee/>} />
+          <Route path="/employeeList" element={<EmployeeList />} />
+          <Route path="/paymentList" element={<EmployeePayment />} />
+          <Route path="/emloyee-update/:id" element={<EmployeeUpdate />} />
 
         </Route>
       </Routes>
