@@ -103,9 +103,9 @@ export default function ManagePayment() {
         </Link>
         <hr className="border-gray-700 my-4"/>
         <div className='space-y-1'>
-          <NavLink icon={dashboard} text="Payment Dashboard" to="/order-dashboard" />
+          <NavLink icon={dashboard} text="Payment Dashboard" to="/payment-dashboard" />
           <NavLink icon={dashboard} text="Manage Payment" to="/paymentdetails" />
-          <NavLink icon={dashboard} text="Complete Payment" to="/complete-orders-dashboard" />
+         
         </div>
       </div>
 
