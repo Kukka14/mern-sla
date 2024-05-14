@@ -75,6 +75,7 @@ import ViewOrder from './pages/admin/OrderManagement/ViewOrder.jsx';
 import ViewPaymentDetails from './pages/admin/PaymentManagement/ViewPaymentDetails.jsx'
 import PaymentHistory from './pages/client/PaymentHistory.jsx';
 
+
 export default function App() {
   const { currentUser } = useSelector((state) => state.user);
   const isAdmin = currentUser && currentUser.isAdmin; // Check if user is admin
@@ -84,7 +85,7 @@ export default function App() {
       {isAdmin ? null : <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="contactus" element={<ContactUs />} />
+        <Route path="/contactus" element={<ContactUs />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/product-view-client" element={<ProductView/>} />
@@ -102,6 +103,8 @@ export default function App() {
       
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
+          
+
           <Route path='/mainDashboard' element={<MainDashboard />} />
           <Route path='/addEmployee' element={<AddEmployee />} />
           <Route path='review' element={<ReviewPage/>} />
