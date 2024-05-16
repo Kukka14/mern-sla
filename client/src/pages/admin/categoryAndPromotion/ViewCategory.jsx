@@ -42,7 +42,7 @@ export default function ViewCategory() {
     doc.addImage(logoImg, "PNG", 12.5, 10, 70, 30); // Adjust the width and height as needed
   
     // Add title
-    doc.text("Product List", 14, 60);
+    doc.text("Category List", 14, 60);
   
     // Add table
     doc.autoTable({
@@ -55,7 +55,7 @@ export default function ViewCategory() {
       ]),
     });
   
-    doc.save("product-list.pdf");
+    doc.save("Category-list.pdf");
 };
 
   const handleDelete = async (categoryId) => {

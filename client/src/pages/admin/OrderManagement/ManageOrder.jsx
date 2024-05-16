@@ -8,6 +8,7 @@ import AdminHeader from '../../../components/AdminHeader';
 export default function ManageOrder() {
   const [orders, setOrders] = useState([]); // State to hold orders data
   const [searchKeyword, setSearchKeyword] = useState('');
+ 
 
   useEffect(() => {
     // Fetch all orders when component mounts
@@ -252,7 +253,7 @@ export default function ManageOrder() {
                         >
                           Delete
                         </button>
-                        <Link to={`/order/${order._id}`} className="bg-blue-500 text-white px-4 py-2 rounded mt-1 hover:bg-blue-600 text-center">
+                        <Link to={`/ViewOrder/orderId:${order._id}`} className="bg-blue-500 text-white px-4 py-2 rounded mt-1 hover:bg-blue-600 text-center">
                           View
                         </Link>
                       </div>

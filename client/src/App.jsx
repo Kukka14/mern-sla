@@ -8,7 +8,7 @@ import Profile from './pages/client/Profile.jsx';
 import ManageProfileReport from './pages/admin/customerManagement/ManageProfileReport.jsx';
 import PrivateRoute from './components/PrivateRoute';
 
-import AddEmployee from './pages/admin/AddEmployee.jsx';
+
 import MainDashboard from './pages/admin/MainDashboard.jsx';
 import ContactUs from './pages/client/ContactUs.jsx';
 import ReviewPage from './pages/client/ReviewPage.jsx';
@@ -69,10 +69,23 @@ import AdminResponses from './pages/admin/customercareManagement/AdminResponses.
 import ReviewAdminDashboard from './pages/admin/customercareManagement/ReviewAdminDashboard.jsx';
 import ReviewReport from './pages/admin/customercareManagement/ReviewReport.jsx';
 import MyReview from './pages/client/MyReview.jsx';
+import ViewOrder from './pages/admin/OrderManagement/ViewOrder.jsx';
+
+
 
 
 import ViewPaymentDetails from './pages/admin/PaymentManagement/ViewPaymentDetails.jsx'
 import PaymentHistory from './pages/client/PaymentHistory.jsx';
+
+import EmployeeDashboard from './pages/admin/EmployeeManagement/EmployeeDashboard.jsx';
+import EmployeeList from './pages/admin/EmployeeManagement/EmployeeList.jsx';
+import EmployeePayment from './pages/admin/EmployeeManagement/EmployeePayment.jsx';
+import EmployeeUpdate from './pages/admin/EmployeeManagement/EmployeeUpdate.jsx';
+import AddEmployee from './pages/admin/EmployeeManagement/AddEmployee.jsx';
+import About from './pages/client/About.jsx';
+
+import PaymentDashboard from './pages/admin/PaymentManagement/PaymentDashboard.jsx';
+
 
 
 export default function App() {
@@ -98,6 +111,7 @@ export default function App() {
           <Route path="/add-supplier" element={<AddSuppler />} />
           <Route path="/view-suppliers" element={<Supplier/>} />
           <Route path="/update-supplier/:id" element={<UpdateSupplier/>} />
+          <Route path="/about" element={<About/>} />
           
       
         <Route element={<PrivateRoute />}>
@@ -136,6 +150,7 @@ export default function App() {
           <Route path='/viewdiscount' element={<ViewDiscount />} />
           <Route path='/couponcodeview' element={<CouponCodeView />} />
           <Route path='/managecoupon/:id' element={<ManageCoupon />} />
+          <Route path='/ViewOrder/:orderId' element={<ViewOrder />} />
 
 
 
@@ -146,6 +161,8 @@ export default function App() {
           <Route path='/update-product/:id' element={<UpdateProductListing/>} />
           <Route path="/products/:categoryName" element={<ProductByCategory/>} />
           <Route path="/view-stocks" element={<ViewStocks/>} />
+
+          <Route path="/payment-dashboard" element={<PaymentDashboard/>} />
          
           
 
@@ -172,6 +189,12 @@ export default function App() {
           <Route path='/my-reviews/:userId' element={<MyReview />} />
           <Route path='/admin-responses' element={<AdminResponses />} />
           <Route path='/reviewreport' element={<ReviewReport />} />
+
+          <Route path="/empDashboard" element={<EmployeeDashboard />} />
+          <Route path="/addEmployee" element={<AddEmployee/>} />
+          <Route path="/employeeList" element={<EmployeeList />} />
+          <Route path="/paymentList" element={<EmployeePayment />} />
+          <Route path="/emloyee-update/:id" element={<EmployeeUpdate />} />
 
         </Route>
       </Routes>

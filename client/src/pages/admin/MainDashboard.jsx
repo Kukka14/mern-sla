@@ -117,7 +117,7 @@ export default function MainDashboard() {
                 <p className="text-sectiontext">Payment Management</p>
               </div>
             </Link>
-            <Link to="/employeeDashboard">
+            <Link to="/empDashboard">
               <div className="flex flex-col justify-center items-center bg-sectionBackground w-48 h-40 rounded-2xl border-2 border-green-900">
                 <img
                   src={employee}

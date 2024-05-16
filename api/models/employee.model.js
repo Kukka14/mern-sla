@@ -16,6 +16,16 @@ const employeeSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
+    },
+    role: {
+        type: String,
+        default: "employee"
+    },
+    position: {
+        type: String,
+    },
+    basicSlary:{
+        type:Number,
     }
 }, {timestamps: true});
 
