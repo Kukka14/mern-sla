@@ -338,7 +338,7 @@ export default function ProductListing() {
                         type="number"
                         id="quantity"
                         min="1"
-                        max="10000000"
+                        max="1000"
                         required
                         className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-blue-500"
                         onChange={handleChange}
