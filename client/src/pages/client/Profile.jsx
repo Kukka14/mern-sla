@@ -266,15 +266,10 @@ export default function Profile() {
             justifyContent: "center",
           }}
         >
-          <button
-            className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
-            style={{ color: "#ffffff" }}
-          >
-            button 1
-          </button>
+
           <Link to="/order-history">
             <button
-              className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
+              className="bg-carttableheader text-white py-3 px-6 rounded-full mr-4"
               style={{ color: "#ffffff" }}
             >
               Order History
@@ -282,33 +277,42 @@ export default function Profile() {
           </Link>
           <Link to="/payment-history">
             <button
-              className="bg-blue-900 text-white py-3 px-6 rounded-full mr-4"
+              className="bg-carttableheader text-white py-3 px-6 rounded-full mr-4"
               style={{ color: "#ffffff" }}
             >
               Payment History
             </button>
           </Link>
-          <button
-            className="bg-blue-900 text-white py-3 px-6 rounded-full"
-            style={{ color: "#ffffff" }}
-          >
-            button 3
-          </button>
+
+          <Link to={`/review?userId=${currentUser._id}`} className="btn">
+            <button className="bg-carttableheader text-white py-3 px-6 rounded-full mr-4" style={{ color: "#ffffff" }}>
+              Add Review
+            </button>
+          </Link>
+
+          <Link to={`/my-reviews/${currentUser._id}`} className="btn">
+            <button className="bg-carttableheader text-white py-3 px-6 rounded-full mr-4" style={{ color: "#ffffff" }}>
+              My Review
+            </button>
+          </Link>
         </div>
 
-        <Link to={`/my-reviews/${currentUser._id}`} className="btn">
-          <button className="bg-blue-900 text-white py-3 px-6 rounded-full" style={{ color: "#ffffff" }}>
-            My Review
-          </button>
-        </Link>
 
-        <Link to={`/review?userId=${currentUser._id}`} className="btn">
-          <button className="bg-blue-900 text-white py-3 px-6 rounded-full" style={{ color: "#ffffff" }}>
-            Add Review
-          </button>
-        </Link>
 
+
+          
+
+
+          
+
+
+        </div>
       </div>
-    </div>
+    
+
+  
+   
+
+
   );
 }
