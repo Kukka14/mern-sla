@@ -130,7 +130,7 @@ const ProductView = () => {
   };
 
   return (
-    <div className="container mx-auto px-10">
+    <div className="container mx-auto px-10 ">
       <h1 className="text-2xl mt-5 text-center font-semibold mb-8">Products</h1>
       <div className="flex justify-center mb-8">
         <input
