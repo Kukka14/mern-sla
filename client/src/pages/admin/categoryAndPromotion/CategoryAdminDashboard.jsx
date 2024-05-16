@@ -141,21 +141,21 @@ export default function CategoryAdminDashboard() {
         {/* Main Content Area */}
         <div className="p-8">
           <div className="flex flex-row justify-around">
-            <div className="flex flex-col justify-center items-center hover:bg-sectionBackgroundHover bg-sectionBackground w-56 shadow-lg h-50 rounded-2xl border-green-900 hover:shadow-lg transform transition-all duration-300 ease-in-out m-2">
+            <div className="flex flex-col justify-center items-center hover:bg-sectionBackgroundHover bg-sectionBackground w-56 shadow-lg h-40 rounded-2xl border-green-900 hover:shadow-lg transform transition-all duration-300 ease-in-out m-2">
               <div className="text-3xl mt-3 font-bold">
                 <p>{categoryCount}</p>
               </div>
               <hr className="mt-3 mb-2 w-40 h-px bg-sectionhr border-0" />
               <p className="text-sectiontext">All Category</p>
             </div>
-            <div className="flex flex-col justify-center items-center hover:bg-sectionBackgroundHover bg-sectionBackground w-56 shadow-lg h-50 rounded-2xl border-green-900 hover:shadow-lg transform transition-all duration-300 ease-in-out m-2">
+            <div className="flex flex-col justify-center items-center hover:bg-sectionBackgroundHover bg-sectionBackground w-56 shadow-lg h-40 rounded-2xl border-green-900 hover:shadow-lg transform transition-all duration-300 ease-in-out m-2">
               <div className="text-3xl mt-3 font-bold">
                 <p>{couponCount}</p>
               </div>
               <hr className="mt-3 mb-2 w-40 h-px bg-sectionhr border-0" />
               <p className="text-sectiontext">All Coupon</p>
             </div>
-            <div className="flex flex-col justify-center items-center hover:bg-sectionBackgroundHover bg-sectionBackground w-56 shadow-lg h-50 rounded-2xl border-green-900 hover:shadow-lg transform transition-all duration-300 ease-in-out m-2">
+            <div className="flex flex-col justify-center items-center hover:bg-sectionBackgroundHover bg-sectionBackground w-56 shadow-lg h-40 rounded-2xl border-green-900 hover:shadow-lg transform transition-all duration-300 ease-in-out m-2">
               <div className="text-3xl mt-3 font-bold">
                 <p>{discountCount}</p>
               </div>

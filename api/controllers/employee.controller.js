@@ -23,6 +23,69 @@ export const add = async (req, res, next) => {
     }
 };
 
+export const get = async (req, res, next) => {
+    try {
+        const sortDirection = req.query.order === 'asc' ? 1 : -1
+
+        const query = {}
+
+        if (req.query.employeeName) {
+            query.name = req.query.employeeName
+        }
+        if (req.query.position) {
+            query.position = req.query.position
+        }
+        if (req.query.employeeId) {
+            query._id = req.query.employeeId
+        }
+        
+
+        const employee = await Employee.find(query).sort({ updatedAt: sortDirection })
+        res.status(200).json(employee)
+    } catch (error) {
+        next(error)
+    }
+};
+
+export const update = async (req, res, next) => {
+
+    try {
+
+        if (req.body.password) {
+            req.body.password = bcryptjs.hashSync(req.body.password, 10);
+        }
+
+        const updatedUser = await Employee.findByIdAndUpdate(
+            req.params.id,
+            {
+                $set: {
+                    name: req.body.name,
+                    nic: req.body.nic,
+                    email: req.body.email,
+                    mobile: req.body.mobile,
+                    position: req.body.position,
+                    basicSlary: req.body.basicSlary,
+                },
+            },
+            { new: true }
+        );
+
+        const { password, ...rest } = updatedUser._doc;
+        res.status(201).json(rest);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const deleteEmp = async (req, res, next) => {
+    try {
+        await Employee.findByIdAndDelete(req.params.id)
+        res.status(200).json({ message: "Employee has been deleted." })
+    } catch (error) {
+        next(error)
+    }
+}
+
 export const signin = async (req, res, next) => {
 
     const { email, password } = req.body;
