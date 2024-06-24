@@ -45,7 +45,6 @@ export const updateCategory = async (req, res) => {
       const { id } = req.params;
       const { categoryname, description, avatar } = req.body;
   
-      // You might want to add some validation here
   
       const updatedCategory = await Category.findByIdAndUpdate(
         id,
